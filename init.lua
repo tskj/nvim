@@ -1,1 +1,2 @@
+require("hotpot")
 require("throwfence")

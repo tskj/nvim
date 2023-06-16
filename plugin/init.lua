@@ -15,15 +15,13 @@ require('packer').startup(function()
 
   use 'jimmay5469/vim-spacemacs'
   use 'hecal3/vim-leader-guide'
-  use 'preservim/nerdtree'
+  -- use 'preservim/nerdtree'
   use { 'junegunn/fzf', run = function() vim.fn['fzf#install']() end }
   use 'ctrlpvim/ctrlp.vim'
+
+  use 'rktjmp/hotpot.nvim'
 end)
 
 -- Mappings for vim-leader-guide
 vim.api.nvim_set_keymap('n', '<leader>', ':<C-U>LeaderGuide \'<SPACE>\'<CR>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('v', '<leader>', ':<C-U>LeaderGuideVisual \'<SPACE>\'<CR>', {noremap = true, silent = true})
-
--- Configure NERDTree to open in the current tab page
-vim.g.NERDTreeSplit = 0
-vim.g.NERDTreeQuitOnOpen = 1
