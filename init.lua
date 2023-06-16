@@ -1,2 +1,1 @@
-require("hotpot")
 require("throwfence")
