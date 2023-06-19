@@ -20,6 +20,7 @@ local function _2_()
     return vim.fn("fzf#install")()
   end
   use({"junegunn/fzf", run = _3_})
+  use("justinmk/vim-sneak")
   return use("ctrlpvim/ctrlp.vim")
 end
 return startup(_2_)
