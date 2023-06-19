@@ -1,4 +1,5 @@
 
+(vim.keymap.set ""  :<space> "" {:noremap true})
 (set vim.g.mapleader " ")
 
 ; Make sure packer is installed
@@ -23,5 +24,6 @@
     (use "hecal3/vim-leader-guide")
     (use {1 "junegunn/fzf" :run (fn [] ((vim.fn "fzf#install")))})
     (use "justinmk/vim-sneak")
+    (use "simeji/winresizer")
     (use "ctrlpvim/ctrlp.vim"))))
 
