@@ -1,4 +1,3 @@
-
 (vim.keymap.set ""  :<space> "" {:noremap true})
 (set vim.g.mapleader " ")
 

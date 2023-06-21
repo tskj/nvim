@@ -1,4 +1,3 @@
-
 ;; these are the supported plugins from vim-spacemacs I want
 (vim.api.nvim_set_var "spacemacs#plugins"
   ["kien/ctrlp.vim"
@@ -24,4 +23,3 @@
   (map-set-leader "w{" ":resize +5<CR>")
   (map-set-leader "w}" ":resize -5<CR>")
   (map-set-leader "wo" ":only<CR>"))
-
