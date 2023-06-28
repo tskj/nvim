@@ -16,3 +16,7 @@
 (vim.keymap.set :n "<leader>at" vim.cmd.terminal)
 
 (vim.keymap.set :n "<leader>wr" vim.cmd.WinResizerStartResize)
+
+;; remap esc in terminal mode
+(vim.keymap.set :t "<Esc>" "<C-\\><C-n>" {:noremap true})
+(vim.keymap.set :t "<C-Space>" "<Esc>" {:noremap true})
