@@ -23,7 +23,7 @@
       ;; plugins
       (use "jimmay5469/vim-spacemacs")
       (use "hecal3/vim-leader-guide")
-      (use {1 "junegunn/fzf" :run (fn [] ((vim.fn "fzf#install")))})
+      (use "ibhagwan/fzf-lua")
       (use "justinmk/vim-sneak")
       (use "simeji/winresizer")
       (use "ctrlpvim/ctrlp.vim")
@@ -31,5 +31,7 @@
       ;; fennel
       (use "Olical/conjure")
       (use "gpanders/nvim-parinfer")
+
+      (use "echasnovski/mini.nvim")
 
       (use "nvim-treesitter/nvim-treesitter"))))
