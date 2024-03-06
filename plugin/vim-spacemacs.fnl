@@ -10,7 +10,3 @@
   ["^t"
    "^fed$"
    "^feR$"])
-
-(let [map-set-leader (fn [lhs rhs] (vim.keymap.set :n (.. "<leader>" lhs) rhs {:noremap true}))]
-  (map-set-leader "wo" ":only<CR>?")
-  (map-set-leader "bs" ":enew<CR>"))

@@ -23,3 +23,6 @@
 - find out if it's possibly to lock packer plugin versions
   also find out how packer works I guess?
 
+- is there like an inverse of `:only` (SPC w o) ?
+
+- relieve <C-e> of being window resize, since I have a leader key for it

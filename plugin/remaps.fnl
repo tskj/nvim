@@ -13,13 +13,18 @@
 (vim.keymap.set :t "<C-Space>" "<Esc>" {:noremap true})
 
 
-;; map SPC f e d to open the file explorer at the neovim config directory
-(vim.keymap.set :n "<leader>fed" (open-in-explorer nvim-dir))
 
-;; open file explorer in directory of current file
-(vim.keymap.set :n "<leader>pt" (open-in-explorer ""))
+(let [map-set-leader (fn [lhs rhs] (vim.keymap.set :n (.. "<leader>" lhs) rhs {:noremap true}))]
+  (map-set-leader "wo" ":only<CR>")
+  (map-set-leader "bs" ":enew<CR>")
 
-;; open terminal (in spacemacs this is SPC a t)
-(vim.keymap.set :n "<leader>t" vim.cmd.terminal)
+  ;; map SPC f e d to open the file explorer at the neovim config directory
+  (map-set-leader "fed" (open-in-explorer nvim-dir))
 
-(vim.keymap.set :n "<leader>wr" vim.cmd.WinResizerStartResize)
+  ;; open file explorer in directory of current file
+  (map-set-leader "pt" (open-in-explorer ""))
+
+  ;; open terminal (in spacemacs this is SPC a t)
+  (map-set-leader "t" vim.cmd.terminal)
+
+  (map-set-leader "wr" vim.cmd.WinResizerStartResize))
