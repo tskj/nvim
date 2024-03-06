@@ -1,0 +1,25 @@
+- write a readme that explains how it works and what to do run stuff
+
+- add a leader shortcut to run :PackerInstall
+  also I guess, add a shortcut to run make and then :PackerInstall, and then maybe reload?
+  or maybe just separate commands?
+
+- add a leader shortcut (SPC q r) to reload neovim (preferrably with all panes and such open)
+
+- find out how to get back my buffer if I accidentally open :Ex
+
+- find out how to ignore <F15>
+
+- figure out which terminal I want to use, and then how to open them
+
+- set cwd automatically when switching buffers or w/e
+
+- set tabs correctly (for html and js and stuff, it already works for fennel)
+
+- find out how to save a scratch buffer?
+
+- fix syntax highlighting on fennel
+
+- find out if it's possibly to lock packer plugin versions
+  also find out how packer works I guess?
+
