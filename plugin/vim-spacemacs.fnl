@@ -12,11 +12,5 @@
    "^feR$"])
 
 (let [map-set-leader (fn [lhs rhs] (vim.keymap.set :n (.. "<leader>" lhs) rhs {:noremap true}))]
-  (map-set-leader "w>" ":vertical resize +10<CR>")
-  (map-set-leader "w<" ":vertical resize -10<CR>")
-  (map-set-leader "w[" ":vertical resize +20<CR>")
-  (map-set-leader "w]" ":vertical resize -20<CR>")
-  (map-set-leader "w{" ":resize +5<CR>")
-  (map-set-leader "w}" ":resize -5<CR>")
-  (map-set-leader "wo" ":only<CR>")
+  (map-set-leader "wo" ":only<CR>?")
   (map-set-leader "bs" ":enew<CR>"))

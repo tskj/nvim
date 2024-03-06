@@ -33,3 +33,4 @@
       (use "gpanders/nvim-parinfer")
 
       (use "nvim-treesitter/nvim-treesitter"))))
+
