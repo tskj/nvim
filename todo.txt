@@ -8,8 +8,6 @@
 
 - figure out which terminal to use, and then how to open them
 
-- set tabs correctly (for html and js and stuff, it already works for fennel)
-
 - add a leader shortcut to run :PackerInstall
   also I guess, add a shortcut to run make and then :PackerInstall, and then maybe reload?
   or maybe just separate commands?
@@ -18,6 +16,9 @@
   also find out how packer works I guess?
   packer is deprecated, I guess find an alternative :sob:
 
-- is there like an inverse of `:only` (SPC w o) ?
-
 - rename (SPC s e)
+
+- using the nix trick of changing the upstream code, I'd like to set 
+  {:MiniStarterFooter {:style "not-italic!"}}
+  and also maybe MiniStarterSection to a less obtrusive color
+  see this PR: https://github.com/EdenEast/nightfox.nvim/pull/174

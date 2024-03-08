@@ -11,9 +11,7 @@
 
 (local nightfox (require :nightfox))
 (nightfox.setup
-  {:options {:dim_inactive true
-             :modules {:mini {:enable true
-                              :MiniStarterFooter {:style "bold"}}}}})
+  {:options {:dim_inactive true}})
 (vim.cmd (.. "colorscheme " (pick-random 
                               ["nightfox" "duskfox" "nordfox" "terafox" "carbonfox"])))
 
