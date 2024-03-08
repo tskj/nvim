@@ -10,8 +10,6 @@
 
 - set tabs correctly (for html and js and stuff, it already works for fennel)
 
-- find out how to save a scratch buffer?
-
 - add a leader shortcut to run :PackerInstall
   also I guess, add a shortcut to run make and then :PackerInstall, and then maybe reload?
   or maybe just separate commands?
@@ -21,3 +19,5 @@
   packer is deprecated, I guess find an alternative :sob:
 
 - is there like an inverse of `:only` (SPC w o) ?
+
+- rename (SPC s e)
