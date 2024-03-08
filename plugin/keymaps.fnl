@@ -45,10 +45,10 @@
   ;; compile all fennel config using make and then quit
   ;; (sadly there's no way to restart neovim automatically)
   (map-set-leader "qr"
-     (fn []
-       (vim.cmd (.. "cd " nvim-dir))
-       (vim.cmd.terminal "make")
-       ;; Setup an autocommand to quit Neovim after make completes
-       (vim.api.nvim_create_autocmd "TermClose"
-         {:pattern "term://*make"
-          :callback (fn [] (vim.cmd.quit))}))))
+    (fn []
+      (vim.cmd (.. "cd " nvim-dir))
+      (vim.cmd.terminal "make")
+      ;; Setup an autocommand to quit Neovim after make completes
+      (vim.api.nvim_create_autocmd "TermClose"
+        {:pattern "term://*make"
+         :callback (fn [] (vim.cmd.quit))}))))

@@ -22,6 +22,7 @@
       (use "mhartington/oceanic-next")
       (use "rakr/vim-one")
       (use "morhetz/gruvbox")
+      (use "EdenEast/nightfox.nvim")
 
       ;; plugins
       (use "jimmay5469/vim-spacemacs")
