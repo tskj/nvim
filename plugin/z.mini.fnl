@@ -1,3 +1,6 @@
+; (local mini-tabline (require :mini.tabline))
+; (mini-tabline.setup)
+
 (local mini-statusline (require :mini.statusline))
 (mini-statusline.setup)
 
