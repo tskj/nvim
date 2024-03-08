@@ -4,3 +4,5 @@
    "r-cr:hor20"])
 
 (vim.cmd "colorscheme randomhue")
+
+(set vim.o.guifont "FiraCode Nerd Font:h14")

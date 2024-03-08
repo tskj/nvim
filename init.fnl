@@ -1,6 +1,9 @@
 (vim.keymap.set ""  :<space> "" {:noremap true})
 (set vim.g.mapleader " ")
 
+; sets current working directory you open a file or w/e (needed for terminal)
+(set vim.o.autochdir true)
+
 ; Make sure packer is installed
 (let [f vim.fn
       install-path (.. (f.stdpath "data") "/site/pack/packer/start/packer.nvim")]
@@ -27,12 +30,13 @@
       (use "justinmk/vim-sneak")
       (use "simeji/winresizer")
       (use "ctrlpvim/ctrlp.vim")
+      (use "echasnovski/mini.nvim")
+      (use "nvim-tree/nvim-web-devicons") ; mini.statusline wants this
 
       ;; fennel
       (use "Olical/conjure")
       (use "gpanders/nvim-parinfer")
-
-      (use "echasnovski/mini.nvim")
+      (use "bakpakin/fennel.vim") ; syntax highlighting
 
       (use "nvim-treesitter/nvim-treesitter"))))
 

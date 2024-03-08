@@ -2,7 +2,7 @@
 (local nvim-dir (vim.fn.stdpath "config"))
 
 ;; print the directory for debugging purposes
-(print nvim-dir)
+; (print nvim-dir)
 
 ;; use :Ex for now, switch to other file explorer in the future
 (fn open-in-explorer [dir]
@@ -25,6 +25,6 @@
   (map-set-leader "pt" (open-in-explorer ""))
 
   ;; open terminal (in spacemacs this is SPC a t)
-  (map-set-leader "t" vim.cmd.terminal)
+  (map-set-leader "at" vim.cmd.terminal)
 
   (map-set-leader "wr" vim.cmd.WinResizerStartResize))
