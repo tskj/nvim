@@ -51,4 +51,4 @@
       ;; Setup an autocommand to quit Neovim after make completes
       (vim.api.nvim_create_autocmd "TermClose"
         {:pattern "term://*make"
-         :callback (fn [] (vim.cmd.quit))}))))
+         :callback (fn [] (vim.cmd "qa"))}))))

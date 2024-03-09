@@ -1,12 +1,12 @@
-; (local mini-tabline (require :mini.tabline))
-; (mini-tabline.setup)
+; (local tabline (require :mini.tabline))
+; (tabline.setup)
 
-(local mini-statusline (require :mini.statusline))
-(mini-statusline.setup)
+(local statusline (require :mini.statusline))
+(statusline.setup)
 
 ; moves selection using ctrl + [hjkl]
-(local mini-move (require :mini.move))
-(mini-move.setup
+(local move (require :mini.move))
+(move.setup
   ;; default is meta (alt),
   ;; I think ctrl is easier to press
   {:mappings {:left "<C-h>"
@@ -15,16 +15,25 @@
               :up "<C-k>"}})
 
 ; auto-closes brackets and stuff
-(local mini-pairs (require :mini.pairs))
-(mini-pairs.setup)
+(local pairs (require :mini.pairs))
+(pairs.setup)
 
 ; surround parens
-(local mini-surround (require :mini.surround))
-(mini-surround.setup)
+(local surround (require :mini.surround))
+(surround.setup)
+
+; comment
+(local comment_ (require :mini.comment))
+(comment_.setup)
 
 ; starter screen and sessions
-(local mini-starter (require :mini.starter))
-(mini-starter.setup)
-;(local mini-sessions (require :mini.sessions))
-;(mini-sessions.setup
+(local starter (require :mini.starter))
+(starter.setup)
+;(local sessions (require :mini.sessions))
+;(sessions.setup
   ;{:autoread false})
+
+; auto suggestions for code
+(local completion (require :mini.completion))
+(completion.setup)
+
