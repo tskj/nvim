@@ -20,6 +20,9 @@
   ;; map SPC f e d to open the file explorer at the neovim config directory
   (map-set-leader "fed" (open-in-explorer nvim-dir))
 
+  ;; rename in spacemacs
+  (map-set-leader "se" vim.lsp.buf.rename)
+
   ;; open file explorer in directory of current file
   (map-set-leader "ef" (open-in-explorer ""))
 
