@@ -18,7 +18,9 @@
 
 - rename (SPC s e)
 
-- using the nix trick of changing the upstream code, I'd like to set 
+- using the nix trick of changing the upstream code, I'd like to set
   {:MiniStarterFooter {:style "not-italic!"}}
   and also maybe MiniStarterSection to a less obtrusive color
   see this PR: https://github.com/EdenEast/nightfox.nvim/pull/174
+
+- opening terminal from file explorer should land you in the cwd of the file explorer

@@ -21,10 +21,10 @@
   (map-set-leader "fed" (open-in-explorer nvim-dir))
 
   ;; open file explorer in directory of current file
-  (map-set-leader "pt" (open-in-explorer ""))
+  (map-set-leader "ef" (open-in-explorer ""))
 
   ;; open terminal (in spacemacs this is SPC a t for "application: terminal")
-  (map-set-leader "at" vim.cmd.terminal)
+  (map-set-leader "t" vim.cmd.terminal)
 
   (map-set-leader "wr" vim.cmd.WinResizerStartResize)
 

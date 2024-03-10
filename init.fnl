@@ -38,6 +38,18 @@
       (use "echasnovski/mini.nvim")
       (use "nvim-tree/nvim-web-devicons") ; mini.statusline wants this
 
+      (use {1 "VonHeikemen/lsp-zero.nvim"
+            :branch "v3.x"
+            ;; apparently in lazy you can just install these manually,
+            ;; i.e. flatten these plugins
+            :requires
+              ["williamboman/mason.nvim"
+               "williamboman/mason-lspconfig.nvim"
+               "neovim/nvim-lspconfig"
+               "hrsh7th/nvim-cmp"
+               "hrsh7th/cmp-nvim-lsp"
+               "L3MON4D3/LuaSnip"]})
+
       ;; fennel
       (use "Olical/conjure")
       (use "gpanders/nvim-parinfer")
