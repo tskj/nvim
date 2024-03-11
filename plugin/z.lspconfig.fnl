@@ -30,7 +30,10 @@
 
 (local mason-lspconfig (require :mason-lspconfig))
 (mason-lspconfig.setup
-  {:handlers [lsp-zero.default_setup]
+  {:handlers {1 lsp-zero.default_setup :lua_ls (fn []
+                                                 (let [lua_opts (lsp-zero.nvim_lua_ls)
+                                                       lua_ls (require :lspconfig)]
+                                                   (lua_ls.setup lua_opts)))}
    :ensure_installed
     ["tsserver" ; TypeScript and JavaScript
      "rust_analyzer" ; Rust
