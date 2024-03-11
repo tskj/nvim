@@ -62,10 +62,14 @@
       ;; Setup an autocommand to quit Neovim after make completes
       (vim.api.nvim_create_autocmd "TermClose"
         {:pattern "term://*make"
-         :callback (fn [] (vim.cmd "qa"))}))))
+         :callback (fn [] (vim.cmd "qa!"))}))))
 
 
 ; these are modifications of existing behavior
+
+
+
+
 (vim.keymap.set :n "<C-u>" "<C-u>M" {:noremap true :silent true})
 (vim.keymap.set :n "<C-d>" "<C-d>M" {:noremap true :silent true})
 (vim.keymap.set :v "P" "\"_dP" {:noremap true :silent true}) ;; don't overwrite register when pasting

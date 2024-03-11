@@ -27,3 +27,5 @@
 - terminal should probably start in insert mode
 
 - scrolling in scroll-off-pager with the mouse completely breaks it
+  also just going up and down fucks the cursor by dragging it to the right
+  fix by sending for instance `10k` to the editor instead of setting the cursor

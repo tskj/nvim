@@ -13,8 +13,8 @@
 (fn scrolly []
   (let [win-height (vim.api.nvim_win_get_height 0)
         cursor-line (vim.fn.winline)
-
-        cap (fn [y] (math.max y 1))]
+        line-count (vim.api.nvim_buf_line_count 0)
+        [distance-to-top _] (vim.api.nvim_win_get_cursor 0)]
 
 
     (var padding-top padding-top)
@@ -26,30 +26,22 @@
 
 
     (when (<= cursor-line padding-top)
-      (let [[current_y current_x] (vim.api.nvim_win_get_cursor 0)
-             line-count (vim.api.nvim_buf_line_count 0)
-
-             new-line (+ current_y padding-bottom)
-             number-of-new-lines (- new-line line-count)]
+      (let [n padding-bottom]
 
         ;; insert synthetic lines
-        (when (> number-of-new-lines 0)
-          (vim.api.nvim_buf_set_lines 0 line-count new-line false (empty-strings number-of-new-lines)))
+        (vim.api.nvim_buf_set_lines 0 line-count (+ line-count n) false (empty-strings n))
 
-        (vim.api.nvim_win_set_cursor 0 [new-line 0])
-        (vim.api.nvim_command "normal! zb")
-        (vim.api.nvim_win_set_cursor 0 [current_y current_x])
+        (print (.. "normal! " n "j" "zb" n "k"))
+        (vim.api.nvim_command (.. "normal! " n "j" "zb" n "k"))
 
         ;; remove synthetic lines
-        (when (> number-of-new-lines 0)
-          (vim.api.nvim_buf_set_lines 0 line-count new-line false []))))
+        (vim.api.nvim_buf_set_lines 0 line-count (+ line-count n) false [])))
+
 
     (when (>= cursor-line (- win-height padding-bottom -1))
-      (let [[current_y current_x] (vim.api.nvim_win_get_cursor 0)]
+      (let [n (math.min padding-top distance-to-top)]
 
-        (vim.api.nvim_win_set_cursor 0 [(cap (- current_y padding-top)) 0])
-        (vim.api.nvim_command "normal! zt")
-        (vim.api.nvim_win_set_cursor 0 [current_y current_x])))))
+        (vim.api.nvim_command (.. "normal! " n "k" "zt" n "j"))))))
 
 
 (fn run-if-regular-buffer [f]
