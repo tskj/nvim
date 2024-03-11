@@ -28,12 +28,18 @@
 (local mason (require :mason))
 (mason.setup)
 
+(local neodev (require :neodev))
+(neodev.setup)
+
 (local mason-lspconfig (require :mason-lspconfig))
 (mason-lspconfig.setup
-  {:handlers {1 lsp-zero.default_setup :lua_ls (fn []
-                                                 (let [lua_opts (lsp-zero.nvim_lua_ls)
-                                                       lua_ls (require :lspconfig)]
-                                                   (lua_ls.setup lua_opts)))}
+  {:handlers {1 lsp-zero.default_setup :fennel_language_server (fn []
+                                                                  (let [lspconfig (require "lspconfig")]
+                                                                    (lspconfig.fennel_language_server.setup
+                                                                      {:settings
+                                                                       {:fennel
+                                                                         {:workspace {:library (vim.api.nvim_list_runtime_paths)}
+                                                                          :diagnostics {:globals ["vim"]}}}})))}
    :ensure_installed
     ["tsserver" ; TypeScript and JavaScript
      "rust_analyzer" ; Rust

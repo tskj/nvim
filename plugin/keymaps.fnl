@@ -1,6 +1,7 @@
 ;; get the path to the Neovim configuration directory
 (local nvim-dir (vim.fn.stdpath "config"))
 
+
 ;; use :Ex for now, switch to other file explorer in the future
 (fn open-in-explorer [dir]
   (.. ":Ex " dir :<cr>))
