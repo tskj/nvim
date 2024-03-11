@@ -52,4 +52,10 @@
         (vim.api.nvim_win_set_cursor 0 [current_y current_x])))))
 
 
-(vim.api.nvim_create_autocmd "CursorMoved" {:pattern "*" :callback scrolly})
+(fn run-if-regular-buffer [f]
+  (fn []
+    (when (and (= vim.bo.buftype "") (~= vim.bo.filetype "netrw"))
+      ;; probably modifiable and regular buffer
+      (f))))
+
+(vim.api.nvim_create_autocmd "CursorMoved" {:pattern "*" :callback (run-if-regular-buffer scrolly)})
