@@ -12,6 +12,9 @@
 
 - fzf-lua vs telescope? hmm
 
+- code_actions need to work with something other than F4 (like ctlr+.)
+  fine if it's fzf-lua that does it or w/e
+
 - need to be able to open terminal from :Explorer and have it land in correct directory
 
 - would be nice if the current file was selected if you go SPC e f to open :Explorer
