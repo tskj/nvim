@@ -1,7 +1,7 @@
 (local lsp-zero (require :lsp-zero))
 (lsp-zero.on_attach
   (fn [client bufnr]
-    (lsp-zero.default_keymaps {:buffer bufnr})
+    (lsp-zero.default_keymaps {:buffer bufnr})))
 
     ;; check out the lsp-zero docs for more information, specifically under
     ;; LSP configuration
@@ -9,7 +9,14 @@
     ;; are more than one, they'll all format in a random order
     ;; apparently you're supposed to make vim.lsp.buf.format()
     ;; use prettier or w/e if you want to use that instead
-    (lsp-zero.buffer_autoformat)))
+    ; (lsp-zero.buffer_autoformat)))
+
+; mostly to stop tsserver from formatting typescript files randomly
+(lsp-zero.format_on_save
+  {:servers
+     {:rust_analyzer ["rust"]
+      :biome ["typescript" "javascript"]
+      :volar ["vue"]}})
 
 ; set some icons instead of letters in the gutter
 (lsp-zero.set_sign_icons
