@@ -18,3 +18,10 @@
 - need to be able to open terminal from :Explorer and have it land in correct directory
 
 - would be nice if the current file was selected if you go SPC e f to open :Explorer
+
+- SPC e p should take you to "project", whatever that is--need to figure out the project
+  thing for sessions anyway
+
+- SPC e h for home (~/) and SPC e c for code (~/code)
+
+- want everything to be installed through scoop somehow, including git or whatever
