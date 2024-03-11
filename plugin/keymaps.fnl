@@ -63,3 +63,6 @@
       (vim.api.nvim_create_autocmd "TermClose"
         {:pattern "term://*make"
          :callback (fn [] (vim.cmd "qa"))}))))
+
+
+; these are modifications of existing behavior
