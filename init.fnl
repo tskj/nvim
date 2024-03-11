@@ -51,6 +51,9 @@
                "hrsh7th/cmp-nvim-lua"
                "L3MON4D3/LuaSnip"]})
 
+      ; lua neovim development?
+      (use "folke/neodev.nvim")
+
       ;; fennel
       (use "Olical/conjure")
       (use "gpanders/nvim-parinfer")
