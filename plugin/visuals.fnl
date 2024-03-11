@@ -26,3 +26,6 @@
 (set vim.opt.signcolumn "auto")
 
 (set vim.opt.fileformats ["unix" "dos"])
+
+; nowrap for long lines
+(set vim.wo.wrap false)

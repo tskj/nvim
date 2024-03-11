@@ -11,6 +11,7 @@
 (vim.keymap.set :t "<Esc>" "<C-\\><C-n>" {:noremap true})
 (vim.keymap.set :t "<C-Space>" "<Esc>" {:noremap true})
 
+
 ;; these are the regular bindings
 (vim.keymap.set :n "<C-Enter>" (fn [] (vim.lsp.buf.code_action)) {:silent true}) ;; adding both for convenience
 (vim.keymap.set :n "<M-Enter>" (fn [] (vim.lsp.buf.code_action)) {:silent true})
