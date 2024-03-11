@@ -66,3 +66,5 @@
 
 
 ; these are modifications of existing behavior
+(vim.keymap.set :n "<C-u>" "<C-u>M" {:noremap true :silent true})
+(vim.keymap.set :n "<C-d>" "<C-d>M" {:noremap true :silent true})

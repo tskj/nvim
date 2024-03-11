@@ -1,4 +1,4 @@
-(local top-limit 10)
+(local top-limit 14)
 (local bot-limit top-limit)
 
 (set vim.o.scrolloff (- top-limit 1))
