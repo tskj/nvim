@@ -25,8 +25,46 @@
 (mason-lspconfig.setup
   {:handlers [lsp-zero.default_setup]
    :ensure_installed
-    ["tsserver"
-     "rust_analyzer"]})
+    ["tsserver" ; TypeScript and JavaScript
+     "rust_analyzer" ; Rust
+     "bashls" ; Bash
+     "clangd" ; C
+     "omnisharp" ; C# (alternative is `csharp_ls`, written in F#)
+     "clojure_lsp" ; Clojure
+     "dockerls" ; Docker (there is also `docker_compose_language_service` as a supplement)
+     "eslint"
+     "elmls" ; Elm
+     "fsautocomplete" ; F#
+     "fennel_language_server" ; Fennel
+     "gopls" ; Go
+     "graphql"
+     "html"
+     "htmx"
+     ; "hls" ; Haskell, failed to install for some reason
+     "biome" ; Linter and Formatter for JavaScript, TypeSript, JSON, CSS, Vue (only the <script> part)
+     "lua_ls" ; Lua
+     "autotools_ls" ; Make
+     "marksman" ; Markdown
+     "glsl_analyzer" ; GLSL (OpenGL)
+     "powershell_es" ; PowerShell
+     "jedi_language_server" ; Python lsp
+     "ruff_lsp" ; Python linter and formatter, no type checking (written in Rust)
+     "sqlls" ; SQL, written in TypeScript (alternatively tried `sqls` written in Go, didn't work)
+     "volar" ; Vue
+     "wgsl_analyzer" ; WebGPU Shading Language
+     "yamlls" ; YAML
+     "zls"]}) ; Zig
+
+; ;; some that didn't quite make the cut
+; (comment
+;   arduino_language_server
+;   azure_pipelines_ls
+;   elixirls
+;   julials
+;   jqls
+;   kotlin_language_server
+;   rnix ; or nil_ls, for Nix
+;   ocamllsp)
 
 (local cmp (require :cmp))
 (cmp.setup

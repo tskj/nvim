@@ -24,3 +24,5 @@
   see this PR: https://github.com/EdenEast/nightfox.nvim/pull/174
 
 - opening terminal from file explorer should land you in the cwd of the file explorer
+
+- fzf-lua vs telescope? hmm

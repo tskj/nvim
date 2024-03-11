@@ -10,6 +10,9 @@
 (vim.keymap.set :t "<Esc>" "<C-\\><C-n>" {:noremap true})
 (vim.keymap.set :t "<C-Space>" "<Esc>" {:noremap true})
 
+;; these are the regular bindings
+(vim.keymap.set :n "<C-.>" (fn [] (vim.lsp.buf.code_action)) {:noremap true})
+
 
 ;; these are all my spacemacs-like keybindings
 (let [map-set-leader (fn [lhs rhs] (vim.keymap.set :n (.. "<leader>" lhs) rhs {:noremap true}))]
