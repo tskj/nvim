@@ -1,28 +1,17 @@
 - write a readme that explains how it works and what to do run stuff
 
-- add a leader shortcut (SPC q r) to reload neovim (preferrably with all panes and such open)
-
-- find out how to get back my buffer if I accidentally open :Ex
-
 - find out how to ignore <F15>
 
 - figure out which terminal to use, and then how to open them
-
-- add a leader shortcut to run :PackerInstall
-  also I guess, add a shortcut to run make and then :PackerInstall, and then maybe reload?
-  or maybe just separate commands?
 
 - find out if it's possibly to lock packer plugin versions
   also find out how packer works I guess?
   packer is deprecated, I guess find an alternative :sob:
 
-- rename (SPC s e)
-
-- using the nix trick of changing the upstream code, I'd like to set
-  {:MiniStarterFooter {:style "not-italic!"}}
-  and also maybe MiniStarterSection to a less obtrusive color
-  see this PR: https://github.com/EdenEast/nightfox.nvim/pull/174
-
 - opening terminal from file explorer should land you in the cwd of the file explorer
 
 - fzf-lua vs telescope? hmm
+
+- need to be able to open terminal from :Explorer and have it land in correct directory
+
+- would be nice if the current file was selected if you go SPC e f to open :Explorer

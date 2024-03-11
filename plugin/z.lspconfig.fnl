@@ -28,9 +28,6 @@
 (local mason (require :mason))
 (mason.setup)
 
-(local neodev (require :neodev))
-(neodev.setup)
-
 (local mason-lspconfig (require :mason-lspconfig))
 (mason-lspconfig.setup
   {:handlers {1 lsp-zero.default_setup :fennel_language_server (fn []
