@@ -1,6 +1,6 @@
 ;; incase you want different paddings
-(local padding-top 10)
-(local padding-bottom 10)
+(local padding-top 15)
+(local padding-bottom 15)
 
 
 (fn empty-strings [n]
@@ -15,6 +15,15 @@
         cursor-line (vim.fn.winline)
 
         cap (fn [y] (math.max y 1))]
+
+
+    (var padding-top padding-top)
+    (var padding-bottom padding-bottom)
+
+    (when (> (+ padding-top padding-bottom 1) win-height)
+      (set padding-top (math.floor (/ win-height 2)))
+      (set padding-bottom (- win-height padding-top -1)))
+
 
     (when (<= cursor-line padding-top)
       (let [[current_y current_x] (vim.api.nvim_win_get_cursor 0)
