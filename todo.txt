@@ -11,9 +11,7 @@
 - opening terminal from file explorer should land you in the cwd of the file explorer
 
 - fzf-lua vs telescope? hmm
-
-- code_actions need to work with something other than F4 (like ctlr+.)
-  fine if it's fzf-lua that does it or w/e
+  needs to be responsible for code_actions as well (ctrl+enter)
 
 - need to be able to open terminal from :Explorer and have it land in correct directory
 
@@ -25,3 +23,7 @@
 - SPC e h for home (~/) and SPC e c for code (~/code)
 
 - want everything to be installed through scoop somehow, including git or whatever
+
+- terminal should probably start in insert mode
+
+- scrolling in scroll-off-pager with the mouse completely breaks it
