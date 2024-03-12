@@ -73,14 +73,21 @@
      (let [win-height (vim.api.nvim_win_get_height 0)
            cursor-line (vim.fn.winline)]
 
+      (var padding-top padding-top)
+      (var padding-bottom padding-bottom)
 
-       (when (<= cursor-line padding-top)
+      (when (> (+ padding-top padding-bottom 1) win-height)
+        (set padding-top (math.floor (/ win-height 2)))
+        (set padding-bottom (- win-height padding-top 1)))
+
+
+      (when (<= cursor-line padding-top)
          (let [n (- padding-top cursor-line -1)]
            (vim.api.nvim_command (.. "normal! " n "j"))
            (set just-scrolled-cursor-to (vim.api.nvim_win_get_cursor 0))))
 
 
-       (when (>= cursor-line (- win-height padding-top -1))
-         (let [n (- padding-bottom (- win-height cursor-line))]
-           (vim.api.nvim_command (.. "normal! " n "k"))
-           (set just-scrolled-cursor-to (vim.api.nvim_win_get_cursor 0))))))})
+      (when (>= cursor-line (- win-height padding-bottom -1))
+           (let [n (- padding-bottom (- win-height cursor-line))]
+             (vim.api.nvim_command (.. "normal! " n "k"))
+             (set just-scrolled-cursor-to (vim.api.nvim_win_get_cursor 0))))))})
