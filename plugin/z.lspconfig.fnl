@@ -25,6 +25,9 @@
    :hint "⚑"
    :info "»"})
 
+(local neodev (require :neodev))
+(neodev.setup)
+
 (local mason (require :mason))
 (mason.setup)
 

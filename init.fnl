@@ -37,6 +37,7 @@
       (use "ctrlpvim/ctrlp.vim")
       (use "echasnovski/mini.nvim")
       (use "nvim-tree/nvim-web-devicons") ; mini.statusline wants this
+      (use "folke/neodev.nvim") ; types for built in nvim apis in lua
 
       (use {1 "VonHeikemen/lsp-zero.nvim"
             :branch "v3.x"
