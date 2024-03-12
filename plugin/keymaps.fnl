@@ -69,12 +69,39 @@
 (vim.keymap.set :v "P" "\"_dP" {:noremap true :silent true}) ;; don't overwrite register when pasting
 (vim.keymap.set :v "D" "\"_d"  {:noremap true :silent true}) ;; don't overwrite register when pasting
 
-; clipboard integration
+
+(fn command-with-unchanged-unnamed-register [cmd]
+  (fn []
+    (let [old-unnamed (vim.fn.getreg "\"")]
+      (vim.api.nvim_command (.. "normal! " cmd))
+      (vim.fn.setreg "\"" old-unnamed))))
+
+
+; clipboard integrations
 (vim.keymap.set :n "<leader>cy" "\"+y" {:noremap true :silent true})
 (vim.keymap.set :n "<leader>cp" "\"+p" {:noremap true :silent true})
+(vim.keymap.set :n "<leader>cd" "\"+d" {:noremap true :silent true})
+(vim.keymap.set :n "<leader>cY" "\"+Y" {:noremap true :silent true})
+(vim.keymap.set :n "<leader>cP" "\"+P" {:noremap true :silent true})
+(vim.keymap.set :n "<leader>cD" "\"+D" {:noremap true :silent true})
+
 (vim.keymap.set :v "<leader>cy" "\"+y" {:noremap true :silent true})
 (vim.keymap.set :v "<leader>cp" "\"+p" {:noremap true :silent true})
-(vim.keymap.set :v "<leader>cP" "\"_d\"+P"  {:noremap true :silent true}) ;; don't overwrite register when pasting from clipboard
+(vim.keymap.set :v "<leader>cd" "\"+d" {:noremap true :silent true})
+
+;; yank to clipboard without changing unnamed register:
+(vim.keymap.set :v "<leader>cY"
+                (command-with-unchanged-unnamed-register "\"+y")
+                {:noremap true :silent true})
+
+;; yank to clipboard without changing unnamed register:
+(vim.keymap.set :v "<leader>cP" "\"_d\"+P"  {:noremap true :silent true})
+
+;; yank to clipboard without changing unnamed register:
+(vim.keymap.set :v "<leader>cD"
+                (command-with-unchanged-unnamed-register "\"+d")
+                {:noremap true :silent true})
+
 
 ; quickfix list
 (vim.keymap.set :n "<C-k>" "<cmd>cnext<CR>zz" {:noremap true :silent true})
