@@ -65,7 +65,19 @@
          :callback (fn [] (vim.cmd "qa!"))}))))
 
 
-; these are modifications of existing behavior
-; (vim.keymap.set :n "<C-u>" "<C-u>M" {:noremap true :silent true})
-; (vim.keymap.set :n "<C-d>" "<C-d>M" {:noremap true :silent true})
+; these are modifications of existing behavior from primeagen
 (vim.keymap.set :v "P" "\"_dP" {:noremap true :silent true}) ;; don't overwrite register when pasting
+(vim.keymap.set :v "D" "\"_d"  {:noremap true :silent true}) ;; don't overwrite register when pasting
+
+; clipboard integration
+(vim.keymap.set :n "<leader>cy" "\"+y" {:noremap true :silent true})
+(vim.keymap.set :n "<leader>cp" "\"+p" {:noremap true :silent true})
+(vim.keymap.set :v "<leader>cy" "\"+y" {:noremap true :silent true})
+(vim.keymap.set :v "<leader>cp" "\"+p" {:noremap true :silent true})
+(vim.keymap.set :v "<leader>cP" "\"_d\"+P"  {:noremap true :silent true}) ;; don't overwrite register when pasting from clipboard
+
+; quickfix list
+(vim.keymap.set :n "<C-k>" "<cmd>cnext<CR>zz" {:noremap true :silent true})
+(vim.keymap.set :n "<C-j>" "<cmd>cprev<CR>zz" {:noremap true :silent true})
+(vim.keymap.set :n "<C-n>" "<cmd>lnext<CR>zz" {:noremap true :silent true})
+(vim.keymap.set :n "<C-p>" "<cmd>lprev<CR>zz" {:noremap true :silent true})
