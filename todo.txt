@@ -25,5 +25,3 @@
 - want everything to be installed through scoop somehow, including git or whatever
 
 - terminal should probably start in insert mode
-
-- scrolling in scroll-off-pager with the mouse completely breaks it

@@ -1,6 +1,6 @@
 ;; incase you want different paddings
-(local _padding-top 15)
-(local _padding-bottom 15)
+(local padding-top 15)
+(local padding-bottom 15)
 
 
 (fn empty-strings [n]
@@ -9,8 +9,15 @@
     (table.insert result ""))
   result)
 
-
+; let's us know whether the triggered cursored moved event
+; was caused by us moving it out of the way of the scrolling
 (var just-scrolled-cursor-to nil)
+(fn equal-coords [ab cd]
+  (let [[y0 x0] ab
+        [y1 x1] cd]
+    (and
+      (= y0 y1)
+      (= x0 x1))))
 
 
 (fn scrolly []
@@ -19,13 +26,11 @@
         line-count (vim.api.nvim_buf_line_count 0)
         [distance-to-top x] (vim.api.nvim_win_get_cursor 0)]
 
-    (print "executing cursor moved event..., curcurs state is" just-scrolled-cursor-to " and actual cursor is" [distance-to-top x])
-
-    (when (or (not just-scrolled-cursor-to) (not (and (= distance-to-top (. just-scrolled-cursor-to 1)) (= x (. just-scrolled-cursor-to 2)))))
+    (when (or (not just-scrolled-cursor-to) (not (equal-coords [distance-to-top x] just-scrolled-cursor-to)))
       (set just-scrolled-cursor-to nil)
 
-      (var padding-top _padding-top)
-      (var padding-bottom _padding-bottom)
+      (var padding-top padding-top)
+      (var padding-bottom padding-bottom)
 
       (when (> (+ padding-top padding-bottom 1) win-height)
         (set padding-top (math.floor (/ win-height 2)))
@@ -34,12 +39,10 @@
 
       (when (<= cursor-line padding-top)
         (let [n padding-bottom]
-          (print "aight, we're at the top")
 
           ;; insert synthetic lines
           (vim.api.nvim_buf_set_lines 0 line-count (+ line-count n) false (empty-strings n))
 
-          (print (.. "normal! " n "j" "zb" n "k"))
           (vim.api.nvim_command (.. "normal! " n "j" "zb" n "k"))
 
           ;; remove synthetic lines
@@ -48,7 +51,6 @@
 
       (when (>= cursor-line (- win-height padding-bottom -1))
         (let [n (math.min padding-top distance-to-top)]
-          (print "aight, we're at the bottom")
 
           (vim.api.nvim_command (.. "normal! " n "k" "zt" n "j")))))))
 
@@ -59,30 +61,26 @@
       ;; probably modifiable and regular buffer
       (f))))
 
+
+; potentially move the screen when the cursor moves
 (vim.api.nvim_create_autocmd "CursorMoved" {:pattern "*" :callback (run-if-regular-buffer scrolly)})
 
 
+; move cursor out of the way when scrolling with mouse wheel
 (vim.api.nvim_create_autocmd "WinScrolled"
   {:pattern "*" :callback
    (fn []
      (let [win-height (vim.api.nvim_win_get_height 0)
-           cursor-line (vim.fn.winline)
-           [distance-to-top _x] (vim.api.nvim_win_get_cursor 0)]
-       (print "executing scroll event...")
+           cursor-line (vim.fn.winline)]
 
 
-       (when (<= cursor-line _padding-top)
-         (let [n (- _padding-top cursor-line -1)]
-           (print "nedover" n "")
+       (when (<= cursor-line padding-top)
+         (let [n (- padding-top cursor-line -1)]
            (vim.api.nvim_command (.. "normal! " n "j"))
-           ; (vim.api.nvim_win_set_cursor 0 [(+ distance-to-top n 3) x])))
-           (set just-scrolled-cursor-to (vim.api.nvim_win_get_cursor 0))
-           (print "cursor has been scrolled to" just-scrolled-cursor-to)))
+           (set just-scrolled-cursor-to (vim.api.nvim_win_get_cursor 0))))
 
 
-       (when (>= cursor-line (- win-height _padding-top -1))
-         (let [n (- _padding-bottom (- win-height cursor-line))]
-           (print "oppover" n)
+       (when (>= cursor-line (- win-height padding-top -1))
+         (let [n (- padding-bottom (- win-height cursor-line))]
            (vim.api.nvim_command (.. "normal! " n "k"))
-           (set just-scrolled-cursor-to (vim.api.nvim_win_get_cursor 0))
-           (print "cursor has been scrolled to" just-scrolled-cursor-to)))))})
+           (set just-scrolled-cursor-to (vim.api.nvim_win_get_cursor 0))))))})
