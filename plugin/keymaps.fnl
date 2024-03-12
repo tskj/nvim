@@ -41,6 +41,7 @@
 
   ;; buffer home, go to start screen! (mini.starter)
   (map-set-leader "bh" (fn [] (MiniStarter.open)))
+  (map-set-leader "bD" ":bd!<CR>")
 
   ;; layout stuff, which are neovim _tabs_
   (map-set-leader "lt"

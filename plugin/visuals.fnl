@@ -29,3 +29,16 @@
 
 ; nowrap for long lines
 (set vim.wo.wrap false)
+
+; e.g. click and drag to resize split with mouse
+(set vim.opt.mouse "a")
+
+; we show the mode in status line anyway
+(set vim.opt.showmode false)
+
+; set to true if you want line numbers
+(set vim.opt.number false)
+
+; highlight searches, but clears on <Esc>
+(set vim.opt.hlsearch true)
+(vim.keymap.set :n "<Esc>" "<cmd>nohlsearch<CR>")

@@ -25,3 +25,5 @@
 - want everything to be installed through scoop somehow, including git or whatever
 
 - terminal should probably start in insert mode
+
+- goto next and prev diagnostics with vim.diagnostic.goto_prev ([d and d] in kickstart)
