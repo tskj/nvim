@@ -105,7 +105,7 @@
 
 
 ; quickfix list
-(vim.keymap.set :n "<C-k>" "<cmd>cnext<CR>zz" {:noremap true :silent true})
-(vim.keymap.set :n "<C-j>" "<cmd>cprev<CR>zz" {:noremap true :silent true})
-(vim.keymap.set :n "<C-n>" "<cmd>lnext<CR>zz" {:noremap true :silent true})
-(vim.keymap.set :n "<C-p>" "<cmd>lprev<CR>zz" {:noremap true :silent true})
+(vim.keymap.set :n "<C-k>" "<cmd>cprev<CR>" {:noremap true :silent true})
+(vim.keymap.set :n "<C-j>" "<cmd>cnext<CR>" {:noremap true :silent true})
+(vim.keymap.set :n "<C-p>" "<cmd>lprev<CR>" {:noremap true :silent true})
+(vim.keymap.set :n "<C-n>" "<cmd>lnext<CR>" {:noremap true :silent true})
