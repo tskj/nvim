@@ -22,7 +22,12 @@
 ;; these are all my spacemacs-like keybindings
 (let [map-set-leader (fn [lhs rhs] (vim.keymap.set :n (.. "<leader>" lhs) rhs {:noremap true}))]
 
+  ;; closes all other windows in current layout
+  ;; if you want to temporarily maximize the window,
+  ;; checkout <leader> lo below
   (map-set-leader "wo" ":only<CR>")
+
+  ;; new scratch buffer
   (map-set-leader "bs" ":enew<CR>")
 
   ;; map SPC f e d to open the file explorer at the neovim config directory
@@ -44,15 +49,21 @@
   (map-set-leader "bD" ":bd!<CR>")
 
   ;; layout stuff, which are neovim _tabs_
-  (map-set-leader "lt"
+  (map-set-leader "lh" ;; layout home
     (fn []
-      (vim.cmd "tabnew")
+      (vim.cmd.tabnew)
       (MiniStarter.open)))
   (map-set-leader "ln" vim.cmd.tabnext)
   (map-set-leader "lp" vim.cmd.tabprev)
   (map-set-leader "lc" vim.cmd.tabclose)
+  (map-set-leader "lo" (fn []
+                         (let [buffer-name (vim.api.nvim_buf_get_name (vim.api.nvim_get_current_buf))
+                               cursor-position (vim.api.nvim_win_get_cursor 0)]
+                           (vim.cmd.tabedit buffer-name)
+                           (vim.api.nvim_win_set_cursor 0 cursor-position))))
   (map-set-leader "l<" (fn [] (vim.cmd.tabmove "-1")))
   (map-set-leader "l>" (fn [] (vim.cmd.tabmove "+1")))
+
 
   ;; compile all fennel config using make and then quit
   ;; (sadly there's no way to restart neovim automatically)
