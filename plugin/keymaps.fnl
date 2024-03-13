@@ -25,10 +25,10 @@
   ;; closes all other windows in current layout
   ;; if you want to temporarily maximize the window,
   ;; checkout <leader> lo below
-  (map-set-leader "wo" ":only<CR>")
+  (map-set-leader "wo" ":only<cr>")
 
   ;; new scratch buffer
-  (map-set-leader "bs" ":enew<CR>")
+  (map-set-leader "bs" ":enew<cr>")
 
   ;; map SPC f e d to open the file explorer at the neovim config directory
   (map-set-leader "fed" (open-in-explorer nvim-dir))
@@ -46,7 +46,7 @@
 
   ;; buffer home, go to start screen! (mini.starter)
   (map-set-leader "bh" (fn [] (MiniStarter.open)))
-  (map-set-leader "bD" ":bd!<CR>")
+  (map-set-leader "bD" ":bd!<cr>")
 
   ;; layout stuff, which are neovim _tabs_
   (map-set-leader "lh" ;; layout home
@@ -115,8 +115,8 @@
                 {:noremap true :silent true})
 
 
-; quickfix list
-(vim.keymap.set :n "<C-k>" "<cmd>cprev<CR>" {:noremap true :silent true})
-(vim.keymap.set :n "<C-j>" "<cmd>cnext<CR>" {:noremap true :silent true})
-(vim.keymap.set :n "<C-p>" "<cmd>lprev<CR>" {:noremap true :silent true})
-(vim.keymap.set :n "<C-n>" "<cmd>lnext<CR>" {:noremap true :silent true})
+; quickfix and location list
+(vim.keymap.set :n "[q" ":cprev<cr>" {:noremap true :silent true})
+(vim.keymap.set :n "]q" ":cnext<cr>" {:noremap true :silent true})
+(vim.keymap.set :n "[l" ":lprev<cr>" {:noremap true :silent true})
+(vim.keymap.set :n "]l" ":lnext<cr>" {:noremap true :silent true})
