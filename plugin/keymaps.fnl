@@ -17,6 +17,7 @@
 (vim.keymap.set :n "<M-Enter>" (fn [] (vim.lsp.buf.code_action)) {:silent true})
 (vim.keymap.set :n "<Enter>" "m`o<Esc>k``" {:noremap true})
 (vim.keymap.set :n "<S-Enter>" "i<Enter><Esc>k$" {:noremap true})
+(vim.keymap.set :n "<C-s>" ":w<cr>")
 
 
 ;; these are all my spacemacs-like keybindings

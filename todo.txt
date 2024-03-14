@@ -35,3 +35,5 @@
 - checkout which-key
 
 - checkout neorg, also nvim-orgmode/orgmode
+
+- probably plugin for closing empty buffers that hang around for no reason
