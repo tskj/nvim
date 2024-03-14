@@ -22,6 +22,10 @@
 (vim.keymap.set :n "<S-Enter>" "i<Enter><Esc>k$" {:noremap true})
 (vim.keymap.set :n "<C-s>" ":w<cr>")
 
+; Leap
+(vim.keymap.set [:n :x :o] "<leader>jf" "<Plug>(leap-forward)")
+(vim.keymap.set [:n :x :o] "<leader>jF" "<Plug>(leap-backward)")
+
 
 ;; these are all my spacemacs-like keybindings
 (let [map-set-leader (fn [lhs rhs] (vim.keymap.set :n (.. "<leader>" lhs) rhs {:noremap true}))]

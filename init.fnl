@@ -19,13 +19,15 @@
    "ibhagwan/fzf-lua"
    "simeji/winresizer"
    "ctrlpvim/ctrlp.vim"
-   "nvim-treesitter/nvim-treesitter"
+   "ggandor/leap.nvim"
 
    "echasnovski/mini.nvim"
    "nvim-tree/nvim-web-devicons" ; mini.statusline wants this
 
 
    {1 "VonHeikemen/lsp-zero.nvim"
+    :lazy true
+    :event "VeryLazy"
     :dependencies
       ["williamboman/mason.nvim"
        "williamboman/mason-lspconfig.nvim"
@@ -34,6 +36,9 @@
        "hrsh7th/cmp-nvim-lsp"
        "hrsh7th/cmp-nvim-lua"
        "L3MON4D3/LuaSnip"]}
+   {1 "nvim-treesitter/nvim-treesitter"
+    :lazy true
+    :event "VeryLazy"}
 
    ;; fennel
    "Olical/conjure"

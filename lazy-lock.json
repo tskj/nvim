@@ -7,6 +7,7 @@
   "fennel.vim": { "branch": "master", "commit": "30b9beabad2c4f09b9b284caf5cd5666b6b4dc89" },
   "fzf-lua": { "branch": "main", "commit": "ff21680ddfd2ba434ea7061b9042f7e18966597d" },
   "lazy.nvim": { "branch": "main", "commit": "83493db50a434a4c5c648faf41e2ead80f96e478" },
+  "leap.nvim": { "branch": "main", "commit": "6ab6bc0ba81cfd104d6f5dfac52bd0804a6aad5c" },
   "lsp-zero.nvim": { "branch": "v3.x", "commit": "14c9164413df4be17a5a0ca9e01a376691cbcaef" },
   "mason-lspconfig.nvim": { "branch": "main", "commit": "55716a879568a498fa236593c8119789054a3b8e" },
   "mason.nvim": { "branch": "main", "commit": "3b5068f0fc565f337d67a2d315d935f574848ee7" },
@@ -19,7 +20,6 @@
   "nvim-treesitter": { "branch": "master", "commit": "3ae78f376c2e721ce4feb23e9a5e8bc6062a2657" },
   "nvim-web-devicons": { "branch": "master", "commit": "75df79feb02d5e0ec114e447453775d4d291ea03" },
   "vim-leader-guide": { "branch": "master", "commit": "8dff63fcc29811bb30fccb135f31ad488a9a6170" },
-  "vim-sneak": { "branch": "master", "commit": "c13d0497139b8796ff9c44ddb9bc0dc9770ad2dd" },
   "vim-spacemacs": { "branch": "master", "commit": "a87473fd6c126f3ee85b32b6ee0d396e2093652e" },
   "winresizer": { "branch": "master", "commit": "9bd559a03ccec98a458e60c705547119eb5350f3" }
 }
