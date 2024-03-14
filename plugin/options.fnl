@@ -39,3 +39,6 @@
 ; highlight searches, but clears on <Esc>
 (set vim.opt.hlsearch true)
 (vim.keymap.set :n "<Esc>" "<cmd>nohlsearch<CR>")
+
+(set vim.g.neovide_transparency 0.95)
+(set vim.getneovide_scroll_animation_length 0.1)
