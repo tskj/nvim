@@ -17,7 +17,6 @@
    "jimmay5469/vim-spacemacs"
    "hecal3/vim-leader-guide"
    "ibhagwan/fzf-lua"
-   "justinmk/vim-sneak"
    "simeji/winresizer"
    "ctrlpvim/ctrlp.vim"
    "nvim-treesitter/nvim-treesitter"
@@ -40,5 +39,6 @@
    "Olical/conjure"
    "gpanders/nvim-parinfer"
    "bakpakin/fennel.vim" ; syntax highlighting
-   "nvim-treesitter/nvim-treesitter"])
+   "folke/neodev.nvim"])
+
 
