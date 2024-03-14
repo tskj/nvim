@@ -1,51 +1,44 @@
-; Make sure packer is installed
-(let [f vim.fn
-      install-path (.. (f.stdpath "data") "/site/pack/packer/start/packer.nvim")]
-  (when (> (f.empty (f.glob install-path)) 0)
-    (f.system ["git" "clone" "https://github.com/wbthomason/packer.nvim" install-path])))
+(vim.keymap.set ""  :<space> "" {:noremap true})
+(set vim.g.mapleader " ")
 
-; Plugins
-(let [packer (require :packer)
-      startup packer.startup]
-  (startup
-    (fn []
-      (use "wbthomason/packer.nvim")
+(local lazypath (.. (vim.fn.stdpath "data") "/lazy/lazy.nvim"))
+(if (not (vim.loop.fs_stat lazypath))
+  (vim.fn.system ["git" "clone" "--filter=blob:none"
+                  "https://github.com/folke/lazy.nvim.git"
+                  "--branch=stable" lazypath]))
+(vim.opt.rtp:prepend lazypath)
 
-      ;; color schemes
-      (use "altercation/vim-colors-solarized")
-      (use "mhartington/oceanic-next")
-      (use "rakr/vim-one")
-      (use "morhetz/gruvbox")
-      (use "EdenEast/nightfox.nvim")
+(local lazy (require :lazy))
+(lazy.setup
+  [;; color schemes
+   "EdenEast/nightfox.nvim"
 
-      ;; plugins
-      (use "jimmay5469/vim-spacemacs")
-      (use "hecal3/vim-leader-guide")
-      (use "ibhagwan/fzf-lua")
-      (use "justinmk/vim-sneak")
-      (use "simeji/winresizer")
-      (use "ctrlpvim/ctrlp.vim")
-      (use "echasnovski/mini.nvim")
-      (use "nvim-tree/nvim-web-devicons") ; mini.statusline wants this
-      (use "folke/neodev.nvim") ; types for built in nvim apis in lua
+   ;; plugins
+   "jimmay5469/vim-spacemacs"
+   "hecal3/vim-leader-guide"
+   "ibhagwan/fzf-lua"
+   "justinmk/vim-sneak"
+   "simeji/winresizer"
+   "ctrlpvim/ctrlp.vim"
+   "nvim-treesitter/nvim-treesitter"
 
-      (use {1 "VonHeikemen/lsp-zero.nvim"
-            :branch "v3.x"
-            ;; apparently in lazy you can just install these manually,
-            ;; i.e. flatten these plugins
-            :requires
-              ["williamboman/mason.nvim"
-               "williamboman/mason-lspconfig.nvim"
-               "neovim/nvim-lspconfig"
-               "hrsh7th/nvim-cmp"
-               "hrsh7th/cmp-nvim-lsp"
-               "hrsh7th/cmp-nvim-lua"
-               "L3MON4D3/LuaSnip"]})
+   "echasnovski/mini.nvim"
+   "nvim-tree/nvim-web-devicons" ; mini.statusline wants this
 
-      ;; fennel
-      (use "Olical/conjure")
-      (use "gpanders/nvim-parinfer")
-      (use "bakpakin/fennel.vim") ; syntax highlighting
 
-      (use "nvim-treesitter/nvim-treesitter"))))
+   {1 "VonHeikemen/lsp-zero.nvim"
+    :dependencies
+      ["williamboman/mason.nvim"
+       "williamboman/mason-lspconfig.nvim"
+       "neovim/nvim-lspconfig"
+       "hrsh7th/nvim-cmp"
+       "hrsh7th/cmp-nvim-lsp"
+       "hrsh7th/cmp-nvim-lua"
+       "L3MON4D3/LuaSnip"]}
+
+   ;; fennel
+   "Olical/conjure"
+   "gpanders/nvim-parinfer"
+   "bakpakin/fennel.vim" ; syntax highlighting
+   "nvim-treesitter/nvim-treesitter"])
 
