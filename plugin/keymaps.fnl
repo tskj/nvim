@@ -21,6 +21,9 @@
 (vim.keymap.set :n "<Enter>" "m`o<Esc>k``" {:noremap true})
 (vim.keymap.set :n "<S-Enter>" "i<Enter><Esc>k$" {:noremap true})
 (vim.keymap.set :n "<C-s>" ":w<cr>")
+(vim.keymap.set :n "<C-w>" ":q<cr>")
+(vim.keymap.set :n "[d" vim.diagnostic.goto_prev)
+(vim.keymap.set :n "]d" vim.diagnostic.goto_next)
 
 ; Leap
 (vim.keymap.set [:n :x :o] "<leader>jf" "<Plug>(leap-forward)")
@@ -51,6 +54,7 @@
   (map-set-leader "t" vim.cmd.terminal)
 
   (map-set-leader "wr" vim.cmd.WinResizerStartResize)
+  (map-set-leader "wD" ":q!<cr>")
 
   ;; buffer home, go to start screen! (mini.starter)
   (map-set-leader "bh" (fn [] (MiniStarter.open)))

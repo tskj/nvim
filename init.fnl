@@ -20,10 +20,12 @@
    "simeji/winresizer"
    "ctrlpvim/ctrlp.vim"
    "ggandor/leap.nvim"
-
    "echasnovski/mini.nvim"
    "nvim-tree/nvim-web-devicons" ; mini.statusline wants this
 
+   {1 "glacambre/firenvim"
+     :lazy (not vim.g.started_by_firenvim)
+     :build (fn [] ((. vim.fn "firenvim#install") 0))}
 
    {1 "VonHeikemen/lsp-zero.nvim"
     :lazy true
@@ -36,9 +38,8 @@
        "hrsh7th/cmp-nvim-lsp"
        "hrsh7th/cmp-nvim-lua"
        "L3MON4D3/LuaSnip"]}
-   {1 "nvim-treesitter/nvim-treesitter"
-    :lazy true
-    :event "VeryLazy"}
+
+   "nvim-treesitter/nvim-treesitter"
 
    ;; fennel
    "Olical/conjure"
