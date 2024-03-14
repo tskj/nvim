@@ -1,13 +1,3 @@
-(vim.keymap.set ""  :<space> "" {:noremap true})
-(set vim.g.mapleader " ")
-
-; sets current working directory you open a file or w/e (needed for terminal)
-(set vim.o.autochdir true)
-
-; more convenient with case insensitive search
-(set vim.opt.ignorecase true)
-(set vim.opt.smartcase true)
-
 ; Make sure packer is installed
 (let [f vim.fn
       install-path (.. (f.stdpath "data") "/site/pack/packer/start/packer.nvim")]

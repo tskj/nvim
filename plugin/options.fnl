@@ -3,19 +3,14 @@
    "i-ci-ve:hor20"
    "r-cr:hor20"])
 
-(fn pick-random [vs]
-  (let [index (math.random (length vs))]
-    (. vs index)))
-
-(math.randomseed (os.time))
-
-(local nightfox (require :nightfox))
-(nightfox.setup
-  {:options {:dim_inactive true}})
-(vim.cmd (.. "colorscheme " (pick-random
-                              ["nightfox" "duskfox" "nordfox" "terafox" "carbonfox"])))
-
 (set vim.o.guifont "FiraCode Nerd Font:h14")
+
+; sets current working directory you open a file or w/e (needed for terminal)
+(set vim.o.autochdir true)
+
+; more convenient with case insensitive search
+(set vim.opt.ignorecase true)
+(set vim.opt.smartcase true)
 
 (set vim.opt.tabstop 2)
 (set vim.opt.shiftwidth 2)
