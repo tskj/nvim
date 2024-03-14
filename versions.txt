@@ -1,0 +1,31 @@
+this was obtained from the packer installs, git hashes should be enough to find out version
+in case I should need it
+
+LuaSnip: a7a4b46 docs: Add descriptions for <Plug> mappings
+cmp-nvim-lsp: 5af77f5 Revert unneeded README.md changes
+cmp-nvim-lua: f12408b Merge pull request #11 from ppwwyyxx/patch-1
+conjure: 31a1626 Guard against nil session IDs and add debug logging #492
+ctrlp.vim: 8b4a952 save/restore cmdheight
+fennel.vim: 30b9bea Merge pull request #3 from TravonteD/master
+fzf-lua: fea7e7b fix(ueberzug): stop shell job when loading from cache
+gruvbox: bf2885a Update README.md
+lsp-zero.nvim: 14c9164 feat: add descriptions to default lsp keymaps
+mason-lspconfig.nvim: 55716a8 chore: update generated code (#373)
+mason.nvim: 3b5068f tests: remove old spec (#1634)
+mini.nvim: 70d8a16 fix(deps): update how error is detected in CLI jobs
+neodev.nvim: 84e0290 chore(build): auto-generate vimdoc
+nightfox.nvim: a408e6b documentation: Change spelling of "week" to "weak" (#417)
+nvim-cmp: 04e0ca3 fix: one more item than max_item_count is displayed (#1811)
+nvim-lspconfig: 9933058 docs: update server_configurations.md skip-checks: true
+nvim-parinfer: c0d95d9 Add dune to default list of filetypes
+nvim-treesitter: 68c619f Update parsers: matlab, racket
+nvim-web-devicons: 4adea17 fix: linux and other assorted dark colours (#408)
+oceanic-next: 09833f7 fix(treesitter): only highlight tree sitter if in neovim Closes #118
+packer.nvim: 1d0cf98 Fix: Change display headline text to not indicate that all tasks are plugins (#1190)
+scrollEOF.nvim: 38fd588 Added option to disable in floating windows (#16)
+vim-colors-solarized: 528a59f [vim] solarized.vim menu updates
+vim-leader-guide: 8dff63f Merge branch 'before_open_trigger'
+vim-one: 187f5c8 Merge pull request #58 from ashfinal/master
+vim-sneak: 93395f5 workaround for cmdheight=0 #299
+vim-spacemacs: a87473f Update easymotion binding
+winresizer: 9bd559a Merge pull request #27 from johnmathews/master
