@@ -48,3 +48,7 @@
 - probably plugin for closing empty buffers that hang around for no reason
 
 - firenvim in browser!
+
+- working with htmls tags and such
+
+- context folds at the top

@@ -20,11 +20,13 @@
 
 ; surround parens
 (local surround (require :mini.surround))
-(surround.setup)
+(surround.setup
+  {:mappings {:add "S"}})
 
 ; comment
 (local comment_ (require :mini.comment))
-(comment_.setup)
+(comment_.setup
+  {:options {:ignore_blank_line true}})
 
 ; starter screen and sessions
 (local starter (require :mini.starter))
