@@ -31,8 +31,7 @@
 (vim.keymap.set :n "<C-s>" ":w<cr>")
 (vim.keymap.set :n "<C-w>" ":q<cr>")
 (vim.keymap.set :n "<C-q>" ":q<cr>")
-(vim.keymap.set :n "[d" vim.diagnostic.goto_prev)
-(vim.keymap.set :n "]d" vim.diagnostic.goto_next)
+
 
 ; Leap
 (vim.keymap.set [:n :x :o] "<leader>jf" "<Plug>(leap-forward)")
@@ -114,7 +113,8 @@
                                 {:grep_open_files true :prompt_title "Live Grep in Open Files"}))
                   {:desc "[S]earch [/] in Open Files"})
   (map-set-leader "sn" (fn [] (builtin.find_files {:cwd (vim.fn.stdpath "config")}))
-                  {:desc "[S]earch [N]eovim files"}))
+                  {:desc "[S]earch [N]eovim files"})
+  (map-set-leader "st" ":TodoTelescope<cr>" {:desc "[S]earch [T]odos"}))
 
 
 
@@ -155,9 +155,18 @@
                 (command-with-unchanged-unnamed-register "\"+d")
                 {:noremap true :silent true})
 
+;jump commands
 
-; quickfix and location list
+;; quickfix and location list
 (vim.keymap.set :n "[q" ":cprev<cr>" {:noremap true :silent true})
 (vim.keymap.set :n "]q" ":cnext<cr>" {:noremap true :silent true})
 (vim.keymap.set :n "[l" ":lprev<cr>" {:noremap true :silent true})
 (vim.keymap.set :n "]l" ":lnext<cr>" {:noremap true :silent true})
+
+;; diagnostics
+(vim.keymap.set :n "[d" vim.diagnostic.goto_prev)
+(vim.keymap.set :n "]d" vim.diagnostic.goto_next)
+
+;; todos
+(vim.keymap.set :n "]t" (fn [] ((. (require :todo-comments) :jump_next))))
+(vim.keymap.set :n "[t" (fn [] ((. (require :todo-comments) :jump_prev))))
