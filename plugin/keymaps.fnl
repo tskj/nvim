@@ -12,7 +12,8 @@
 
 ;; remap esc in terminal mode
 (vim.keymap.set :t "<Esc><Esc>" "<C-\\><C-n>" {:noremap true})
-(vim.api.nvim_create_autocmd "TermOpen" {:pattern  "*" :command "startinsert"})
+(vim.api.nvim_create_autocmd "TermOpen" {:pattern  "*" :command "startinsert"}) ;; auto insert mode
+(vim.api.nvim_create_autocmd "BufEnter" {:pattern  "term://*" :command "startinsert"}) ;; auto insert mode
 
 
 ;; these are the regular bindings
@@ -59,7 +60,7 @@
   (map-set-leader "ef" (open-in-explorer ""))
 
   ;; open terminal (in spacemacs this is SPC a t for "application: terminal")
-  (map-set-leader "t" vim.cmd.terminal)
+  (map-set-leader "ac" vim.cmd.terminal) ;; c for CMD prompt
 
   (map-set-leader "wr" vim.cmd.WinResizerStartResize)
   (map-set-leader "wD" ":q!<cr>")
