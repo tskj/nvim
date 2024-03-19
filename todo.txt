@@ -28,8 +28,6 @@
 
 - kickstart: highlighting stuff you're doing--TextYankPost autocmd!
 
-- goto next and prev diagnostics with vim.diagnostic.goto_prev/goto_next ([d and d] in kickstart)
-
 - folke/todo-comments.nvim
 
 - checkout which-key
@@ -47,8 +45,11 @@
 
 - probably plugin for closing empty buffers that hang around for no reason
 
-- firenvim in browser!
-
 - working with htmls tags and such
 
 - context folds at the top
+
+- see if some form of sexp keybindings like slurp can work together with parinfer
+
+- maybe I can make my own multicursor / multiselection thing? they all seem too complicated
+  actually maybe this one is good: mg979/vim-visual-multi even though it's vimscript

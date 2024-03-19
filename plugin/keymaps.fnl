@@ -11,16 +11,26 @@
 
 
 ;; remap esc in terminal mode
-(vim.keymap.set :t "<Esc>" "<C-\\><C-n>" {:noremap true})
-(vim.keymap.set :t "<C-Space>" "<Esc>" {:noremap true})
+(vim.keymap.set :t "<Esc><Esc>" "<C-\\><C-n>" {:noremap true})
+(vim.api.nvim_create_autocmd "TermOpen" {:pattern  "*" :command "startinsert"})
+; (vim.keymap.set :t "<C-Space>" "<Esc>" {:noremap true})
 
 
 ;; these are the regular bindings
-(vim.keymap.set :n "<C-Enter>" (fn [] (vim.lsp.buf.code_action)) {:noremap true})
+(vim.keymap.set :n "<C-Enter>" vim.lsp.buf.code_action {:noremap true})
 (vim.keymap.set :n "<Enter>" "m`o<Esc>k``" {:noremap true})
 (vim.keymap.set :n "<S-Enter>" "i<Enter><Esc>k$" {:noremap true})
+(vim.keymap.set :n "<C-h>" "<cmd>wincmd h<cr>" {:silent true})
+(vim.keymap.set :n "<C-j>" "<cmd>wincmd j<cr>" {:silent true})
+(vim.keymap.set :n "<C-k>" "<cmd>wincmd k<cr>" {:silent true})
+(vim.keymap.set :n "<C-l>" "<cmd>wincmd l<cr>" {:silent true})
+(vim.keymap.set :t "<C-h>" "<cmd>wincmd h<cr>" {:silent true})
+(vim.keymap.set :t "<C-j>" "<cmd>wincmd j<cr>" {:silent true})
+(vim.keymap.set :t "<C-k>" "<cmd>wincmd k<cr>" {:silent true})
+(vim.keymap.set :t "<C-l>" "<cmd>wincmd l<cr>" {:silent true})
 (vim.keymap.set :n "<C-s>" ":w<cr>")
 (vim.keymap.set :n "<C-w>" ":q<cr>")
+(vim.keymap.set :n "<C-q>" ":q<cr>")
 (vim.keymap.set :n "[d" vim.diagnostic.goto_prev)
 (vim.keymap.set :n "]d" vim.diagnostic.goto_next)
 
