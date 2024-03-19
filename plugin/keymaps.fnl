@@ -13,7 +13,6 @@
 ;; remap esc in terminal mode
 (vim.keymap.set :t "<Esc><Esc>" "<C-\\><C-n>" {:noremap true})
 (vim.api.nvim_create_autocmd "TermOpen" {:pattern  "*" :command "startinsert"})
-; (vim.keymap.set :t "<C-Space>" "<Esc>" {:noremap true})
 
 
 ;; these are the regular bindings
