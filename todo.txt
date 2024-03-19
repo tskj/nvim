@@ -50,6 +50,3 @@
 - context folds at the top
 
 - see if some form of sexp keybindings like slurp can work together with parinfer
-
-- maybe I can make my own multicursor / multiselection thing? they all seem too complicated
-  actually maybe this one is good: mg979/vim-visual-multi even though it's vimscript

@@ -22,10 +22,20 @@
    "ggandor/leap.nvim"
    "echasnovski/mini.nvim"
    "nvim-tree/nvim-web-devicons" ; mini.statusline wants this
+   "mg979/vim-visual-multi"
 
    {1 "glacambre/firenvim"
      :lazy (not vim.g.started_by_firenvim)
      :build (fn [] ((. vim.fn "firenvim#install") 0))}
+
+   {1 "nvim-telescope/telescope.nvim"
+    :event "VimEnter"
+    :branch "0.1.x"
+    :dependencies ["nvim-lua/plenary.nvim"
+                   {1 "nvim-telescope/telescope-fzf-native.nvim"
+                    :build "make"
+                    :cond (fn [] (= 1 (vim.fn.executable "make")))}
+                   "nvim-telescope/telescope-ui-select.nvim"]}
 
    {1 "VonHeikemen/lsp-zero.nvim"
     :lazy true

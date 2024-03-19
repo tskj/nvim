@@ -95,7 +95,27 @@
       ;; Setup an autocommand to quit Neovim after make completes
       (vim.api.nvim_create_autocmd "TermClose"
         {:pattern "term://*make"
-         :callback (fn [] (vim.cmd "qa!"))}))))
+         :callback (fn [] (vim.cmd "qa!"))})))
+
+  ;; Telescope!
+  (local builtin (require :telescope.builtin))
+  (map-set-leader "sh" builtin.help_tags { :desc "[S]earch [H]elp"})
+  (map-set-leader "sk" builtin.keymaps { :desc "[S]earch [K]eymaps"})
+  (map-set-leader "sf" builtin.find_files { :desc "[S]earch [F]iles"})
+  (map-set-leader "ss" builtin.builtin { :desc "[S]earch [S]elect Telescope"})
+  (map-set-leader "sw" builtin.grep_string { :desc "[S]earch current [W]ord"})
+  (map-set-leader "sg" builtin.live_grep { :desc "[S]earch by [G]rep"})
+  (map-set-leader "sd" builtin.diagnostics { :desc "[S]earch [D]iagnostics"})
+  (map-set-leader "sr" builtin.resume { :desc "[S]earch [R]esume"})
+  (map-set-leader "s." builtin.oldfiles { :desc "[S]earch Recent Files ('.' for repeat)"})
+  (map-set-leader "sb" builtin.buffers { :desc "[S]earch [B]uffers (existing)"}) ;; SPC SPC
+  (map-set-leader "/"  builtin.current_buffer_fuzzy_find { :desc "[/] Fuzzily search in current buffer"})
+  (map-set-leader "s/" (fn [] (builtin.live_grep
+                                {:grep_open_files true :prompt_title "Live Grep in Open Files"}))
+                  {:desc "[S]earch [/] in Open Files"})
+  (map-set-leader "sn" (fn [] (builtin.find_files {:cwd (vim.fn.stdpath "config")}))
+                  {:desc "[S]earch [N]eovim files"}))
+
 
 
 ; these are modifications of existing behavior from primeagen
