@@ -100,10 +100,10 @@
   (local builtin (require :telescope.builtin))
   (map-set-leader "sh" builtin.help_tags { :desc "[S]earch [H]elp"})
   (map-set-leader "sk" builtin.keymaps { :desc "[S]earch [K]eymaps"})
-  (map-set-leader "sf" builtin.find_files { :desc "[S]earch [F]iles"})
+  (map-set-leader "sf" (. (require :telescope-config) :find-files) { :desc "[S]earch [F]iles"})
   (map-set-leader "ss" builtin.builtin { :desc "[S]earch [S]elect Telescope"})
   (map-set-leader "sw" builtin.grep_string { :desc "[S]earch current [W]ord"})
-  (map-set-leader "sg" builtin.live_grep { :desc "[S]earch by [G]rep"})
+  (map-set-leader "sg" (. (require :telescope-config) :live-grep) { :desc "[S]earch by [G]rep"})
   (map-set-leader "sd" builtin.diagnostics { :desc "[S]earch [D]iagnostics"})
   (map-set-leader "sr" builtin.resume { :desc "[S]earch [R]esume"})
   (map-set-leader "s." builtin.oldfiles { :desc "[S]earch Recent Files ('.' for repeat)"})
@@ -117,10 +117,10 @@
   (map-set-leader "st" ":TodoTelescope<cr>" {:desc "[S]earch [T]odos"})
   (map-set-leader "sm" builtin.marks {:desc "[S]earch [M]arks"})
   (map-set-leader "sq" builtin.quickfix {:desc "[S]earch [Q]quickfix list"})
-  (map-set-leader "gd" builtin.lsp_definitions {:desc "[G]oto [D]efinition"})
-  (map-set-leader "gr" builtin.lsp_references {:desc "[G]oto [R]eferences"})
-  (map-set-leader "gi" builtin.lsp_implementations {:desc "[G]oto [I]mplementations"})
-  (map-set-leader "go" builtin.lsp_type_definitions {:desc "[G]oto Type Definitions"}))
+  (vim.keymap.set :n "gd" builtin.lsp_definitions {:desc "[G]oto [D]efinition" :noremap true})
+  (vim.keymap.set :n "gr" builtin.lsp_references {:desc "[G]oto [R]eferences" :noremap true})
+  (vim.keymap.set :n "gi" builtin.lsp_implementations {:desc "[G]oto [I]mplementations" :noremap true})
+  (vim.keymap.set :n "go" builtin.lsp_type_definitions {:desc "[G]oto Type Definitions" :noremap true}))
 
 
 
