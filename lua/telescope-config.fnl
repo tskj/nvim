@@ -36,9 +36,9 @@
           git-path))))
 
 
-  (var opts {})
+  (local opts {})
   (if (is-git-repo)
-    (set opts {:cwd (get-git-root)}))
+    (tset opts :cwd (get-git-root)))
   opts)
 
 ; find files relative to git repository

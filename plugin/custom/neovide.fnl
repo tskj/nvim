@@ -1,6 +1,18 @@
 (when vim.g.neovide
 
-  (set vim.g.neovide_transparency 0.95)
+  (var is-transparent true)
+  (local transparency-value 0.95)
+  (set vim.g.neovide_transparency transparency-value)
+
+  (vim.api.nvim_create_user_command "ToggleNeovide" ;; toggles transparency on or off
+                                    (fn [] (if is-transparent
+                                               (do (set vim.g.neovide_transparency 1)
+                                                   (set is-transparent false))
+                                               (do (set vim.g.neovide_transparency transparency-value)
+                                                   (set is-transparent true))))
+                                    {})
+
+
   (set vim.getneovide_scroll_animation_length 0.1)
   (set vim.g.neovide_hide_mouse_when_typing true)
 
