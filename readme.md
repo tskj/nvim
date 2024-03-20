@@ -11,3 +11,4 @@ requirements:
 scoop install go
 scoop install rust
 scoop install ripgrep
+scoop install fd

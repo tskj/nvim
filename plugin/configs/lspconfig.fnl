@@ -89,7 +89,7 @@
   {:mapping (cmp.mapping.preset.insert
               {:<C-Space> (cmp.mapping.confirm {:select true})
                :<S-Tab> (cmp.mapping.confirm {:select true})
-               :<C-y> (cmp.mapping.confirm {:select false})})
+               :<C-y> (cmp.mapping.confirm {:select true})})
    :sources [{:name "nvim_lsp"} {:name "nvim_lua"}]
    :window {:completion (cmp.config.window.bordered)
             :documentation (cmp.config.window.bordered)}})

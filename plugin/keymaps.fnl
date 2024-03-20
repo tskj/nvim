@@ -39,7 +39,7 @@
 
 
 ;; these are all my spacemacs-like keybindings
-(let [map-set-leader (fn [lhs rhs] (vim.keymap.set :n (.. "<leader>" lhs) rhs {:noremap true}))]
+(let [map-set-leader (fn [lhs rhs] (vim.keymap.set [:n :v] (.. "<leader>" lhs) rhs {:noremap true}))]
 
   ;; closes all other windows in current layout
   ;; if you want to temporarily maximize the window,
@@ -107,14 +107,20 @@
   (map-set-leader "sd" builtin.diagnostics { :desc "[S]earch [D]iagnostics"})
   (map-set-leader "sr" builtin.resume { :desc "[S]earch [R]esume"})
   (map-set-leader "s." builtin.oldfiles { :desc "[S]earch Recent Files ('.' for repeat)"})
-  (map-set-leader "sb" builtin.buffers { :desc "[S]earch [B]uffers (existing)"}) ;; SPC SPC
+  (map-set-leader "sb" builtin.buffers { :desc "[S]earch [B]uffers (existing)"})
   (map-set-leader "/"  builtin.current_buffer_fuzzy_find { :desc "[/] Fuzzily search in current buffer"})
   (map-set-leader "s/" (fn [] (builtin.live_grep
                                 {:grep_open_files true :prompt_title "Live Grep in Open Files"}))
-                  {:desc "[S]earch [/] in Open Files"})
+                       {:desc "[S]earch [/] in Open Files"})
   (map-set-leader "sn" (fn [] (builtin.find_files {:cwd (vim.fn.stdpath "config")}))
-                  {:desc "[S]earch [N]eovim files"})
-  (map-set-leader "st" ":TodoTelescope<cr>" {:desc "[S]earch [T]odos"}))
+                       {:desc "[S]earch [N]eovim files"})
+  (map-set-leader "st" ":TodoTelescope<cr>" {:desc "[S]earch [T]odos"})
+  (map-set-leader "sm" builtin.marks {:desc "[S]earch [M]arks"})
+  (map-set-leader "sq" builtin.quickfix {:desc "[S]earch [Q]quickfix list"})
+  (map-set-leader "gd" builtin.lsp_definitions {:desc "[G]oto [D]efinition"})
+  (map-set-leader "gr" builtin.lsp_references {:desc "[G]oto [R]eferences"})
+  (map-set-leader "gi" builtin.lsp_implementations {:desc "[G]oto [I]mplementations"})
+  (map-set-leader "go" builtin.lsp_type_definitions {:desc "[G]oto Type Definitions"}))
 
 
 
