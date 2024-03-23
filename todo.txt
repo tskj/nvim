@@ -50,3 +50,5 @@
 - context folds at the top
 
 - see if some form of sexp keybindings like slurp can work together with parinfer
+
+- both the file explorer and terminal really should set cwd when you interact with them
