@@ -8,7 +8,6 @@
   (for [_ 1 n]
     (table.insert result ""))
   result)
-
 ; let's us know whether the triggered cursored moved event
 ; was caused by us moving it out of the way of the scrolling
 (var just-scrolled-cursor-to nil)
@@ -47,13 +46,17 @@
           (if (= n 0)
            (vim.api.nvim_command (.. "normal! " "zb"))
            (do
+
+            (local was-modified (vim.api.nvim_buf_get_option 0 "modified"))
+
             ;; insert synthetic lines
             (vim.api.nvim_buf_set_lines 0 line-count (+ line-count n) false (empty-strings n))
 
             (vim.api.nvim_command (.. "normal! " n "j" "zb" n "k"))
 
             ;; remove synthetic lines
-            (vim.api.nvim_buf_set_lines 0 line-count (+ line-count n) false [])))))
+            (vim.api.nvim_buf_set_lines 0 line-count (+ line-count n) false [])
+            (vim.api.nvim_buf_set_option 0 "modified" was-modified)))))
 
 
       (when (>= cursor-line (- win-height padding-bottom -1))
@@ -61,7 +64,7 @@
           (if (= n 0)
            (vim.api.nvim_command (.. "normal! " "zt"))
            (vim.api.nvim_command (.. "normal! " n "k" "zt" n "j"))))))))
-
+ 
 
 (fn run-if-regular-buffer [f]
   (fn []
