@@ -31,6 +31,10 @@
 (vim.keymap.set :n "<C-s>" ":w<cr>")
 (vim.keymap.set :n "<C-w>" ":q<cr>")
 (vim.keymap.set :n "<C-q>" ":bd!<cr>")
+(vim.keymap.set :t "<C-w>" (fn [] (vim.api.nvim_command "q")))
+(vim.keymap.set :t "<C-q>" (fn [] (vim.api.nvim_command "bd!")))
+(vim.keymap.set :n "<C-->" "<C-^>")
+(vim.keymap.set :t "<C-->" (fn [] (vim.api.nvim_command "buffer #")))
 
 
 ; Leap
@@ -54,6 +58,8 @@
 
   ;; rename in spacemacs
   (map-set-leader "se" vim.lsp.buf.rename)
+  ;; clear search (opposite of spacemacs(!))
+  (map-set-leader "cs" ":nohlsearch<cr>")
 
   ;; open file explorer in directory of current file
   (map-set-leader "ef" (open-in-explorer ""))
