@@ -30,7 +30,7 @@
 (vim.keymap.set :t "<C-l>" "<cmd>wincmd l<cr>" {:silent true})
 (vim.keymap.set :n "<C-s>" ":w<cr>")
 (vim.keymap.set :n "<C-w>" ":q<cr>")
-(vim.keymap.set :n "<C-q>" ":q<cr>")
+(vim.keymap.set :n "<C-q>" ":bd!<cr>")
 
 
 ; Leap
@@ -108,7 +108,7 @@
   (map-set-leader "sr" builtin.resume { :desc "[S]earch [R]esume"})
   (map-set-leader "s." builtin.oldfiles { :desc "[S]earch Recent Files ('.' for repeat)"})
   (map-set-leader "sb" builtin.buffers { :desc "[S]earch [B]uffers (existing)"})
-  (map-set-leader "/"  builtin.current_buffer_fuzzy_find { :desc "[/] Fuzzily search in current buffer"})
+  (map-set-leader "sj" builtin.current_buffer_fuzzy_find { :desc "[/] Fuzzily search in current buffer"})
   (map-set-leader "s/" (fn [] (builtin.live_grep
                                 {:grep_open_files true :prompt_title "Live Grep in Open Files"}))
                        {:desc "[S]earch [/] in Open Files"})
@@ -117,16 +117,39 @@
   (map-set-leader "st" ":TodoTelescope<cr>" {:desc "[S]earch [T]odos"})
   (map-set-leader "sm" builtin.marks {:desc "[S]earch [M]arks"})
   (map-set-leader "sq" builtin.quickfix {:desc "[S]earch [Q]quickfix list"})
+  (map-set-leader "sc" builtin.git_commits {:desc "[S]earch [C]ommits (git)"})
   (vim.keymap.set :n "gd" builtin.lsp_definitions {:desc "[G]oto [D]efinition" :noremap true})
   (vim.keymap.set :n "gr" builtin.lsp_references {:desc "[G]oto [R]eferences" :noremap true})
   (vim.keymap.set :n "gi" builtin.lsp_implementations {:desc "[G]oto [I]mplementations" :noremap true})
-  (vim.keymap.set :n "go" builtin.lsp_type_definitions {:desc "[G]oto Type Definitions" :noremap true}))
+  (vim.keymap.set :n "go" builtin.lsp_type_definitions {:desc "[G]oto Type Definitions" :noremap true})
+
+
+  ;; fzf-lua
+  (local fzf-lua (require :fzf-lua))
+  (map-set-leader "zh" fzf-lua.help_tags {:desc "[Z]earch [Help]"})
+  (map-set-leader "zk" fzf-lua.keymaps { :desc "[Z]earch [K]eymaps"})
+  (map-set-leader "zf" fzf-lua.files { :desc "[Z]earch [F]iles"})
+  (map-set-leader "zz" fzf-lua.builtin { :desc "[Z]earch F[Z]F-lua builtins"})
+  (map-set-leader "zw" fzf-lua.grep_cword { :desc "[Z]earch current [W]ord"})
+  (map-set-leader "zv" fzf-lua.grep_visual { :desc "[Z]earch [V]isual selection"})
+  (map-set-leader "zg" fzf-lua.live_grep { :desc "[Z]earch by [G]rep"})
+  (map-set-leader "zd" fzf-lua.diagnostics_workspace { :desc "[Z]earch [D]iagnostics"})
+  (map-set-leader "zr" fzf-lua.resume { :desc "[Z]earch [R]esume"})
+  (map-set-leader "z." fzf-lua.oldfiles { :desc "[Z]earch Recent Files ('.' for repeat)"})
+  (map-set-leader "zb" fzf-lua.buffers { :desc "[Z]earch [B]uffers (existing)"})
+  (map-set-leader "zj" fzf-lua.blines { :desc "[/] Fuzzily search in current buffer"})
+  (map-set-leader "z/" fzf-lua.lines {:desc "[Z]earch [/] in Open Files"})
+  (map-set-leader "zn" (fn [] (fzf-lua.files {:cwd (vim.fn.stdpath "config")}))
+                       {:desc "[Z]earch [N]eovim files"})
+  (map-set-leader "zm" fzf-lua.marks {:desc "[Z]earch [M]arks"})
+  (map-set-leader "zq" fzf-lua.quickfix {:desc "[Z]earch [Q]quickfix list"})
+  (map-set-leader "zc" fzf-lua.git_commits {:desc "[Z]earch [C]ommits (git)"}))
 
 
 
 ; these are modifications of existing behavior from primeagen
 (vim.keymap.set :v "p" "\"_dP" {:noremap true :silent true}) ;; don't overwrite register when pasting
-(vim.keymap.set :v "d" "\"_d"  {:noremap true :silent true}) ;; don't overwrite register when pasting
+(vim.keymap.set :v "d" "\"_d"  {:noremap true :silent true}) ;; don't overwrite register when deleting
 
 
 (fn command-with-unchanged-unnamed-register [cmd]

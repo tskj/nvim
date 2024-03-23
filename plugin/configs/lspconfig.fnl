@@ -84,12 +84,12 @@
 
 (local cmp (require :cmp))
 (cmp.setup
-  ;; this mapping allows us to confirm completions without selecting with ctrl+space
-  ;; or shift+tab
   {:mapping (cmp.mapping.preset.insert
               {:<C-Space> (cmp.mapping.confirm {:select true})
-               :<S-Tab> (cmp.mapping.confirm {:select true})
-               :<C-y> (cmp.mapping.confirm {:select true})})
+               :<C-y> (cmp.mapping.confirm {:select true})
+               :<C-m> (cmp.mapping.confirm {:select true})}) ;; trying this
+   :preselect "item"
+   :completion {:completeopt "menu,menuone,noinsert"}
    :sources [{:name "nvim_lsp"} {:name "nvim_lua"}]
    :window {:completion (cmp.config.window.bordered)
             :documentation (cmp.config.window.bordered)}})
