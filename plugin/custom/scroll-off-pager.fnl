@@ -64,7 +64,7 @@
           (if (= n 0)
            (vim.api.nvim_command (.. "normal! " "zt"))
            (vim.api.nvim_command (.. "normal! " n "k" "zt" n "j"))))))))
- 
+
 
 (fn run-if-regular-buffer [f]
   (fn []
