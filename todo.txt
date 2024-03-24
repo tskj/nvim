@@ -1,19 +1,10 @@
-- write a readme that explains how it works and what to do run stuff
+- write a readme that explains how it works and what to do run stuff (book?)
 
 - find out how to ignore <F15>
 
-- figure out which terminal to use, and then how to open them
-
-- find out if it's possibly to lock packer plugin versions
-  also find out how packer works I guess?
-  packer is deprecated, I guess find an alternative :sob:
-
 - opening terminal from file explorer should land you in the cwd of the file explorer
 
-- fzf-lua vs telescope? hmm
-  needs to be responsible for code_actions as well (ctrl+enter)
-
-- need to be able to open terminal from :Explorer and have it land in correct directory
+- make sure telescope is responsible for code_actions as well (ctrl+enter)
 
 - would be nice if the current file was selected if you go SPC e f to open :Explorer
 
@@ -21,14 +12,7 @@
   thing for sessions anyway
 
 - SPC e h for home (~/) and SPC e c for code (~/code)
-
-- want everything to be installed through scoop somehow, including git or whatever
-
-- terminal should probably start in insert mode
-
-- kickstart: highlighting stuff you're doing--TextYankPost autocmd!
-
-- folke/todo-comments.nvim
+  and SPC e n instead of SPC f e d
 
 - checkout which-key
 
@@ -52,3 +36,12 @@
 - see if some form of sexp keybindings like slurp can work together with parinfer
 
 - both the file explorer and terminal really should set cwd when you interact with them
+
+- powershell prompt seems to be very slow when it's in a git repository
+
+- why doesn't ctrl+l clear the screen in terminal emulator, neither in wsl nor windows?
+
+- ctrl+p is broken in zsh, but also the prompt is weird (both color and the cursor flickers when newline)
+  probably re-install zsh in wsl
+
+- SPC s g seemed to be broken in wsl, maybe I've not installed rg?

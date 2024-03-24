@@ -65,7 +65,10 @@
   (map-set-leader "ef" (open-in-explorer ""))
 
   ;; open terminal (in spacemacs this is SPC a t for "application: terminal")
-  (map-set-leader "ac" vim.cmd.terminal) ;; c for CMD prompt
+  (map-set-leader "ac" vim.cmd.terminal) ;; c for command line
+  (map-set-leader "ap" (fn [] (vim.cmd.terminal "powershell.exe")))
+  (map-set-leader "al" (fn [] (vim.cmd.terminal "wsl.exe zsh"))) ;; l for linux
+  (map-set-leader "ab" (fn [] (vim.cmd.terminal "wsl.exe bash")))
 
   (map-set-leader "wr" vim.cmd.WinResizerStartResize)
   (map-set-leader "wD" ":q!<cr>")
