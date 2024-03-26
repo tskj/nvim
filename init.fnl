@@ -18,11 +18,16 @@
    "hecal3/vim-leader-guide"
    "ibhagwan/fzf-lua"
    "simeji/winresizer"
-   "ctrlpvim/ctrlp.vim"
    "ggandor/leap.nvim"
    "echasnovski/mini.nvim"
-   "nvim-tree/nvim-web-devicons" ; mini.statusline wants this
+   "nvim-tree/nvim-web-devicons"
    "mg979/vim-visual-multi"
+
+   {1 "NeogitOrg/neogit"
+    :dependencies ["nvim-lua/plenary.nvim"
+                   "sindrets/diffview.nvim"
+                   "nvim-telescope/telescope.nvim"]
+    :config true}
 
    {1 "glacambre/firenvim"
      :lazy (not vim.g.started_by_firenvim)
