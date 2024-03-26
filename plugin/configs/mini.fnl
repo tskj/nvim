@@ -1,6 +1,3 @@
-; (local tabline (require :mini.tabline))
-; (tabline.setup)
-
 ; moves selection using ctrl + [hjkl]
 (local move (require :mini.move))
 (move.setup
@@ -28,9 +25,9 @@
 ; starter screen and sessions
 (local starter (require :mini.starter))
 (starter.setup)
-;(local sessions (require :mini.sessions))
-;(sessions.setup
-  ;{:autoread false})
+(local sessions (require :mini.sessions))
+(sessions.setup
+ {:autoread false})
 
 (local easymotion (require :mini.jump2d))
 (easymotion.setup

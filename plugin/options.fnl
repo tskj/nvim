@@ -42,3 +42,6 @@
 
 (set vim.opt.shm "sS") ;; removes search count
 (set vim.opt.showcmd false) ;; removes selection count
+
+(set vim.opt.confirm false)
+(set vim.opt.swapfile false)
