@@ -20,7 +20,8 @@
         [distance-to-top x] (vim.api.nvim_win_get_cursor 0)
         screen-is-at-top? (= distance-to-top cursor-line)]
 
-    (when (or (not just-scrolled-cursor-to) (not (equal-coords [distance-to-top x] just-scrolled-cursor-to)))
+    (when (or (not just-scrolled-cursor-to)
+              (not (equal-coords [distance-to-top x] just-scrolled-cursor-to)))
       (set just-scrolled-cursor-to nil)
 
       (var padding-top padding-top)
@@ -33,32 +34,24 @@
       (when (and screen-is-at-top? (<= cursor-line padding-top))
          (set padding-top 0))
 
-
       (when (<= cursor-line padding-top)
         (let [distance-to-padding-border (- padding-top cursor-line)
               one-window-height (- win-height padding-top padding-bottom)
               n (+ distance-to-padding-border one-window-height)]
 
-          (if (> n 0) (vim.api.nvim_command (.. "exe \"normal! " n "\\<C-y>\"")))))
+          (when (> n 0) (vim.api.nvim_command (.. "exe \"normal! " n "\\<C-y>\"")))))
 
 
-      (when (>= cursor-line (- win-height padding-bottom))
-        (let [distance-to-padding-border (- win-height cursor-line padding-bottom)
+      (when (> cursor-line (- win-height padding-bottom))
+        (let [distance-to-padding-border (- cursor-line (- win-height padding-bottom) 1)
               one-window-height (- win-height padding-top padding-bottom)
               n (+ distance-to-padding-border one-window-height)]
 
-          (if (> n 0) (vim.api.nvim_command (.. "exe \"normal! " n "\\<C-e>\""))))))))
-
-
-(fn run-if-regular-buffer [f]
-  (fn []
-    (when (and (= vim.bo.buftype "") (~= vim.bo.filetype "netrw"))
-      ;; probably modifiable and regular buffer
-      (f))))
+          (when (> n 0) (vim.api.nvim_command (.. "exe \"normal! " n "\\<C-e>\""))))))))
 
 
 ; potentially move the screen when the cursor moves
-(vim.api.nvim_create_autocmd "CursorMoved" {:pattern "*" :callback (run-if-regular-buffer scrolly)})
+(vim.api.nvim_create_autocmd "CursorMoved" {:pattern "*" :callback scrolly})
 
 
 ; move cursor out of the way when scrolling with mouse wheel
