@@ -40,5 +40,5 @@
 (set vim.opt.hlsearch true)
 (vim.keymap.set :n "<Esc>" "<cmd>nohlsearch<CR>")
 
-(set vim.g.neovide_transparency 0.95)
-(set vim.getneovide_scroll_animation_length 0.1)
+(set vim.opt.shm "sS") ;; removes search count
+(set vim.opt.showcmd false) ;; removes selection count

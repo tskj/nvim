@@ -1,5 +1,8 @@
 (when vim.g.neovide
 
+  (set vim.g.neovide_transparency 0.95)
+  (set vim.getneovide_scroll_animation_length 0.1)
+
   (var is-transparent true)
   (local transparency-value 0.95)
   (set vim.g.neovide_transparency transparency-value)
