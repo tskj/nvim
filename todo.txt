@@ -42,6 +42,20 @@
 - why doesn't ctrl+l clear the screen in terminal emulator, neither in wsl nor windows?
 
 - ctrl+p is broken in zsh, but also the prompt is weird (both color and the cursor flickers when newline)
-  probably re-install zsh in wsl
+  probably re-install zsh in wsl (uninstall ctrlp in vim)
 
 - SPC s g seemed to be broken in wsl, maybe I've not installed rg?
+
+- the reason ctrl+l doesn't work is that it's used for window navgiation; maybe I can discriminate
+  left and right cltr?
+
+- can use ctrl+ H and L for quick :bn and :bp; can use cltr+ J and K to navigate forward and backwards
+  in tabpages
+
+- probably want more of a path in the status line and also git branch, means we don't need that in
+  the path in powershell?
+
+- ctlr+- shouldn't scale down in in wezterm, or alternatively maybe ctrl+tab should be the alt buffer?
+
+- remove duplicate file paths for SPC s . on windows, and maybe allow closing buffers in SPC s b with
+  ctrl+x or something. also, ctrl+b for SPC s b?
