@@ -16,7 +16,6 @@
 
    ;; plugins
    "jimmay5469/vim-spacemacs"
-   "hecal3/vim-leader-guide"
    "ibhagwan/fzf-lua"
    "simeji/winresizer"
    "ggandor/leap.nvim"

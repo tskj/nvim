@@ -1,6 +1,3 @@
-(vim.keymap.set ""  :<space> "" {:noremap true})
-(set vim.g.mapleader " ")
-
 ;; get the path to the Neovim configuration directory
 (local nvim-dir (vim.fn.stdpath "config"))
 
