@@ -164,6 +164,8 @@
 (vim.keymap.set :v "p" "\"_dP" {:noremap true :silent true}) ;; don't overwrite register when pasting
 (vim.keymap.set :v "d" "\"_d"  {:noremap true :silent true}) ;; don't overwrite register when deleting
 
+(vim.keymap.set :v "P" "p" {:noremap true :silent true}) ;; overwrite register when pasting
+
 
 (fn command-with-unchanged-unnamed-register [cmd]
   (fn []
@@ -189,7 +191,7 @@
                 (command-with-unchanged-unnamed-register "\"+y")
                 {:noremap true :silent true})
 
-;; yank to clipboard without changing unnamed register:
+;; paste from clipboard without changing unnamed register:
 (vim.keymap.set :v "<leader>cp" "\"_d\"+P"  {:noremap true :silent true})
 
 ;; yank to clipboard without changing unnamed register:
