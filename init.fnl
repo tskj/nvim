@@ -27,7 +27,9 @@
     :dependencies ["nvim-lua/plenary.nvim"
                    "sindrets/diffview.nvim"
                    "nvim-telescope/telescope.nvim"]
-    :config {:disable_insert_on_commit true :graph_style "unicode"}}
+    :config {:disable_insert_on_commit true
+             :graph_style "unicode"
+             :integrations {:telescope true :diffview true}}}
 
    {1 "glacambre/firenvim"
      :lazy (not vim.g.started_by_firenvim)

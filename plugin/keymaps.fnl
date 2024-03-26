@@ -64,6 +64,10 @@
   ;; open file explorer in directory of current file
   (map-set-leader "ef" (open-in-explorer ""))
 
+  ;; neogit
+  (map-set-leader "gs" ":Neogit<cr>")
+  (map-set-leader "gc" ":Neogit commit<cr>")
+
   ;; open terminal (in spacemacs this is SPC a t for "application: terminal")
   (map-set-leader "ac" vim.cmd.terminal) ;; c for command line
   (map-set-leader "ap" (fn [] (vim.cmd.terminal "powershell.exe")))
