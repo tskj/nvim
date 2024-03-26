@@ -21,6 +21,7 @@
    "ggandor/leap.nvim"
    "echasnovski/mini.nvim"
    {1 "lewis6991/gitsigns.nvim" :opts {}}
+   "nvim-telescope/telescope-ui-select.nvim"
 
    {1 "nvim-lualine/lualine.nvim"
     :opts {:sections {:lualine_c [{1 "filename" :path 3}]

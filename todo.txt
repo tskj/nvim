@@ -59,3 +59,7 @@
 
 - remove duplicate file paths for SPC s . on windows, and maybe allow closing buffers in SPC s b with
   ctrl+x or something. also, ctrl+b for SPC s b?
+
+- pasting doesn't work with capital P (to override yank register / unnamed register)
+
+- my scroller plugin can't affect undo history like it does now
