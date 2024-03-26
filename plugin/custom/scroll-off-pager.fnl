@@ -3,11 +3,6 @@
 (local padding-bottom 15)
 
 
-(fn empty-strings [n]
-  (var result [])
-  (for [_ 1 n]
-    (table.insert result ""))
-  result)
 ; let's us know whether the triggered cursored moved event
 ; was caused by us moving it out of the way of the scrolling
 (var just-scrolled-cursor-to nil)
@@ -22,7 +17,6 @@
 (fn scrolly []
   (let [win-height (vim.api.nvim_win_get_height 0)
         cursor-line (vim.fn.winline)
-        line-count (vim.api.nvim_buf_line_count 0)
         [distance-to-top x] (vim.api.nvim_win_get_cursor 0)
         screen-is-at-top? (= distance-to-top cursor-line)]
 
@@ -41,29 +35,19 @@
 
 
       (when (<= cursor-line padding-top)
-        (let [n padding-bottom]
+        (let [distance-to-padding-border (- padding-top cursor-line)
+              one-window-height (- win-height padding-top padding-bottom)
+              n (+ distance-to-padding-border one-window-height)]
 
-          (if (= n 0)
-           (vim.api.nvim_command (.. "normal! " "zb"))
-           (do
-
-            (local was-modified (vim.api.nvim_buf_get_option 0 "modified"))
-
-            ;; insert synthetic lines
-            (vim.api.nvim_buf_set_lines 0 line-count (+ line-count n) false (empty-strings n))
-
-            (vim.api.nvim_command (.. "normal! " n "j" "zb" n "k"))
-
-            ;; remove synthetic lines
-            (vim.api.nvim_buf_set_lines 0 line-count (+ line-count n) false [])
-            (vim.api.nvim_buf_set_option 0 "modified" was-modified)))))
+          (if (> n 0) (vim.api.nvim_command (.. "exe \"normal! " n "\\<C-y>\"")))))
 
 
-      (when (>= cursor-line (- win-height padding-bottom -1))
-        (let [n (math.min padding-top distance-to-top)]
-          (if (= n 0)
-           (vim.api.nvim_command (.. "normal! " "zt"))
-           (vim.api.nvim_command (.. "normal! " n "k" "zt" n "j"))))))))
+      (when (>= cursor-line (- win-height padding-bottom))
+        (let [distance-to-padding-border (- win-height cursor-line padding-bottom)
+              one-window-height (- win-height padding-top padding-bottom)
+              n (+ distance-to-padding-border one-window-height)]
+
+          (if (> n 0) (vim.api.nvim_command (.. "exe \"normal! " n "\\<C-e>\""))))))))
 
 
 (fn run-if-regular-buffer [f]
