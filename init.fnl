@@ -20,6 +20,7 @@
    "simeji/winresizer"
    "ggandor/leap.nvim"
    "echasnovski/mini.nvim"
+   {1 "lewis6991/gitsigns.nvim" :opts {}}
    "nvim-tree/nvim-web-devicons"
    "mg979/vim-visual-multi"
 
