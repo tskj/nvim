@@ -21,6 +21,17 @@
    "ggandor/leap.nvim"
    "echasnovski/mini.nvim"
    {1 "lewis6991/gitsigns.nvim" :opts {}}
+
+   {1 "nvim-lualine/lualine.nvim"
+    :opts {:sections {:lualine_c [{1 "filename" :path 3}]
+                      :lualine_x [{1 "searchcount" :maxcount 999} "encoding" "filetype"]}
+           :options {:component_separators {:left "" :right ""}
+                     :section_separators {:left "" :right ""}}
+           :tabline {:lualine_a [{1 "tabs"
+                                  :mode 0
+                                  :show_modified_status false}]
+                     :lualine_z ["windows"]}}}
+
    "nvim-tree/nvim-web-devicons"
    "mg979/vim-visual-multi"
 

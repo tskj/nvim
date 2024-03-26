@@ -1,9 +1,6 @@
 ; (local tabline (require :mini.tabline))
 ; (tabline.setup)
 
-(local statusline (require :mini.statusline))
-(statusline.setup)
-
 ; moves selection using ctrl + [hjkl]
 (local move (require :mini.move))
 (move.setup

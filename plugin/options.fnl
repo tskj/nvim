@@ -3,7 +3,7 @@
    "i-ci-ve:hor20"
    "r-cr:hor20"])
 
-(set vim.o.guifont "FiraCode Nerd Font:h14")
+(set vim.o.guifont "FiraCode Nerd Font:h15")
 (if vim.g.started_by_firenvim
   (set vim.o.guifont "FiraCode Nerd Font:h10"))
 
