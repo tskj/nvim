@@ -4,7 +4,7 @@
    "r-cr:hor20"])
 
 (set vim.o.guifont "FiraCode Nerd Font:h15")
-(if vim.g.started_by_firenvim
+(when vim.g.started_by_firenvim
   (set vim.o.guifont "FiraCode Nerd Font:h10"))
 
 ; sets current working directory you open a file or w/e (needed for terminal)
@@ -45,3 +45,13 @@
 
 (set vim.opt.confirm false)
 (set vim.opt.swapfile false)
+
+
+(let [undodir (.. (vim.fn.stdpath "data") "/undo")
+      not-exists? (= 0 (vim.fn.isdirectory undodir))]
+
+  (when not-exists?
+    (vim.fn.mkdir undodir "p"))
+
+  (set vim.opt.undofile true)
+  (set vim.opt.undodir undodir))
