@@ -32,6 +32,8 @@
 (vim.keymap.set :t "<C-q>" (fn [] (vim.api.nvim_command "bd!")))
 (vim.keymap.set :n "<C-->" "<C-^>")
 (vim.keymap.set :t "<C-->" (fn [] (vim.api.nvim_command "buffer #")))
+(vim.keymap.set :n "<C-Tab>" "<C-^>")
+(vim.keymap.set :t "<C-Tab>" (fn [] (vim.api.nvim_command "buffer #")))
 
 (vim.keymap.set [:n :t] "<C-S-H>" (fn [] (vim.api.nvim_command ":bp")))
 (vim.keymap.set [:n :t] "<C-S-L>" (fn [] (vim.api.nvim_command ":bn")))
