@@ -44,6 +44,8 @@
 (vim.keymap.set [:n :x :o] "<leader>jF" "<Plug>(leap-backward)")
 
 
+(fn run [f] (f))
+
 ;; these are all my spacemacs-like keybindings
 (let [map-set-leader (fn [lhs rhs] (vim.keymap.set [:n :v] (.. "<leader>" lhs) rhs {:noremap true}))]
 
@@ -80,14 +82,15 @@
   (map-set-leader "wD" ":q!<cr>")
 
   ;; buffer home, go to start screen! (mini.starter)
-  (map-set-leader "bh" (fn [] (MiniStarter.open)))
+  (map-set-leader "bh" (fn [] (-> :mini.starter (require) (. :open) (run))))
   (map-set-leader "bD" ":bd!<cr>")
+
 
   ;; layout stuff, which are neovim _tabs_
   (map-set-leader "lh" ;; layout home
     (fn []
       (vim.cmd.tabnew)
-      (MiniStarter.open)))
+      (-> :mini.starter (require) (. :open) (run))))
   (map-set-leader "ln" vim.cmd.tabnext)
   (map-set-leader "lp" vim.cmd.tabprev)
   (map-set-leader "lc" vim.cmd.tabclose)
