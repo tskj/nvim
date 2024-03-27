@@ -1,12 +1,6 @@
 - write a readme that explains how it works and what to do run stuff (book?)
 
-- find out how to ignore <F15>
-
-- would be nice if the current file was selected if you go SPC e f to open :Explorer
-
-- SPC e p should take you to "project", whatever that is--need to figure out the project
-  thing for sessions anyway
-
+- SPC e p should take you to "project", based on .git
 - SPC e h for home (~/) and SPC e c for code (~/code)
   and SPC e n instead of SPC f e d
 
@@ -23,6 +17,10 @@
     vim.opt_local.formatoptions = "tcqjn"
     vim.opt_local.formatlistpat = "^\\s*\\([~]\\+\\|[-]\\+\\)\\s*"
 
+- checkout harpoon I guess
+
+- Copilot
+
 - probably plugin for closing empty buffers that hang around for no reason
 
 - working with htmls tags and such
@@ -32,18 +30,20 @@
 - see if some form of sexp keybindings like slurp can work together with parinfer
 
 - both the file explorer and terminal really should set cwd when you interact with them
+- would be nice if the current file was selected if you go SPC e f to open :Explorer
 
-- powershell prompt seems to be very slow when it's in a git repository
+- prompts in ps (slow), bash (too long) and zsh (no color)
 
-- ctrl+p is broken in zsh, but also the prompt is weird (both color and the cursor flickers when newline)
-  probably re-install zsh in wsl ()
+- moving quickly between quickfix list items, like ; and , in addition to ]q and [q
 
-- SPC s g seemed to be broken in wsl, maybe I've not installed rg?
+- in norwegian; kind of problematic at times
 
-- the reason ctrl+l doesn't work is that it's used for window navgiation; maybe I can discriminate
-  left and right cltr?
-
-- ctlr+- shouldn't scale down in in wezterm, or alternatively maybe ctrl+tab should be the alt buffer?
+## known issues
 
 - remove duplicate file paths for SPC s . on windows, and maybe allow closing buffers in SPC s b with
-  ctrl+x or something. also, ctrl+b for SPC s b?
+  ctrl+x or something
+
+- cursor flickers when pressing enter in terminals
+
+- <F15> is inserted in insert mode due to caffeine on Windows
+
