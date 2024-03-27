@@ -33,6 +33,11 @@
 (vim.keymap.set :n "<C-->" "<C-^>")
 (vim.keymap.set :t "<C-->" (fn [] (vim.api.nvim_command "buffer #")))
 
+(vim.keymap.set [:n :t] "<C-S-H>" (fn [] (vim.api.nvim_command ":bp")))
+(vim.keymap.set [:n :t] "<C-S-L>" (fn [] (vim.api.nvim_command ":bn")))
+(vim.keymap.set [:n :t] "<C-S-K>" (fn [] (vim.api.nvim_command ":tabnext")))
+(vim.keymap.set [:n :t] "<C-S-J>" (fn [] (vim.api.nvim_command ":tabprev")))
+
 
 ; Leap
 (vim.keymap.set [:n :x :o] "<leader>jf" "<Plug>(leap-forward)")
