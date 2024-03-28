@@ -1,3 +1,5 @@
+(local {: run} (require :user.utils))
+
 ;; get the path to the Neovim configuration directory
 (local nvim-dir (vim.fn.stdpath "config"))
 
@@ -45,8 +47,6 @@
 (vim.keymap.set [:n :x :o] "<leader>jf" "<Plug>(leap-forward)")
 (vim.keymap.set [:n :x :o] "<leader>jF" "<Plug>(leap-backward)")
 
-
-(fn run [f] (f))
 
 ;; these are all my spacemacs-like keybindings
 (let [map-set-leader (fn [lhs rhs] (vim.keymap.set [:n :v] (.. "<leader>" lhs) rhs {:noremap true}))]
@@ -120,10 +120,10 @@
   (local builtin (require :telescope.builtin))
   (map-set-leader "sh" builtin.help_tags { :desc "[S]earch [H]elp"})
   (map-set-leader "sk" builtin.keymaps { :desc "[S]earch [K]eymaps"})
-  (map-set-leader "sf" (. (require :telescope-config) :find-files) { :desc "[S]earch [F]iles"})
+  (map-set-leader "sf" (. (require :user.telescope-config) :find-files) { :desc "[S]earch [F]iles"})
   (map-set-leader "ss" builtin.builtin { :desc "[S]earch [S]elect Telescope"})
   (map-set-leader "sw" builtin.grep_string { :desc "[S]earch current [W]ord"})
-  (map-set-leader "sg" (. (require :telescope-config) :live-grep) { :desc "[S]earch by [G]rep"})
+  (map-set-leader "sg" (. (require :user.telescope-config) :live-grep) { :desc "[S]earch by [G]rep"})
   (map-set-leader "sd" builtin.diagnostics { :desc "[S]earch [D]iagnostics"})
   (map-set-leader "sr" builtin.resume { :desc "[S]earch [R]esume"})
   (map-set-leader "s." builtin.oldfiles { :desc "[S]earch Recent Files ('.' for repeat)"})
