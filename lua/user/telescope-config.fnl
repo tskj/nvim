@@ -5,7 +5,7 @@
 ; current working directory
 (fn create-opts []
 
-  (local path (-> (require :user.project-repo-cache) (. :get-path-to-repo) (run)))
+  (local path (-> (require :user.find-git-repo-cache) (. :get-path-to-repo) (run)))
 
   (if path
     {:cwd path}

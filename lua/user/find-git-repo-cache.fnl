@@ -1,3 +1,9 @@
+;;; functionality to find the path to a "project",
+;;; which means the path to the directory containing
+;;; a .git directory (if you are in a git repo).
+;;; if not (you're outside any git repo): returns nil
+
+
 ;; this is a cached lookup-table that gives the
 ;; path to the git repo (the directory where .git is located)
 ;; if we're in the work tree of a git repo
