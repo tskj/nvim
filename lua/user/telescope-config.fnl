@@ -5,11 +5,14 @@
 ; current working directory
 (fn create-opts []
 
-  (local path (-> (require :user.find-git-repo-cache) (. :get-path-to-repo) (run)))
+  (local cwd (vim.fn.getcwd))
+  (local project-path (-> (require :user.find-git-repo-cache)
+                          (. :get-path-to-repo)
+                          (run cwd)))
 
-  (if path
-    {:cwd path}
-    {}))
+  (if project-path
+    {:cwd project-path}
+    {:cwd cwd}))
 
 
 {
