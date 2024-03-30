@@ -55,3 +55,5 @@
 
   (set vim.opt.undofile true)
   (set vim.opt.undodir undodir))
+
+(set vim.opt.linespace 8) ; only works in neovide

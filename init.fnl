@@ -22,16 +22,7 @@
    "echasnovski/mini.nvim"
    {1 "lewis6991/gitsigns.nvim" :opts {}}
    "nvim-telescope/telescope-ui-select.nvim"
-
-   {1 "nvim-lualine/lualine.nvim"
-    :opts {:sections {:lualine_c [{1 "filename" :path 3}]
-                      :lualine_x ["searchcount" "selectioncount" "encoding" "filesize" "filetype"]}
-           :options {:component_separators {:left "" :right ""}
-                     :section_separators {:left "" :right ""}}
-           :tabline {:lualine_a [{1 "tabs"
-                                  :mode 0
-                                  :show_modified_status false}]
-                     :lualine_z ["windows"]}}}
+   "nvim-lualine/lualine.nvim"
 
    "nvim-tree/nvim-web-devicons"
    "mg979/vim-visual-multi"
