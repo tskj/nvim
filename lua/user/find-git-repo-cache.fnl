@@ -42,19 +42,19 @@
 
          (do
            (log "we don't know what the path is"
-                      "because we haven't checked yet")
+                "because we haven't checked yet")
            (if (cwd-in-git-repo? cwd)
 
                (let [dot-git-path (vim.fn.finddir ".git" ".;")
                      git-path (vim.fn.fnamemodify dot-git-path ":h")]
 
                  (log "we're in a project! it's at path:"
-                            git-path)
+                      git-path)
                  (tset cwd->project cwd git-path)
                  git-path)
 
                (do
                  (log "we're not in a git repo,"
-                            "setting to false")
+                      "setting to false")
                  (tset cwd->project cwd false)
                  nil))))))}
