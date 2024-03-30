@@ -4,7 +4,7 @@
 ;;; if not (you're outside any git repo): returns nil
 
 
-(local {: debug-log} (require :user.utils))
+(import-macros {: log} :fnl.macros)
 
 
 ;; this is a cached lookup-table that gives the
@@ -22,7 +22,7 @@
 
 ;; are we in a project folder?
 (fn cwd-in-git-repo? [cwd]
-  (debug-log "checking" cwd "using git rev-parse...")
+  (log "checking" cwd "using git rev-parse...")
   (vim.fn.system (.. "cd " cwd " && git rev-parse --is-inside-work-tree"))
   (= 0 vim.v.shell_error))
 
@@ -32,29 +32,29 @@
  (fn [cwd]
    (let [project-path (. cwd->project cwd)]
 
-     (debug-log "cwd is:" cwd)
+     (log "cwd is:" cwd)
      (if (~= project-path nil)
 
          (do
-           ;; SWR
-           (debug-log "path is:" project-path)
+           ;; TODO: SWR
+           (log "path is:" project-path)
            (or project-path nil)) ; nil if we know it doesn't exist
 
          (do
-           (debug-log "we don't know what the path is"
+           (log "we don't know what the path is"
                       "because we haven't checked yet")
            (if (cwd-in-git-repo? cwd)
 
                (let [dot-git-path (vim.fn.finddir ".git" ".;")
                      git-path (vim.fn.fnamemodify dot-git-path ":h")]
 
-                 (debug-log "we're in a project! it's at path:"
+                 (log "we're in a project! it's at path:"
                             git-path)
                  (tset cwd->project cwd git-path)
                  git-path)
 
                (do
-                 (debug-log "we're not in a git repo,"
+                 (log "we're not in a git repo,"
                             "setting to false")
                  (tset cwd->project cwd false)
                  nil))))))}
