@@ -6,7 +6,7 @@
 (fn create-opts []
 
   (local cwd (vim.fn.getcwd))
-  (local project-path (-> (require :user.find-git-repo-cache)
+  (local project-path (-> (require :user.find-git-repo)
                           (. :get-path-to-repo)
                           (run cwd)))
 
