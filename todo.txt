@@ -40,6 +40,19 @@
 
 - DAP
 
+- rename tabs, sessions, and SPC r i instead of SPC s e
+
+- Neovide Toggle commands for transparency, linespacing (including statusline separators)
+
+- lisp and lispoptions in vim.options, check them out!
+
+- SESSIONS SESSIONS SESSIONS
+
+- Sneak
+
+- indent correctly on blank lines in parinfer buffers
+
+
 ## known issues
 
 - duplicate file paths for SPC s . on windows sometimes with both backwards and forwards slashes
@@ -51,4 +64,7 @@
 - cursor flickers when pressing enter in terminals
 
 - <F15> is inserted in insert mode due to caffeine on Windows
+
+- linespacing messes up vertical lines like git indicators on files, Telescope borders
+  and of course the statusline
 

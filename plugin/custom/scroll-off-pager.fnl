@@ -1,6 +1,6 @@
 ;; incase you want different paddings
-(local padding-top 15)
-(local padding-bottom 15)
+(local padding-top 10)
+(local padding-bottom 10)
 
 
 ; let's us know whether the triggered cursored moved event
