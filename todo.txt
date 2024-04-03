@@ -42,10 +42,6 @@
 
 - rename tabs, sessions, and SPC r i instead of SPC s e
 
-- Neovide Toggle commands for transparency, linespacing (including statusline separators)
-
-- lisp and lispoptions in vim.options, check them out!
-
 - SESSIONS SESSIONS SESSIONS
 
 - Sneak
