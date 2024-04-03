@@ -29,9 +29,9 @@
 (sessions.setup
  {:autoread false})
 
-(local easymotion (require :mini.jump2d))
-(easymotion.setup
-  {:mappings {:start_jumping "<leader>jk"}
+(local jump2d (require :mini.jump2d))
+(jump2d.setup
+  {:mappings {:start_jumping "<leader>jl"}
    :view {:dim true :n_steps_ahead 2}})
 
 (local notify (require :mini.notify))
@@ -41,4 +41,4 @@
 (trailspace.setup)
 ; automatically remove trailing white space on save
 (vim.api.nvim_create_autocmd "BufWritePost"
-  {:pattern "*" :callback (fn [] (MiniTrailspace.trim))})
+  {:pattern "*" :callback (fn [] (trailspace.trim))})

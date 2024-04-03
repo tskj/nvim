@@ -43,13 +43,18 @@
 (vim.keymap.set [:n :t] "<C-S-J>" (fn [] (vim.api.nvim_command ":tabprev")))
 
 
-; Leap
-(vim.keymap.set [:n :x :o] "<leader>jf" "<Plug>(leap-forward)")
-(vim.keymap.set [:n :x :o] "<leader>jF" "<Plug>(leap-backward)")
+;; Leap
+(vim.keymap.set [:n :x :o] "<leader>gj" "<Plug>(leap-forward)" {:desc "[g]oto [j]ump (Leap forwards)"})
+(vim.keymap.set [:n :x :o] "<leader>gJ" "<Plug>(leap-backward)" {:desc "[g]oto [J]ump (Leap backwards)"})
+
+;; Sneak
+(vim.keymap.set [:n :x :o] "gj" "<Plug>Sneak_s" {:desc "[g]oto [j]ump (Sneak forwards)"})
+(vim.keymap.set [:n :x :o] "gJ" "<Plug>Sneak_S" {:desc "[g]oto [j]ump (Sneak backwards)"})
 
 
 ;; these are all my spacemacs-like keybindings
-(let [map-set-leader (fn [lhs rhs] (vim.keymap.set [:n :v] (.. "<leader>" lhs) rhs {:noremap true}))]
+(let [map-set-leader (fn [lhs rhs ?opts]
+                       (vim.keymap.set [:n :v] (.. "<leader>" lhs) rhs {:noremap true}))]
 
   ;; closes all other windows in current layout
   ;; if you want to temporarily maximize the window,

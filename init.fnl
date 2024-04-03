@@ -23,6 +23,7 @@
    {1 "lewis6991/gitsigns.nvim" :opts {}}
    "nvim-telescope/telescope-ui-select.nvim"
    "nvim-lualine/lualine.nvim"
+   "justinmk/vim-sneak"
 
    "nvim-tree/nvim-web-devicons"
    "mg979/vim-visual-multi"
@@ -71,5 +72,3 @@
    "gpanders/nvim-parinfer"
    "bakpakin/fennel.vim" ; syntax highlighting
    "folke/neodev.nvim"])
-
-
