@@ -24,6 +24,9 @@
    "nvim-telescope/telescope-ui-select.nvim"
    "nvim-lualine/lualine.nvim"
    "justinmk/vim-sneak"
+   {1 "folke/which-key.nvim"
+    :event "VeryLazy"
+    :opts {}}
 
    "nvim-tree/nvim-web-devicons"
    "mg979/vim-visual-multi"

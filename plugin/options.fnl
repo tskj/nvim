@@ -55,3 +55,7 @@
 
   (set vim.opt.undofile true)
   (set vim.opt.undodir undodir))
+
+
+(set vim.o.timeout true)
+(set vim.o.timeoutlen 300)

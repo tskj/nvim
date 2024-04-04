@@ -31,7 +31,7 @@
 
 (local jump2d (require :mini.jump2d))
 (jump2d.setup
-  {:mappings {:start_jumping "<leader>jl"}
+  {:mappings {:start_jumping "<leader>gl"}
    :view {:dim true :n_steps_ahead 2}})
 
 (local notify (require :mini.notify))
