@@ -31,10 +31,10 @@
 (vim.keymap.set :n "<C-q>"   ":bd!<cr>"                                 {:desc "Close buffer (:bd!)"})
 (vim.keymap.set :t "<C-w>"   (fn [] (vim.api.nvim_command "q"))         {:desc "Close window (:q)"})
 (vim.keymap.set :t "<C-q>"   (fn [] (vim.api.nvim_command "bd!"))       {:desc "Close buffer (:bd!)"})
-(vim.keymap.set :n "<C-->"   "<C-^>"                                    {:desc "Switch to Alternate Buffer (ctrl + dash)"})
-(vim.keymap.set :t "<C-->"   (fn [] (vim.api.nvim_command "buffer #"))  {:desc "Switch to Alternate Buffer (ctrl + dash)"})
-(vim.keymap.set :n "<C-Tab>" "<C-^>"                                    {:desc "Switch to Alternate Buffer (ctrl + tab)"})
-(vim.keymap.set :t "<C-Tab>" (fn [] (vim.api.nvim_command "buffer #"))  {:desc "Switch to Alternate Buffer (ctrl + tab)"})
+(vim.keymap.set :n "<C-->"   "<C-^>"                                    {:desc "Switch to Alternate Buffer (ctrl+dash)"})
+(vim.keymap.set :t "<C-->"   (fn [] (vim.api.nvim_command "buffer #"))  {:desc "Switch to Alternate Buffer (ctrl+dash)"})
+(vim.keymap.set :n "<C-Tab>" "<C-^>"                                    {:desc "Switch to Alternate Buffer (ctrl+tab)"})
+(vim.keymap.set :t "<C-Tab>" (fn [] (vim.api.nvim_command "buffer #"))  {:desc "Switch to Alternate Buffer (ctrl+tab)"})
 
 (vim.keymap.set [:n :t] "<C-S-H>" (fn [] (vim.api.nvim_command ":bp"))      {:desc "Previous Buffer (:bp)"})
 (vim.keymap.set [:n :t] "<C-S-L>" (fn [] (vim.api.nvim_command ":bn"))      {:desc "Next Buffer (:bn)"})
@@ -91,7 +91,7 @@
     (-> :mini.starter (require) (. :open) (run)))
   {:desc "[L]ayer [H]ome (open new tab with Starter page)"})
 (vim.keymap.set [:n :v] "<leader>ln" vim.cmd.tabnext  {:desc "[L]ayer [N]ext (next tab)"})
-(vim.keymap.set [:n :v] "<leader>lp" vim.cmd.tabprev  {:desc "[L]ayer [P]revious (prev tab)"})
+(vim.keymap.set [:n :v] "<leader>lp" vim.cmd.tabprev  {:desc "[L]ayer [P]rev (prev tab)"})
 (vim.keymap.set [:n :v] "<leader>lc" vim.cmd.tabclose {:desc "[L]ayer [C]lose (close tab)"})
 (vim.keymap.set [:n :v] "<leader>lo"
                 (fn []
@@ -116,6 +116,25 @@
        :callback (fn [] (vim.cmd "qa!"))}))
   {:desc "[Q]uit [R]eload (compiles fennel and quits)"})
 
+;; spacemacs basics
+(vim.keymap.set :n "<leader>bd" ":bd<cr>"    {:desc "[B]uffer [D]elete"})
+(vim.keymap.set :n "<leader>bn" ":bn<cr>"    {:desc "[B]uffer [N]ext"})
+(vim.keymap.set :n "<leader>bp" ":bp<cr>"    {:desc "[B]uffer [P]rev"})
+(vim.keymap.set :n "<leader>bR" ":e<cr>"     {:desc "[B]uffer [R]eload"})
+(vim.keymap.set :n "<leader>fs" ":w<cr>"     {:desc "[F]ile [S]ave (same as ctrl+s)"})
+(vim.keymap.set :n "<leader>fS" ":wa<cr>"    {:desc "[F]ile [S]ave all"})
+(vim.keymap.set :n "<leader>qq" ":qa<cr>"    {:desc "[Q]uit all"})
+(vim.keymap.set :n "<leader>qQ" ":qa!<cr>"   {:desc "[Q]uit all force"})
+(vim.keymap.set :n "<leader>qs" ":xa<cr>"    {:desc "[Q]uit [S]ave"})
+(vim.keymap.set :n "<leader>w-" ":sp<cr>"    {:desc "[W]indow [-]plit horizontally"})
+(vim.keymap.set :n "<leader>w/" ":vsp<cr>"   {:desc "[W]indow [/]plit vertically"})
+(vim.keymap.set :n "<leader>w=" "<C-W>="     {:desc "[W]indow [=]qualize"})
+(vim.keymap.set :n "<leader>wd" ":q<cr>"     {:desc "[W]indow [D]elete"})
+(vim.keymap.set :n "<leader>wn" "<C-W><C-W>" {:desc "[W]indow [N]ext (focus)"})
+(vim.keymap.set :n "<leader>wh" "<cmd>wincmd h<cr>" {:desc "Move focus to the window to the left"})
+(vim.keymap.set :n "<leader>wj" "<cmd>wincmd j<cr>" {:desc "Move focus to window below"})
+(vim.keymap.set :n "<leader>wk" "<cmd>wincmd k<cr>" {:desc "Move focus to window above"})
+(vim.keymap.set :n "<leader>wl" "<cmd>wincmd l<cr>" {:desc "Move focus to the window to the right"})
 
 ;; telescope
 (local builtin (require :telescope.builtin))

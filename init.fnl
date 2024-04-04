@@ -15,7 +15,6 @@
    "EdenEast/nightfox.nvim"
 
    ;; plugins
-   "jimmay5469/vim-spacemacs"
    "ibhagwan/fzf-lua"
    "simeji/winresizer"
    "ggandor/leap.nvim"

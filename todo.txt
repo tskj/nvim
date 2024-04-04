@@ -2,9 +2,6 @@
 
 - SPC e p should take you to "project", based on .git
 - SPC e h for home (~/) and SPC e c for code (~/code)
-  and SPC e n instead of SPC f e d (this conflicts, figure it out)
-
-- checkout which-key
 
 - checkout neorg, also nvim-orgmode/orgmode
   settings for norg files:
@@ -40,14 +37,15 @@
 
 - DAP
 
-- rename tabs, sessions, and SPC r i instead of SPC s e
+- rename tabs, sessions ((SPC r l or SPC r t) and SPC r s)
 
 - SESSIONS SESSIONS SESSIONS
 
-- Sneak
-
 - indent correctly on blank lines in parinfer buffers
-
+  so if we're not on first line and our line is blank:
+    check if the line above is non-blank:
+      if we're to the left of the start of text on line above, indent more
+      so that we're on the same column
 
 ## known issues
 
@@ -63,4 +61,6 @@
 
 - linespacing messes up vertical lines like git indicators on files, Telescope borders
   and of course the statusline
+  maybe the font itself could be stretched? then we could have the same aesthetic in any
+  terminal emulator
 
