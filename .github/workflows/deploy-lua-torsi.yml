@@ -1,0 +1,48 @@
+name: Compile and Deploy Lua Files
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-lua:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v3
+        with:
+          ref: 'main'
+
+      - name: Set up Fennel environment
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fennel
+
+      - name: Make Lua files
+        run: make
+
+      - name: Checkout torsi branch
+        uses: actions/checkout@v3
+        with:
+          ref: 'torsi'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Clear old Lua files
+        run: |
+          git rm -rf .
+          git clean -fdx
+
+      - name: Copy Lua files from main branch
+        run: |
+          cp $(find . -type f -name '*.lua') .
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+      - name: Commit Lua files
+        run: |
+          git add -A
+          git commit -m "Update Lua files - ${{ github.sha }}"
+          git push origin torsi --force
