@@ -33,20 +33,24 @@ jobs:
           ref: 'torsi'
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
+          path: 'temp_branch'
 
-      - name: Clear old Lua files
+      - name: Clear old Lua files in torsi branch
         run: |
-          git rm -rf .
+          cd temp_branch
+          git rm -r *.lua || echo "No Lua files to remove"
           git clean -fdx
 
-      - name: Copy Lua files from main branch
+      - name: Copy Lua files from main branch while preserving directory structure
         run: |
-          find . -type f -name '*.lua' -exec cp {} . \;
+          rsync -av --include='*/' --include='*.lua' --exclude='*' ./ temp_branch/
 
       - name: Commit Lua files
+        working-directory: temp_branch
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add -A
-          git commit -m "Update Lua files - ${{ github.sha }}"
+          git commit -m "Update Lua files - ${{ github.sha }}" || echo "No changes to commit"
           git push origin torsi --force
+
