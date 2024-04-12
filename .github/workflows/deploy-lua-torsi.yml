@@ -15,10 +15,14 @@ jobs:
         with:
           ref: 'main'
 
-      - name: Set up Fennel environment
+      - name: Install Lua and LuaRocks
         run: |
           sudo apt-get update
-          sudo apt-get install -y fennel
+          sudo apt-get install -y lua5.3 luarocks
+
+      - name: Install Fennel
+        run: |
+          sudo luarocks install fennel
 
       - name: Make Lua files
         run: make
