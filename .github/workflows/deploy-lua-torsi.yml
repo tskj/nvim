@@ -24,16 +24,8 @@ jobs:
         run: |
           sudo luarocks install fennel
 
-      - name: List directory structure
-        run: ls -R
-
-      - name: List directory structure
-        run: ls -R
-        working-directory: ${{github.workspace}}
-
       - name: Make Lua files
         run: make
-        working-directory: ${{github.workspace}}
 
       - name: Checkout torsi branch
         uses: actions/checkout@v3
@@ -49,12 +41,12 @@ jobs:
 
       - name: Copy Lua files from main branch
         run: |
-          cp $(find . -type f -name '*.lua') .
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          find . -type f -name '*.lua' -exec cp {} . \;
 
       - name: Commit Lua files
         run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
           git add -A
           git commit -m "Update Lua files - ${{ github.sha }}"
           git push origin torsi --force
