@@ -24,8 +24,6 @@
 
 - context folds at the top
 
-- see if some form of sexp keybindings like slurp can work together with parinfer
-
 - both the file explorer and terminal really should set cwd when you interact with them
 - would be nice if the current file was selected if you go SPC e f to open :Explorer
 
@@ -41,11 +39,15 @@
 
 - SESSIONS SESSIONS SESSIONS
 
+- see if some form of sexp keybindings like slurp can work together with parinfer
+
 - indent correctly on blank lines in parinfer buffers
   so if we're not on first line and our line is blank:
     check if the line above is non-blank:
       if we're to the left of the start of text on line above, indent more
       so that we're on the same column
+  maybe, unrelatedly, set parinfer's mode to 'paren' when doing a search
+  and replace or replaying a macro or whatever, to not get into a messed up state
 
 ## known issues
 
