@@ -18,7 +18,7 @@ jobs:
       - name: Install Lua and LuaRocks
         run: |
           sudo apt-get update
-          sudo apt-get install -y lua5.3 luarocks
+          sudo apt-get install -y lua5.3 luarocks liblua5.3-dev
 
       - name: Install Fennel
         run: |
