@@ -26,6 +26,7 @@ jobs:
 
       - name: Make Lua files
         run: make
+        working-directory: ${{github.workspace}}
 
       - name: Checkout torsi branch
         uses: actions/checkout@v3
