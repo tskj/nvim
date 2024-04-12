@@ -19,6 +19,6 @@ $(LUA): %.lua: %.fnl $$(MACROS)
 	fennel \
 		--add-package-path ${VIMRUNTIME}/lua \
 		--add-package-path ${VIMRUNTIME}/lua/vim/lsp \
-		--add-macro-path fnl/macros \
+		--add-macro-path ${VIMRUNTIME}/fnl/macros \
 		--compile $< \
 		> $@
