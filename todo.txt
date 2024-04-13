@@ -49,6 +49,10 @@
   maybe, unrelatedly, set parinfer's mode to 'paren' when doing a search
   and replace or replaying a macro or whatever, to not get into a messed up state
 
+- faded parens on end of sexps
+
+- add +prefix descriptions to keys on which key!
+
 ## known issues
 
 - duplicate file paths for SPC s . on windows sometimes with both backwards and forwards slashes
