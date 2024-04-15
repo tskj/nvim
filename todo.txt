@@ -40,14 +40,11 @@
 - SESSIONS SESSIONS SESSIONS
 
 - see if some form of sexp keybindings like slurp can work together with parinfer
+  also move up and down the tree structure (next/prev sibling)
 
-- indent correctly on blank lines in parinfer buffers
-  so if we're not on first line and our line is blank:
-    check if the line above is non-blank:
-      if we're to the left of the start of text on line above, indent more
-      so that we're on the same column
-  maybe, unrelatedly, set parinfer's mode to 'paren' when doing a search
+- set parinfer's mode to 'paren' when doing a search
   and replace or replaying a macro or whatever, to not get into a messed up state
+  also maybe go to paren mode when saving to format and then go back to smart?
 
 - faded parens on end of sexps
 
