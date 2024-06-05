@@ -4,6 +4,16 @@
 ;;; a bit -- if you _want_ to open a new line above an existing line, go one
 ;;; down and use shift+O instead
 
+;;; here's a bug (interacts weirdly with something like the indent thing maybe, puts cursor on wrong line in some situations):
+;;;
+    ;   .center {
+    ;            display: flex;
+    ;            flex-direction: row;
+    ;            justify-content: middle
+    ;}
+
+    ; </style>
+
 (vim.keymap.set
   :n "o"
   (fn []
