@@ -6,7 +6,7 @@ if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({"git", "clone", "--filter=blob:none", "https://github.com/folke/lazy.nvim.git", "--branch=stable", lazypath})
 else
 end
-do end (vim.opt.rtp):prepend(lazypath)
+vim.opt.rtp:prepend(lazypath)
 local lazy = require("lazy")
 local function _2_()
   return vim.fn["firenvim#install"](0)

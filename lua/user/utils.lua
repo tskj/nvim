@@ -9,17 +9,17 @@ local function debug_log(...)
   local messages
   local _1_
   do
-    local tbl_19_auto = {}
-    local i_20_auto = 0
+    local tbl_21_auto = {}
+    local i_22_auto = 0
     for __4_auto, x_5_auto in ipairs(msgs) do
-      local val_21_auto = tostring(x_5_auto)
-      if (nil ~= val_21_auto) then
-        i_20_auto = (i_20_auto + 1)
-        do end (tbl_19_auto)[i_20_auto] = val_21_auto
+      local val_23_auto = tostring(x_5_auto)
+      if (nil ~= val_23_auto) then
+        i_22_auto = (i_22_auto + 1)
+        tbl_21_auto[i_22_auto] = val_23_auto
       else
       end
     end
-    _1_ = tbl_19_auto
+    _1_ = tbl_21_auto
   end
   messages = table.concat(_1_, " ")
   local log_line = (os.date("[%Y-%m-%dT%H:%M:%S] ") .. messages .. "\n")
