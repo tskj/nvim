@@ -67,5 +67,8 @@
   maybe the font itself could be stretched? then we could have the same aesthetic in any
   terminal emulator
 
-- pressing D in visual mode doesn't yank the text to the register like it should
+- pressing D in visual mode (regular, not block) doesn't yank the text to the register like it should
   (or rather it _does_, however it takes the whole line?)
+
+- consider using ctrl+enter instead of ctrl+m to select auto-complete suggestions
+  (cumbersome with M being next to N when going up and down suggestions)
