@@ -72,3 +72,6 @@
 
 - consider using ctrl+enter instead of ctrl+m to select auto-complete suggestions
   (cumbersome with M being next to N when going up and down suggestions)
+
+- would be nice to see the name of the file when using telescope, whether greping or even searching
+  for files, since the path can be quite long in a project. (also how do I scroll in the preview?)
