@@ -75,3 +75,6 @@
 
 - would be nice to see the name of the file when using telescope, whether greping or even searching
   for files, since the path can be quite long in a project. (also how do I scroll in the preview?)
+
+- maybe add H and L as "first character of line" and "last character of line", respectively?
+  ^ and g_, apparently?
