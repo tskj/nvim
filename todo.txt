@@ -78,3 +78,4 @@
 
 - maybe add H and L as "first character of line" and "last character of line", respectively?
   ^ and g_, apparently?
+  or maybe it would be better if this moved the screen over to reveal more of the line
