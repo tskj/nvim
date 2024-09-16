@@ -17,8 +17,7 @@ if vim.g.neovide then
   local linespacing_3f = false
   local separators = nil
   local function neovide_toggle_21(_4_)
-    local _arg_5_ = _4_
-    local args = _arg_5_["args"]
+    local args = _4_["args"]
     if (args == "toggle-transparency") then
       if transparent_3f then
         transparent_3f = false
@@ -69,10 +68,10 @@ if vim.g.neovide then
   neovide_toggle_21({args = "toggle-transparency"})
   neovide_toggle_21({args = "toggle-animations"})
   neovide_toggle_21({args = "toggle-linespacing"})
-  local function _11_()
+  local function _10_()
     return {"toggle-transparency", "toggle-animations", "toggle-linespacing"}
   end
-  return vim.api.nvim_create_user_command("Neovide", neovide_toggle_21, {nargs = 1, complete = _11_})
+  return vim.api.nvim_create_user_command("Neovide", neovide_toggle_21, {nargs = 1, complete = _10_})
 else
   return nil
 end
