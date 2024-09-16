@@ -84,3 +84,5 @@
   or similar, and then how to navigate through it
 
 - add command to select nightfox/whateverfox theme at will
+
+- neogit no longer opens commit message window to the side (but instead opens it above :()
