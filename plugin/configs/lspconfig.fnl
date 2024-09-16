@@ -41,7 +41,7 @@
                                                                          {:workspace {:library (vim.api.nvim_list_runtime_paths)}
                                                                           :diagnostics {:globals ["vim"]}}}})))}
    :ensure_installed
-    ["tsserver" ; TypeScript and JavaScript
+    ["ts_ls" ; TypeScript and JavaScript
      "rust_analyzer" ; Rust
      "bashls" ; Bash
      "clangd" ; C
@@ -50,6 +50,7 @@
      "dockerls" ; Docker (there is also `docker_compose_language_service` as a supplement)
      "eslint"
      "elmls" ; Elm
+     "millet" ; standard ml
      "fsautocomplete" ; F#
      "fennel_language_server" ; Fennel
      "gopls" ; Go

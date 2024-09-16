@@ -82,3 +82,5 @@
 
 - find out how to add all the stuff from a Telescope window, for instance live_grep, to the quickfix
   or similar, and then how to navigate through it
+
+- add command to select nightfox/whateverfox theme at will
