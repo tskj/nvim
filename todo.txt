@@ -86,3 +86,6 @@
 - add command to select nightfox/whateverfox theme at will
 
 - neogit no longer opens commit message window to the side (but instead opens it above :()
+
+- okay so shift+D should _not_ in fact yank to the register in visual selection mode
+  instead use VX to cut selections (and/or lines)
