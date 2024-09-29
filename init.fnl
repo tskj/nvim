@@ -71,6 +71,7 @@
 
    ;; fennel
    "Olical/conjure"
-   "gpanders/nvim-parinfer"
+   ;; "gpanders/nvim-parinfer"
+   {1 "eraserhd/parinfer-rust" :build "cargo build --release"}
    "bakpakin/fennel.vim" ; syntax highlighting
    "folke/neodev.nvim"])

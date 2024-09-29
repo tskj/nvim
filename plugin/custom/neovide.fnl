@@ -13,7 +13,7 @@
 
   ;; these get toggled further down, so these are
   ;; the opposite of the defaults!
-  (var transparent? false)
+  (var transparent? true)
   (var animation? false)
   (var linespacing? false)
 
