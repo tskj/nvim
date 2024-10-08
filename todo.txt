@@ -89,3 +89,6 @@
 
 - okay so shift+D should _not_ in fact yank to the register in visual selection mode
   instead use VX to cut selections (and/or lines)
+
+- there's input lag on pressing ctrl+w but not typing :q, what's going on? is it bound to something
+  else that we're waiting for?
