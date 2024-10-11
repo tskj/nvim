@@ -58,6 +58,9 @@
 (vim.api.nvim_create_autocmd "WinScrolled"
   {:pattern "*" :callback
    (fn []
+     (when (~= (vim.fn.mode) "n")
+      (lua :return))
+
      (let [win-height (vim.api.nvim_win_get_height 0)
            cursor-line (vim.fn.winline)
            [distance-to-top _x] (vim.api.nvim_win_get_cursor 0)
