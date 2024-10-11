@@ -35,9 +35,9 @@
             (set vim.g.neovide_cursor_animation_length 0)
             (set vim.g.neovide_cursor_trail_size 0))
         (do (set animation? true)
-          (set vim.g.neovide_scroll_animation_length 0.1)
-          (set vim.g.neovide_cursor_animation_length 0.005)
-          (set vim.g.neovide_cursor_trail_size 0.5)))
+            (set vim.g.neovide_scroll_animation_length 0.1)
+            (set vim.g.neovide_cursor_animation_length 0.005)
+            (set vim.g.neovide_cursor_trail_size 0.5)))
 
       :toggle-linespacing
       (if linespacing?
