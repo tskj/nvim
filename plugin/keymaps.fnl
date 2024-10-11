@@ -35,8 +35,23 @@
 (vim.keymap.set :t "<C-->"   (fn [] (vim.api.nvim_command "buffer #"))  {:desc "Switch to Alternate Buffer (ctrl+dash)"})
 (vim.keymap.set :n "<C-Tab>" "<C-^>"                                    {:desc "Switch to Alternate Buffer (ctrl+tab)"})
 (vim.keymap.set :t "<C-Tab>" (fn [] (vim.api.nvim_command "buffer #"))  {:desc "Switch to Alternate Buffer (ctrl+tab)"})
-(vim.keymap.set :n "<Tab>"   ">$"                                       {:desc "Indent line"})
-(vim.keymap.set :n "<S-Tab>" "<$"                                       {:desc "Dedent line"})
+
+(fn indent-then-move-cursor [cmd]
+  (fn []
+    (let [prev-line (vim.api.nvim_get_current_line)]
+      (vim.cmd (.. "normal! " cmd))
+      (let [current-line (vim.api.nvim_get_current_line)
+            indents (- (# current-line) (# prev-line))]
+        (when (= indents 0)
+          (lua :return))
+        (if (< indents 0)
+          (vim.cmd (.. "normal! " (math.abs indents) "h"))
+          (vim.cmd (.. "normal! " indents "l")))))))
+(vim.keymap.set :n "<Tab>" (indent-then-move-cursor ">>")   {:desc "Indent line" :noremap true})
+(vim.keymap.set :n "<leader><Tab>" "V="                     {:desc "Format line" :noremap true})
+;; necessary to avoid ctrl+i also meaning tab in normal mode
+(vim.keymap.set :n "<C-i>"   "<C-i>"                        {:noremap true})
+(vim.keymap.set :n "<S-Tab>" (indent-then-move-cursor "<<") {:desc "Dedent line" :noremap true})
 
 (vim.keymap.set [:n :t] "<C-S-H>" (fn [] (vim.api.nvim_command ":bp"))      {:desc "Previous Buffer (:bp)"})
 (vim.keymap.set [:n :t] "<C-S-L>" (fn [] (vim.api.nvim_command ":bn"))      {:desc "Next Buffer (:bn)"})
