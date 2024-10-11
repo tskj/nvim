@@ -35,6 +35,8 @@
 (vim.keymap.set :t "<C-->"   (fn [] (vim.api.nvim_command "buffer #"))  {:desc "Switch to Alternate Buffer (ctrl+dash)"})
 (vim.keymap.set :n "<C-Tab>" "<C-^>"                                    {:desc "Switch to Alternate Buffer (ctrl+tab)"})
 (vim.keymap.set :t "<C-Tab>" (fn [] (vim.api.nvim_command "buffer #"))  {:desc "Switch to Alternate Buffer (ctrl+tab)"})
+(vim.keymap.set :n "<Tab>"   ">$"                                       {:desc "Indent line"})
+(vim.keymap.set :n "<S-Tab>" "<$"                                       {:desc "Dedent line"})
 
 (vim.keymap.set [:n :t] "<C-S-H>" (fn [] (vim.api.nvim_command ":bp"))      {:desc "Previous Buffer (:bp)"})
 (vim.keymap.set [:n :t] "<C-S-L>" (fn [] (vim.api.nvim_command ":bn"))      {:desc "Next Buffer (:bn)"})

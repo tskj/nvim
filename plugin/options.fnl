@@ -18,6 +18,8 @@
 (set vim.opt.shiftwidth 2)
 (set vim.opt.expandtab true)
 
+(set vim.opt.cursorline true)
+
 ; left gutter, I think it's probably best to not waste that space?
 ; it only appears to work with "no" though, so w/e
 (set vim.opt.signcolumn "auto")
