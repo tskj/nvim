@@ -10,7 +10,6 @@ vim.opt.smartcase = true
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
-vim.opt.cursorline = true
 vim.opt.signcolumn = "auto"
 vim.opt.fileformats = {"unix", "dos"}
 vim.wo.wrap = false
@@ -33,6 +32,5 @@ do
   vim.opt.undofile = true
   vim.opt.undodir = undodir
 end
-vim.o.timeout = true
-vim.o.timeoutlen = 300
+vim.opt.linespace = 8
 return nil

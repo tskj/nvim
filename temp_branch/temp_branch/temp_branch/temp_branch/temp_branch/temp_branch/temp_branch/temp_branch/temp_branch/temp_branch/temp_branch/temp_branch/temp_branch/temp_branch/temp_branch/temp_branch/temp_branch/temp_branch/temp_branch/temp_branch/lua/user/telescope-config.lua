@@ -2,7 +2,7 @@ local _local_1_ = require("user.utils")
 local run = _local_1_["run"]
 local function create_opts()
   local cwd = vim.fn.getcwd()
-  local project_path = run(require("user.find-git-repo")["get-path-to-repo"], cwd)
+  local project_path = run((require("user.find-git-repo"))["get-path-to-repo"], cwd)
   if project_path then
     return {cwd = project_path}
   else
