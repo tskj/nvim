@@ -26,6 +26,7 @@
    {1 "folke/which-key.nvim"
     :event "VeryLazy"
     :opts {}}
+   "stevearc/oil.nvim"
 
    "nvim-tree/nvim-web-devicons"
    "mg979/vim-visual-multi"

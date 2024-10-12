@@ -4,9 +4,8 @@
 (local nvim-dir (vim.fn.stdpath "config"))
 
 
-;; use :Ex for now, switch to other file explorer in the future
 (fn open-in-explorer [dir]
-  (.. ":Ex " dir :<cr>))
+  (.. ":Oil " dir :<cr>))
 
 
 (vim.keymap.set :t "<Esc><Esc>" "<C-\\><C-n>" {:desc "Activate Normal mode from Terminal"})
