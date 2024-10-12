@@ -79,10 +79,18 @@
 (vim.keymap.set [:n :v] "<leader>en" (open-in-explorer nvim-dir) {:desc "[E]xplore [N]eovim config files"})
 (vim.keymap.set [:n :v] "<leader>eh" (open-in-explorer "~")      {:desc "[E]xplore [H]ome"})
 (vim.keymap.set [:n :v] "<leader>ec" (open-in-explorer "~/code") {:desc "[E]xplore [C]ode"})
+(vim.keymap.set [:n :v] "<leader>ep" (fn []
+                                       (run
+                                         (open-in-explorer
+                                           (-> :user.find-git-repo
+                                               (require)
+                                               (. :get-path-to-repo)
+                                               (run (vim.fn.getcwd))))))
+                {:desc "[E]xplore [P]roject (according to git repo)"})
+
 (vim.keymap.set [:n :v] "<leader>vd" vim.diagnostic.open_float   {:desc "[V]iew [D]diagnostic"})
 
 (vim.keymap.set [:n :v] "<leader>ri" vim.lsp.buf.rename    {:desc "[R]ename [I]dentifier [LSP]"})
-(vim.keymap.set [:n :v] "<leader>cs" ":nohlsearch<cr>"     {:desc "[C]lear [S]earch (Esc also does the same)"})
 
 ;; open file explorer in directory of current file
 (vim.keymap.set [:n :v] "<leader>ef" (open-in-explorer "") {:desc "[E]xplore [F]ile (open directory of cwd)"})

@@ -1,6 +1,3 @@
-- SPC e p should take you to "project", based on .git
-- SPC e h for home (~/) and SPC e c for code (~/code)
-
 - checkout neorg, also nvim-orgmode/orgmode
   settings for norg files:
     vim.opt_local.colorcolumn = "100"
@@ -14,11 +11,7 @@
 
 - checkout harpoon I guess
 
-- probably plugin for closing empty buffers that hang around for no reason
-
 - working with htmls tags and such
-
-- context folds at the top
 
 - prompts in ps (slow), bash (too long) and zsh (no color)
 
