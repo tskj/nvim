@@ -2,7 +2,7 @@ local _local_1_ = require("user.utils")
 local run = _local_1_["run"]
 local nvim_dir = vim.fn.stdpath("config")
 local function open_in_explorer(dir)
-  return (":Ex " .. dir .. "<cr>")
+  return (":Oil " .. dir .. "<cr>")
 end
 vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", {desc = "Activate Normal mode from Terminal"})
 vim.api.nvim_create_autocmd("TermOpen", {pattern = "*", command = "startinsert"})

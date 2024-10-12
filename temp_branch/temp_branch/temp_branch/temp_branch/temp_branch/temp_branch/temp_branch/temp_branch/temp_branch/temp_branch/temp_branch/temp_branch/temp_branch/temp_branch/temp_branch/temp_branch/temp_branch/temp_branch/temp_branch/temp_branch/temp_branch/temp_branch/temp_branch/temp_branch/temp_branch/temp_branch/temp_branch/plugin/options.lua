@@ -32,5 +32,6 @@ do
   vim.opt.undofile = true
   vim.opt.undodir = undodir
 end
-vim.opt.linespace = 8
+vim.o.timeout = true
+vim.o.timeoutlen = 300
 return nil
