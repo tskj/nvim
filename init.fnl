@@ -27,6 +27,8 @@
     :event "VeryLazy"
     :opts {}}
    "stevearc/oil.nvim"
+   "jiaoshijie/undotree"
+   "debugloop/telescope-undo.nvim"
 
    "nvim-tree/nvim-web-devicons"
    "mg979/vim-visual-multi"

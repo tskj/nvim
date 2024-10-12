@@ -137,6 +137,8 @@
        :callback (fn [] (vim.cmd "qa!"))}))
   {:desc "[Q]uit [R]eload (compiles fennel and quits)"})
 
+(vim.keymap.set [:n :v] "<leader>u" (fn [] (-> :undotree (require) (. :toggle) (run)) {:desc "[U]ndo tree "}))
+
 ;; spacemacs basics
 (vim.keymap.set :n "<leader>bd" ":bd<cr>"    {:desc "[B]uffer [D]elete"})
 (vim.keymap.set :n "<leader>bn" ":bn<cr>"    {:desc "[B]uffer [N]ext"})
@@ -183,6 +185,7 @@
 (vim.keymap.set [:n :v] "<leader>sm" builtin.marks                     {:desc "[S]earch [M]arks"})
 (vim.keymap.set [:n :v] "<leader>sq" builtin.quickfix                  {:desc "[S]earch [Q]quickfix list"})
 (vim.keymap.set [:n :v] "<leader>sc" builtin.git_commits               {:desc "[S]earch [C]ommits (git)"})
+(vim.keymap.set [:n :v] "<leader>su" (fn [] (-> :telescope (require) (. :extensions :undo :undo) (run)) {:desc "[S]earch [U]ndo tree"}))
 
 
 (vim.keymap.set :n "gd" builtin.lsp_definitions      {:desc "[G]oto [D]efinition [LSP]"})
