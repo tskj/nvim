@@ -74,11 +74,10 @@
 - find out how to add all the stuff from a Telescope window, for instance live_grep, to the quickfix
   or similar, and then how to navigate through it
 
+## nice to have
+
 - add command to select nightfox/whateverfox theme at will
   also add transparent background when that lands in neovide
 
 - neogit no longer opens commit message window to the side (but instead opens it above :()
   also there's annoying warnings if you don't capitalize first word
-
-- okay so shift+D should _not_ in fact yank to the register in visual selection mode
-  instead use VX to cut selections (and/or lines)

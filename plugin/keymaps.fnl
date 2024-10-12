@@ -217,11 +217,13 @@
 (vim.keymap.set [:n :v] "<leader>zc" fzf-lua.git_commits           {:desc "[Z]earch [C]ommits (git) [fzf-lua]"})
 
 
-
 ;; these are modifications of existing behavior, from primeagen
+(vim.keymap.set :n "D" "\"_D"  {:silent true}) ; dont' overwrite register when pasting
 (vim.keymap.set :v "p" "\"_dP" {:silent true}) ; don't overwrite register when pasting
 (vim.keymap.set :v "d" "\"_d"  {:silent true}) ; don't overwrite register when deleting
+(vim.keymap.set :v "D" "\"_d"  {:silent true}) ; dont' overwrite register when pasting
 
+(vim.keymap.set :n "X" "D"     {:silent true}) ; cut to end of line)
 (vim.keymap.set :v "P" "p"     {:silent true}) ; overwrite register when pasting
 
 
