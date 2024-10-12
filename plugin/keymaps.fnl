@@ -7,7 +7,7 @@
 (fn open-in-explorer [dir]
   (fn []
     (vim.cmd (.. "cd " dir))
-    (vim.cmd (.. "Oil " dir ))))
+    (vim.cmd (.. "Oil " dir))))
 
 
 (vim.keymap.set :t "<Esc><Esc>" "<C-\\><C-n>" {:desc "Activate Normal mode from Terminal"})
