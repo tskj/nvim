@@ -12,7 +12,7 @@ if vim.g.neovide then
   end
   vim.keymap.set("n", "<M-Enter>", _2_)
   vim.g.neovide_cursor_animate_command_line = false
-  local transparent_3f = false
+  local transparent_3f = true
   local animation_3f = false
   local linespacing_3f = false
   local separators = nil
