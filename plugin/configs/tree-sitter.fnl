@@ -16,3 +16,15 @@
             {:ab "@block.outer"
              :ib "@block.inner"}
           :lookahead true}}}))
+
+((-> :treesitter-context (require) (. :setup))
+ {:enable true
+  :max_lines 0
+  :min_window_height 0
+  :line_numbers false
+  :multiline_threshold 200
+  :trim_scope :outer
+  :mode :cursor
+  :separator nil
+  :zindex 200
+  :on_attach nil})

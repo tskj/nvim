@@ -67,6 +67,7 @@
        "L3MON4D3/LuaSnip"]}
 
    "nvim-treesitter/nvim-treesitter"
+   "nvim-treesitter/nvim-treesitter-context"
    {1 "folke/todo-comments.nvim"
     :event "VimEnter"
     :dependencies ["nvim-lua/plenary.nvim"]
