@@ -60,8 +60,6 @@
 
 - cursor flickers when pressing enter in terminals
 
-- <F15> is inserted in insert mode due to caffeine on Windows
-
 - linespacing messes up vertical lines like git indicators on files, Telescope borders
   and of course the statusline
   maybe the font itself could be stretched? then we could have the same aesthetic in any
@@ -70,25 +68,17 @@
 - pressing D in visual mode (regular, not block) doesn't yank the text to the register like it should
   (or rather it _does_, however it takes the whole line?)
 
-- consider using ctrl+enter instead of ctrl+m to select auto-complete suggestions
-  (cumbersome with M being next to N when going up and down suggestions)
-
 - would be nice to see the name of the file when using telescope, whether greping or even searching
   for files, since the path can be quite long in a project. (also how do I scroll in the preview?)
-
-- maybe add H and L as "first character of line" and "last character of line", respectively?
-  ^ and g_, apparently?
-  or maybe it would be better if this moved the screen over to reveal more of the line
 
 - find out how to add all the stuff from a Telescope window, for instance live_grep, to the quickfix
   or similar, and then how to navigate through it
 
 - add command to select nightfox/whateverfox theme at will
+  also add transparent background when that lands in neovide
 
 - neogit no longer opens commit message window to the side (but instead opens it above :()
+  also there's annoying warnings if you don't capitalize first word
 
 - okay so shift+D should _not_ in fact yank to the register in visual selection mode
   instead use VX to cut selections (and/or lines)
-
-- there's input lag on pressing ctrl+w but not typing :q, what's going on? is it bound to something
-  else that we're waiting for?

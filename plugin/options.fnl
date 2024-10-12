@@ -61,3 +61,6 @@
 
 (set vim.o.timeout true)
 (set vim.o.timeoutlen 300)
+
+(vim.api.nvim_del_keymap :n "<C-w><C-d>")
+(vim.api.nvim_del_keymap :n "<C-w>d")

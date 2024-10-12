@@ -77,6 +77,9 @@
 (vim.keymap.set [:n :v] "<leader>wo" ":only<cr>"                 {:desc "[W]indow [O]nly (close every other window)"})
 (vim.keymap.set [:n :v] "<leader>bs" ":enew<cr>"                 {:desc "[B]uffer [S]cratch (new buffer)"})
 (vim.keymap.set [:n :v] "<leader>en" (open-in-explorer nvim-dir) {:desc "[E]xplore [N]eovim config files"})
+(vim.keymap.set [:n :v] "<leader>eh" (open-in-explorer "~")      {:desc "[E]xplore [H]ome"})
+(vim.keymap.set [:n :v] "<leader>ec" (open-in-explorer "~/code") {:desc "[E]xplore [C]ode"})
+(vim.keymap.set [:n :v] "<leader>vd" vim.diagnostic.open_float   {:desc "[V]iew [D]diagnostic"})
 
 (vim.keymap.set [:n :v] "<leader>ri" vim.lsp.buf.rename    {:desc "[R]ename [I]dentifier [LSP]"})
 (vim.keymap.set [:n :v] "<leader>cs" ":nohlsearch<cr>"     {:desc "[C]lear [S]earch (Esc also does the same)"})
