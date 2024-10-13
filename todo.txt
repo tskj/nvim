@@ -25,7 +25,7 @@
   also move up and down the tree structure (next/prev sibling)
 
 - set parinfer's mode to 'paren' when doing a search and replace or replaying a macro
-  or renaming a variable with lsp, to not get into a messed up state
+  or renaming a variable with lsp or pasting, to not get into a messed up state
   also maybe go to paren mode when saving to format and then go back to smart?
 
 ## known issues

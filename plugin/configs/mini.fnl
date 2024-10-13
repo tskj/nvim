@@ -27,7 +27,8 @@
 (starter.setup)
 (local sessions (require :mini.sessions))
 (sessions.setup
- {:autoread false})
+ {:autoread false
+  :file ""})
 
 (local jump2d (require :mini.jump2d))
 (jump2d.setup

@@ -145,7 +145,7 @@
        :callback (fn [] (vim.cmd "qa!"))}))
   {:desc "[Q]uit [R]eload (compiles fennel and quits)"})
 
-(vim.keymap.set [:n :v] "<leader>u" (fn [] (-> :undotree (require) (. :toggle) (run)) {:desc "[U]ndo tree "}))
+(vim.keymap.set [:n :v] "<leader>u" (fn [] (-> :undotree (require) (. :toggle) (run))) {:desc "[U]ndo tree "})
 
 ;; spacemacs basics
 (vim.keymap.set :n "<leader>bd" ":bd<cr>"    {:desc "[B]uffer [D]elete"})
