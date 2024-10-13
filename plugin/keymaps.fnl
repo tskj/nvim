@@ -54,10 +54,10 @@
 (vim.keymap.set :n "<C-i>"   "<C-i>"                        {:noremap true})
 (vim.keymap.set :n "<S-Tab>" (indent-then-move-cursor "<<") {:desc "Dedent line" :noremap true})
 
-(vim.keymap.set [:n :t] "<C-S-H>" (fn [] (vim.api.nvim_command ":bp"))      {:desc "Previous Buffer (:bp)"})
-(vim.keymap.set [:n :t] "<C-S-L>" (fn [] (vim.api.nvim_command ":bn"))      {:desc "Next Buffer (:bn)"})
-(vim.keymap.set [:n :t] "<C-S-K>" (fn [] (vim.api.nvim_command ":tabnext")) {:desc "Next Tab (:tabnext)"})
-(vim.keymap.set [:n :t] "<C-S-J>" (fn [] (vim.api.nvim_command ":tabprev")) {:desc "Previous Tab (:tabprev)"})
+(vim.keymap.set [:n :t] "<C-S-H>" (fn [] (vim.api.nvim_command "bp"))      {:desc "Previous Buffer (:bp)"})
+(vim.keymap.set [:n :t] "<C-S-L>" (fn [] (vim.api.nvim_command "bn"))      {:desc "Next Buffer (:bn)"})
+(vim.keymap.set [:n :t] "<C-S-K>" (fn [] (vim.api.nvim_command "tabnext")) {:desc "Next Tab (:tabnext)"})
+(vim.keymap.set [:n :t] "<C-S-J>" (fn [] (vim.api.nvim_command "tabprev")) {:desc "Previous Tab (:tabprev)"})
 
 
 ;; Leap
