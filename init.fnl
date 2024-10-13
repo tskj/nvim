@@ -70,6 +70,8 @@
     :event "VimEnter"
     :dependencies ["nvim-lua/plenary.nvim"]
     :opts {:signs false}}
+   {1 "ThePrimeagen/refactoring.nvim"
+    :config (fn [] ((-> :refactoring (require) (. :setup))))}
 
    ;; fennel
    "Olical/conjure"

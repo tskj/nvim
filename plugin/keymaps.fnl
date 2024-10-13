@@ -36,6 +36,7 @@
 (vim.keymap.set :t "<C-->"   (fn [] (vim.api.nvim_command "buffer #"))  {:desc "Switch to Alternate Buffer (ctrl+dash)"})
 (vim.keymap.set :n "<C-Tab>" "<C-^>"                                    {:desc "Switch to Alternate Buffer (ctrl+tab)"})
 (vim.keymap.set :t "<C-Tab>" (fn [] (vim.api.nvim_command "buffer #"))  {:desc "Switch to Alternate Buffer (ctrl+tab)"})
+(vim.keymap.set :n "Z" "zz"  {:desc "Center this line"})
 
 (fn indent-then-move-cursor [cmd]
   (fn []
@@ -329,3 +330,17 @@
                   (-> (require :todo-comments)
                       (. :jump_next)
                       (run)))                  {:desc "[]]ump [T]odo next"})
+
+;; refactors
+(vim.keymap.set :x "<leader>ref" ":Refactor extract "         {:desc "[R]efactor [E]xtract [F]unction"})
+(vim.keymap.set :x "<leader>rff" ":Refactor extract_to_file " {:desc "[R]efactor to [F]ile: [F]unction"})
+(vim.keymap.set :x "<leader>rev" ":Refactor extract_var "     {:desc "[R]efactor [E]xtract [V]variable"})
+(vim.keymap.set :n "<leader>rIf" ":Refactor inline_func<cr>"      {:desc "[R]efactor [I]nline [F]unctino"})
+(vim.keymap.set [:n :x] "<leader>rIv" ":Refactor inline_var<cr>"  {:desc "[R]efactor [I]nline [V]ariable"})
+(vim.keymap.set :n "<leader>reb" ":Refactor extract_block<cr>"    {:desc "[R]efactor [E]xtract [B]lock"})
+(vim.keymap.set :n "<leader>rfb" ":Refactor extract_block<cr>"    {:desc "[R]efactor to [F]ile: [B]lock"})
+(vim.keymap.set [:n :x] "<leader>rs" (fn [] ((-> :telescope (require) (. :extensions :refactoring :refactors)))) {:desc "[R]efactor [S]earch (telescope)"})
+;; debug
+(vim.keymap.set :n "<leader>rdf" (fn [] ((-> :refactoring (require) (. :debug :printf))))                        {:desc "[R]efactor [D]debug [F]unction"})
+(vim.keymap.set [:n :x] "<leader>rdp" (fn [] ((-> :refactoring (require) (. :debug :print_var))))                {:desc "[R]efactor [D]debug [P]rint (variable or selection)"})
+(vim.keymap.set [:n :x] "<leader>rdc" (fn [] ((-> :refactoring (require) (. :debug :cleanup)) {})))              {:desc "[R]efactor [D]debug [C]lean"}
