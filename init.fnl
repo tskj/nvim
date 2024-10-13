@@ -43,10 +43,6 @@
              :integrations {:telescope true :diffview true}
              :commit_editor {:spell_check false}}}
 
-   {1 "glacambre/firenvim"
-     :lazy (not vim.g.started_by_firenvim)
-     :build (fn [] ((. vim.fn "firenvim#install") 0))}
-
    {1 "nvim-telescope/telescope.nvim"
     :event "VimEnter"
     :branch "0.1.x"
