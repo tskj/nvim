@@ -42,7 +42,7 @@
   terminal emulator
 
 - would be nice to see the name of the file when using telescope, whether greping or even searching
-  for files, since the path can be quite long in a project. (also how do I scroll in the preview?)
+  for files, since the path can be quite long in a project.
 
 - find out how to add all the stuff from a Telescope window, for instance live_grep, to the quickfix
   or similar, and then how to navigate through it
