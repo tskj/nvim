@@ -64,3 +64,7 @@
 
 (vim.api.nvim_del_keymap :n "<C-w><C-d>")
 (vim.api.nvim_del_keymap :n "<C-w>d")
+
+(set vim.env.LANG "en_US.UTF-8")
+(set vim.env.LC_ALL "en_US.UTF-8")
+

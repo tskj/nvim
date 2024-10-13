@@ -15,8 +15,6 @@
 
 - prompts in ps (slow), bash (too long) and zsh (no color)
 
-- in norwegian; kind of problematic at times
-
 - DAP
 
 - rename tabs, sessions ((SPC r l or SPC r t) and SPC r s)
@@ -49,6 +47,3 @@
 
 - add command to select nightfox/whateverfox theme at will
   also add transparent background when that lands in neovide
-
-- neogit no longer opens commit message window to the side (but instead opens it above :()
-  also there's annoying warnings if you don't capitalize first word
