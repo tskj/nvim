@@ -18,7 +18,7 @@
 ;; these are the regular bindings
 (vim.keymap.set :n "<C-Enter>"  vim.lsp.buf.code_action {:desc "Code Actions [LSP]"})
 (vim.keymap.set :n "<Enter>"   "m`o<Esc>k``"            {:desc "Add blank line below"})
-(vim.keymap.set :n "<S-Enter>" "i<Enter><Esc>k$"        {:desc "Break line at cursor"})
+(vim.keymap.set :n "<S-Enter>" "m`i<Enter><Esc>``"      {:desc "Break line at cursor"})
 (vim.keymap.set :n "<C-h>"     "<cmd>wincmd h<cr>"      {:desc "Move focus to the window to the left"})
 (vim.keymap.set :n "<C-j>"     "<cmd>wincmd j<cr>"      {:desc "Move focus to window below"})
 (vim.keymap.set :n "<C-k>"     "<cmd>wincmd k<cr>"      {:desc "Move focus to window above"})
@@ -268,22 +268,64 @@
 
 ;;; jump commands
 
+(var m-type nil)
+
+(fn register [type]
+  (set m-type type)
+  (vim.defer_fn
+    (fn [] (set m-type nil))
+    100_000))
+
+(vim.keymap.set :n ";"
+                (fn []
+                  (match m-type
+                    :q (vim.cmd "normal ]q")
+                    :l (vim.cmd "normal ]l")
+                    :d (vim.cmd "normal ]d")
+                    :t (vim.cmd "normal ]t")
+                    _  (vim.cmd "normal! ;"))))
+
+(vim.keymap.set :n ","
+                (fn []
+                  (match m-type
+                    :q (vim.cmd "normal [q")
+                    :l (vim.cmd "normal [l")
+                    :d (vim.cmd "normal [d")
+                    :t (vim.cmd "normal [t")
+                    _  (vim.cmd "normal! ,"))))
+
 ;; quickfix and location list
-(vim.keymap.set :n "[q" ":cprev<cr>" {:desc "[[]ump [Q]uickfix previous (:cprev)"})
-(vim.keymap.set :n "]q" ":cnext<cr>" {:desc "[]]ump [Q]uickfix next (:cnext)"})
-(vim.keymap.set :n "[l" ":lprev<cr>" {:desc "[[]ump [L]ocation previous (:lprev)"})
-(vim.keymap.set :n "]l" ":lnext<cr>" {:desc "[]]ump [L]ocation next (:lnext)"})
+(vim.keymap.set :n "[q" (fn []
+                          (register :q)
+                          (vim.api.nvim_command "cprev")) {:desc "[[]ump [Q]uickfix previous (:cprev)"})
+(vim.keymap.set :n "]q" (fn []
+                          (register :q)
+                          (vim.api.nvim_command "cnext")) {:desc "[]]ump [Q]uickfix next (:cnext)"})
+(vim.keymap.set :n "[l" (fn []
+                          (register :l)
+                          (vim.api.nvim_command "lprev")) {:desc "[[]ump [L]ocation previous (:lprev)"})
+(vim.keymap.set :n "]l" (fn []
+                          (register :l)
+                          (vim.api.nvim_command "lnext")) {:desc "[]]ump [L]ocation next (:lnext)"})
 
 ;; diagnostics
-(vim.keymap.set :n "[d" vim.diagnostic.goto_prev {:desc "[[]ump [D]iagnostic previous"})
-(vim.keymap.set :n "]d" vim.diagnostic.goto_next {:desc "[]]ump [D]iagnostic next"})
+(vim.keymap.set :n "[d" (fn []
+                          (register :d)
+                          (vim.diagnostic.goto_prev)) {:desc "[[]ump [D]iagnostic previous"})
+(vim.keymap.set :n "]d" (fn []
+                          (register :d)
+                          (vim.diagnostic.goto_next)) {:desc "[]]ump [D]iagnostic next"})
 
 ;; todos
 (vim.keymap.set :n "[t"
-                (fn [] (-> (require :todo-comments)
-                           (. :jump_prev)
-                           (run)))                  {:desc "[[]ump [T]odo previous"})
+                (fn []
+                  (register :t)
+                  (-> (require :todo-comments)
+                      (. :jump_prev)
+                      (run)))                  {:desc "[[]ump [T]odo previous"})
 (vim.keymap.set :n "]t"
-                (fn [] (-> (require :todo-comments)
-                           (. :jump_next)
-                           (run)))                  {:desc "[]]ump [T]odo next"})
+                (fn []
+                  (register :t)
+                  (-> (require :todo-comments)
+                      (. :jump_next)
+                      (run)))                  {:desc "[]]ump [T]odo next"})

@@ -15,8 +15,6 @@
 
 - prompts in ps (slow), bash (too long) and zsh (no color)
 
-- moving quickly between quickfix list items, like ; and , in addition to ]q and [q
-
 - in norwegian; kind of problematic at times
 
 - DAP
