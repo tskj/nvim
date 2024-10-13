@@ -12,12 +12,13 @@ if vim.g.neovide then
   end
   vim.keymap.set("n", "<M-Enter>", _2_)
   vim.g.neovide_cursor_animate_command_line = false
-  local transparent_3f = true
+  local transparent_3f = false
   local animation_3f = false
   local linespacing_3f = false
   local separators = nil
   local function neovide_toggle_21(_4_)
-    local args = _4_["args"]
+    local _arg_5_ = _4_
+    local args = _arg_5_["args"]
     if (args == "toggle-transparency") then
       if transparent_3f then
         transparent_3f = false
@@ -68,10 +69,10 @@ if vim.g.neovide then
   neovide_toggle_21({args = "toggle-transparency"})
   neovide_toggle_21({args = "toggle-animations"})
   neovide_toggle_21({args = "toggle-linespacing"})
-  local function _10_()
+  local function _11_()
     return {"toggle-transparency", "toggle-animations", "toggle-linespacing"}
   end
-  return vim.api.nvim_create_user_command("Neovide", neovide_toggle_21, {nargs = 1, complete = _10_})
+  return vim.api.nvim_create_user_command("Neovide", neovide_toggle_21, {nargs = 1, complete = _11_})
 else
   return nil
 end
