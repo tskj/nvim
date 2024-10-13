@@ -41,7 +41,7 @@
              :disable_insert_on_commit true
              :graph_style "unicode"
              :integrations {:telescope true :diffview true}
-             :commit_editor {:spell_check false}}} 
+             :commit_editor {:spell_check false}}}
 
    {1 "glacambre/firenvim"
      :lazy (not vim.g.started_by_firenvim)
