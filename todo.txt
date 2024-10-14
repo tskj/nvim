@@ -49,3 +49,5 @@
   also add transparent background when that lands in neovide
 
 - context lags sadge, switch to treesitter context or forget
+
+- code action and more give an error about windwos flip not working
