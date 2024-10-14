@@ -147,6 +147,11 @@ local function _22_()
   return vim.api.nvim_create_autocmd("TermClose", {pattern = "term://*make", callback = _23_})
 end
 vim.keymap.set({"n", "v"}, "<leader>qr", _22_, {desc = "[Q]uit [R]eload (compiles fennel and quits)"})
+local function _24_()
+  run(require("undotree").toggle)
+  return {desc = "[U]ndo tree "}
+end
+vim.keymap.set({"n", "v"}, "<leader>u", _24_)
 vim.keymap.set("n", "<leader>bd", ":bd<cr>", {desc = "[B]uffer [D]elete"})
 vim.keymap.set("n", "<leader>bn", ":bn<cr>", {desc = "[B]uffer [N]ext"})
 vim.keymap.set("n", "<leader>bp", ":bp<cr>", {desc = "[B]uffer [P]rev"})
@@ -177,18 +182,23 @@ vim.keymap.set({"n", "v"}, "<leader>sr", builtin.resume, {desc = "[S]earch [R]es
 vim.keymap.set({"n", "v"}, "<leader>s.", builtin.oldfiles, {desc = "[S]earch Recent Files ('.' for repeat)"})
 vim.keymap.set({"n", "v"}, "<leader>sb", builtin.buffers, {desc = "[S]earch [B]uffers (existing)"})
 vim.keymap.set({"n", "v"}, "<leader>sj", builtin.current_buffer_fuzzy_find, {desc = "[S]earch [J]ump: fuzzily search in current buffer"})
-local function _24_()
+local function _25_()
   return builtin.live_grep({grep_open_files = true, prompt_title = "Live Grep in Open Files"})
 end
-vim.keymap.set({"n", "v"}, "<leader>s/", _24_, {desc = "[S]earch [/] in Open Files"})
-local function _25_()
+vim.keymap.set({"n", "v"}, "<leader>s/", _25_, {desc = "[S]earch [/] in Open Files"})
+local function _26_()
   return builtin.find_files({cwd = vim.fn.stdpath("config")})
 end
-vim.keymap.set({"n", "v"}, "<leader>sn", _25_, {desc = "[S]earch [N]eovim config files"})
+vim.keymap.set({"n", "v"}, "<leader>sn", _26_, {desc = "[S]earch [N]eovim config files"})
 vim.keymap.set({"n", "v"}, "<leader>st", ":TodoTelescope<cr>", {desc = "[S]earch [T]odos"})
 vim.keymap.set({"n", "v"}, "<leader>sm", builtin.marks, {desc = "[S]earch [M]arks"})
 vim.keymap.set({"n", "v"}, "<leader>sq", builtin.quickfix, {desc = "[S]earch [Q]quickfix list"})
 vim.keymap.set({"n", "v"}, "<leader>sc", builtin.git_commits, {desc = "[S]earch [C]ommits (git)"})
+local function _27_()
+  run(require("telescope").extensions.undo.undo)
+  return {desc = "[S]earch [U]ndo tree"}
+end
+vim.keymap.set({"n", "v"}, "<leader>su", _27_)
 vim.keymap.set("n", "gd", builtin.lsp_definitions, {desc = "[G]oto [D]efinition [LSP]"})
 vim.keymap.set("n", "gr", builtin.lsp_references, {desc = "[G]oto [R]eferences [LSP]"})
 vim.keymap.set("n", "gi", builtin.lsp_implementations, {desc = "[G]oto [I]mplementations [LSP]"})
@@ -207,10 +217,10 @@ vim.keymap.set({"n", "v"}, "<leader>z.", fzf_lua.oldfiles, {desc = "[Z]earch Rec
 vim.keymap.set({"n", "v"}, "<leader>zb", fzf_lua.buffers, {desc = "[Z]earch [B]uffers (existing) [fzf-lua]"})
 vim.keymap.set({"n", "v"}, "<leader>zj", fzf_lua.blines, {desc = "[/] Fuzzily search in current buffer [fzf-lua]"})
 vim.keymap.set({"n", "v"}, "<leader>z/", fzf_lua.lines, {desc = "[Z]earch [/] in Open Files [fzf-lua]"})
-local function _26_()
+local function _28_()
   return fzf_lua.files({cwd = vim.fn.stdpath("config")}, {desc = "[Z]earch [N]eovim config files [fzf-lua]"})
 end
-vim.keymap.set({"n", "v"}, "<leader>zn", _26_)
+vim.keymap.set({"n", "v"}, "<leader>zn", _28_)
 vim.keymap.set({"n", "v"}, "<leader>zm", fzf_lua.marks, {desc = "[Z]earch [M]arks [fzf-lua]"})
 vim.keymap.set({"n", "v"}, "<leader>zq", fzf_lua.quickfix, {desc = "[Z]earch [Q]quickfix list [fzf-lua]"})
 vim.keymap.set({"n", "v"}, "<leader>zc", fzf_lua.git_commits, {desc = "[Z]earch [C]ommits (git) [fzf-lua]"})
@@ -218,12 +228,12 @@ vim.keymap.set("v", "p", "\"_dP", {silent = true})
 vim.keymap.set("v", "d", "\"_d", {silent = true})
 vim.keymap.set("v", "P", "p", {silent = true})
 local function command_with_unchanged_unnamed_register(cmd)
-  local function _27_()
+  local function _29_()
     local old_unnamed = vim.fn.getreg("\"")
     vim.api.nvim_command(("normal! " .. cmd))
     return vim.fn.setreg("\"", old_unnamed)
   end
-  return _27_
+  return _29_
 end
 vim.keymap.set("n", "<leader>cy", "\"+y", {silent = true, desc = "[C]lipboard [Y]ank (y)"})
 vim.keymap.set("n", "<leader>cp", "\"+p", {silent = true, desc = "[C]lipboard [P]aste (p)"})
@@ -243,11 +253,11 @@ vim.keymap.set("n", "[l", ":lprev<cr>", {desc = "[[]ump [L]ocation previous (:lp
 vim.keymap.set("n", "]l", ":lnext<cr>", {desc = "[]]ump [L]ocation next (:lnext)"})
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, {desc = "[[]ump [D]iagnostic previous"})
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, {desc = "[]]ump [D]iagnostic next"})
-local function _28_()
+local function _30_()
   return run(require("todo-comments").jump_prev)
 end
-vim.keymap.set("n", "[t", _28_, {desc = "[[]ump [T]odo previous"})
-local function _29_()
+vim.keymap.set("n", "[t", _30_, {desc = "[[]ump [T]odo previous"})
+local function _31_()
   return run(require("todo-comments").jump_next)
 end
-return vim.keymap.set("n", "]t", _29_, {desc = "[]]ump [T]odo next"})
+return vim.keymap.set("n", "]t", _31_, {desc = "[]]ump [T]odo next"})
