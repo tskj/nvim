@@ -47,3 +47,5 @@
 
 - add command to select nightfox/whateverfox theme at will
   also add transparent background when that lands in neovide
+
+- context lags sadge, switch to treesitter context or forget
