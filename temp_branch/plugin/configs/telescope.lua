@@ -6,4 +6,5 @@ telescope.setup({extensions = {["ui-select"] = {run(require("telescope.themes").
 pcall(require("telescope").load_extension, "fzf")
 pcall(require("telescope").load_extension, "ui-selet")
 telescope.load_extension("ui-select")
-return telescope.load_extension("undo")
+telescope.load_extension("undo")
+return telescope.load_extension("refactoring")
