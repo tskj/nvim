@@ -353,5 +353,4 @@ vim.keymap.set({"n", "x"}, "<leader>rdp", _46_, {desc = "[R]efactor [D]debug [P]
 local function _47_()
   return require("refactoring").debug.cleanup({})
 end
-vim.keymap.set({"n", "x"}, "<leader>rdc", _47_)
-return {desc = "[R]efactor [D]debug [C]lean"}
+return vim.keymap.set({"n", "x"}, "<leader>rdc", _47_, {desc = "[R]efactor [D]debug [C]lean"})
