@@ -49,3 +49,8 @@
   also add transparent background when that lands in neovide
 
 - code action and more give an error about windwos flip not working
+  opening branch using `b` for instance in neogit
+
+- tabnext and tabprev using cltr+shift+j and k doesn't work in Nvy and terminal (only neovide)
+
+- close tab then move one left custom plugin doesn't really work most of the time

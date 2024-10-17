@@ -343,4 +343,4 @@
 ;; debug
 (vim.keymap.set :n "<leader>rdf" (fn [] ((-> :refactoring (require) (. :debug :printf))))                        {:desc "[R]efactor [D]debug [F]unction"})
 (vim.keymap.set [:n :x] "<leader>rdp" (fn [] ((-> :refactoring (require) (. :debug :print_var))))                {:desc "[R]efactor [D]debug [P]rint (variable or selection)"})
-(vim.keymap.set [:n :x] "<leader>rdc" (fn [] ((-> :refactoring (require) (. :debug :cleanup)) {})))              {:desc "[R]efactor [D]debug [C]lean"}
+(vim.keymap.set [:n :x] "<leader>rdc" (fn [] ((-> :refactoring (require) (. :debug :cleanup)) {}))              {:desc "[R]efactor [D]debug [C]lean"})
