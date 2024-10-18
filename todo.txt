@@ -54,3 +54,37 @@
 - tabnext and tabprev using cltr+shift+j and k doesn't work in Nvy and terminal (only neovide)
 
 - close tab then move one left custom plugin doesn't really work most of the time
+
+- see filepath in small float window:
+function ShowFilePathFloat()
+    -- Get the current file path
+    local file_path = vim.fn.expand('%:p')
+
+    -- Create a small floating window
+    local buf = vim.api.nvim_create_buf(false, true)
+    local width = math.min(80, vim.fn.strwidth(file_path) + 2)
+    local height = 1
+    local opts = {
+        relative = 'editor',
+        width = width,
+        height = height,
+        row = math.floor((vim.o.lines - height) / 2),
+        col = math.floor((vim.o.columns - width) / 2),
+        style = 'minimal',
+        border = 'rounded',
+    }
+
+    -- Set the content of the floating window to the file path
+    vim.api.nvim_buf_set_lines(buf, 0, -1, false, { file_path })
+
+    -- Open the floating window with the specified options
+    vim.api.nvim_open_win(buf, true, opts)
+
+    -- Allow normal mode operations (like visual selection) inside the float
+    vim.cmd('normal! gg0')
+end
+
+-- Map it to a keybinding
+vim.api.nvim_set_keymap('n', '<leader>p', ':lua ShowFilePathFloat()<CR>', { noremap = true, silent = true })
+
+- maybe show the full file path when browsing in telescope in the messsage thinghy where the command line is
