@@ -92,3 +92,8 @@ vim.api.nvim_set_keymap('n', '<leader>p', ':lua ShowFilePathFloat()<CR>', { nore
 - maybe show the full file path when browsing in telescope in the messsage thinghy where the command line is
 
 - lsp signature info when typing in insert mode: https://chatgpt.com/c/671422de-1330-800b-9639-fb113d72f024
+
+- close terminal window with <c-w> should close the actual terminal and remove it
+
+- plugin to kill process running on a specific port (floating modal input?) (maybe it exists?)
+  should work on windows and unix
