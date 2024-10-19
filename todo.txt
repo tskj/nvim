@@ -54,3 +54,5 @@
 - tabnext and tabprev using cltr+shift+j and k doesn't work in Nvy and terminal (only neovide)
 
 - close tab then move one left custom plugin doesn't really work most of the time
+
+- pressing enter in normal mode in a terminal should put us in insert mode and execute the enter

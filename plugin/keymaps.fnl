@@ -174,6 +174,9 @@
 (vim.keymap.set [:n :v] "<leader>sk" builtin.keymaps                   {:desc "[S]earch [K]eymaps"})
 (vim.keymap.set [:n :v] "<leader>sf"
                 (. (require :user.telescope-config) :find-files)       {:desc "[S]earch [F]iles"})
+(vim.keymap.set [:n :v] "<leader>sa"
+                (. (require :user.telescope-config) :find-hidden-files)
+                {:desc "[S]earch [A]ll files (includes hidden but hides .gitignore)"})
 (vim.keymap.set [:n :v] "<leader>ss" builtin.builtin                   {:desc "[S]earch [S]elect Telescope"})
 (vim.keymap.set [:n :v] "<leader>sw" builtin.grep_string               {:desc "[S]earch current [W]ord"})
 (vim.keymap.set [:n :v] "<leader>sg"
