@@ -62,12 +62,12 @@
 
 
 ;; Leap
-(vim.keymap.set [:n :x :o] "<leader>gj" "<Plug>(leap-forward)"  {:desc "[G]oto [J]ump forwards [Leap]"})
-(vim.keymap.set [:n :x :o] "<leader>gJ" "<Plug>(leap-backward)" {:desc "[G]oto [J]ump backwards [Leap]"})
+(vim.keymap.set [:n :x :o] "<leader>gl" "<Plug>(leap-forward)"  {:desc "[G]oto [L]eap forwards [Leap]"})
+(vim.keymap.set [:n :x :o] "<leader>gl" "<Plug>(leap-backward)" {:desc "[G]oto [L]eap backwards [Leap]"})
 
 ;; Sneak
-(vim.keymap.set [:n :x :o] "gj" "<Plug>Sneak_s" {:desc "[G]oto [J]ump forwards [Sneak]"})
-(vim.keymap.set [:n :x :o] "gJ" "<Plug>Sneak_S" {:desc "[G]oto [J]ump backwards [Sneak]"})
+(vim.keymap.set [:n :x :o] "gl" "<Plug>Sneak_s" {:desc "[G]oto [l]eap forwards [Sneak]"})
+(vim.keymap.set [:n :x :o] "gL" "<Plug>Sneak_S" {:desc "[G]oto [L]eap backwards [Sneak]"})
 
 
 ;;; these are all the spacemacs-like keybindings
