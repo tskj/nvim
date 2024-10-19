@@ -65,19 +65,19 @@ vim.keymap.set("n", "<leader><Tab>", "V=", {desc = "Format line", noremap = true
 vim.keymap.set("n", "<C-i>", "<C-i>", {noremap = true})
 vim.keymap.set("n", "<S-Tab>", indent_then_move_cursor("<<"), {desc = "Dedent line", noremap = true})
 local function _10_()
-  return vim.api.nvim_command(":bp")
+  return vim.api.nvim_command("bp")
 end
 vim.keymap.set({"n", "t"}, "<C-S-H>", _10_, {desc = "Previous Buffer (:bp)"})
 local function _11_()
-  return vim.api.nvim_command(":bn")
+  return vim.api.nvim_command("bn")
 end
 vim.keymap.set({"n", "t"}, "<C-S-L>", _11_, {desc = "Next Buffer (:bn)"})
 local function _12_()
-  return vim.api.nvim_command(":tabnext")
+  return vim.api.nvim_command("tabnext")
 end
 vim.keymap.set({"n", "t"}, "<C-S-K>", _12_, {desc = "Next Tab (:tabnext)"})
 local function _13_()
-  return vim.api.nvim_command(":tabprev")
+  return vim.api.nvim_command("tabprev")
 end
 vim.keymap.set({"n", "t"}, "<C-S-J>", _13_, {desc = "Previous Tab (:tabprev)"})
 vim.keymap.set({"n", "x", "o"}, "<leader>gj", "<Plug>(leap-forward)", {desc = "[G]oto [J]ump forwards [Leap]"})

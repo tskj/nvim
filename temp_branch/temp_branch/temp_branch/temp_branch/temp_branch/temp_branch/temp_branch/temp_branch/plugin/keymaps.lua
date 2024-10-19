@@ -151,10 +151,9 @@ local function _23_()
 end
 vim.keymap.set({"n", "v"}, "<leader>qr", _23_, {desc = "[Q]uit [R]eload (compiles fennel and quits)"})
 local function _25_()
-  run(require("undotree").toggle)
-  return {desc = "[U]ndo tree "}
+  return run(require("undotree").toggle)
 end
-vim.keymap.set({"n", "v"}, "<leader>u", _25_)
+vim.keymap.set({"n", "v"}, "<leader>u", _25_, {desc = "[U]ndo tree "})
 vim.keymap.set("n", "<leader>bd", ":bd<cr>", {desc = "[B]uffer [D]elete"})
 vim.keymap.set("n", "<leader>bn", ":bn<cr>", {desc = "[B]uffer [N]ext"})
 vim.keymap.set("n", "<leader>bp", ":bp<cr>", {desc = "[B]uffer [P]rev"})

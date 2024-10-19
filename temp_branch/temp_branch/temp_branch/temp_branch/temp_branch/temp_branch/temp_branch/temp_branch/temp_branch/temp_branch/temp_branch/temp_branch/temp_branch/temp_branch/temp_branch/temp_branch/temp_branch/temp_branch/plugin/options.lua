@@ -35,4 +35,5 @@ do
 end
 vim.o.timeout = true
 vim.o.timeoutlen = 300
-return nil
+vim.api.nvim_del_keymap("n", "<C-w><C-d>")
+return vim.api.nvim_del_keymap("n", "<C-w>d")
