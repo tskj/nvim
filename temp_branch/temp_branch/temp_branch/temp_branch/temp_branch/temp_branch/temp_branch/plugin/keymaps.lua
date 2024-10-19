@@ -197,10 +197,9 @@ vim.keymap.set({"n", "v"}, "<leader>sm", builtin.marks, {desc = "[S]earch [M]ark
 vim.keymap.set({"n", "v"}, "<leader>sq", builtin.quickfix, {desc = "[S]earch [Q]quickfix list"})
 vim.keymap.set({"n", "v"}, "<leader>sc", builtin.git_commits, {desc = "[S]earch [C]ommits (git)"})
 local function _28_()
-  run(require("telescope").extensions.undo.undo)
-  return {desc = "[S]earch [U]ndo tree"}
+  return run(require("telescope").extensions.undo.undo)
 end
-vim.keymap.set({"n", "v"}, "<leader>su", _28_)
+vim.keymap.set({"n", "v"}, "<leader>su", _28_, {desc = "[S]earch [U]ndo tree"})
 vim.keymap.set("n", "gd", builtin.lsp_definitions, {desc = "[G]oto [D]efinition [LSP]"})
 vim.keymap.set("n", "gr", builtin.lsp_references, {desc = "[G]oto [R]eferences [LSP]"})
 vim.keymap.set("n", "gi", builtin.lsp_implementations, {desc = "[G]oto [I]mplementations [LSP]"})
