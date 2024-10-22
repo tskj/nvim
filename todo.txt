@@ -97,3 +97,9 @@ vim.api.nvim_set_keymap('n', '<leader>p', ':lua ShowFilePathFloat()<CR>', { nore
 
 - plugin to kill process running on a specific port (floating modal input?) (maybe it exists?)
   should work on windows and unix
+
+- SPC s v -> search visual, namely use telescope to fuzzy search in current buffer
+  SPC s e -> search SEssions, whenver we get that working
+
+- regular dd does actually trash the register
+  c also does this annoyingly
