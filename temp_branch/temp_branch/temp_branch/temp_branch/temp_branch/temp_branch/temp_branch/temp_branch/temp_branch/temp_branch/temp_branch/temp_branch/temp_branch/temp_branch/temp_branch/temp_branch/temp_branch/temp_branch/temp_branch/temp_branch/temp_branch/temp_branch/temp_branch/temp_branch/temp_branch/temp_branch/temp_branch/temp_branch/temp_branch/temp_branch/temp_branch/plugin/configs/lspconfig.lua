@@ -16,4 +16,6 @@ local function _2_()
 end
 mason_lspconfig.setup({handlers = {lsp_zero.default_setup, fennel_language_server = _2_}, ensure_installed = {"ts_ls", "rust_analyzer", "bashls", "clangd", "omnisharp", "clojure_lsp", "dockerls", "eslint", "elmls", "millet", "fsautocomplete", "fennel_language_server", "gopls", "graphql", "html", "htmx", "biome", "lua_ls", "autotools_ls", "marksman", "glsl_analyzer", "powershell_es", "jedi_language_server", "ruff_lsp", "sqlls", "volar", "wgsl_analyzer", "yamlls", "zls"}})
 local cmp = require("cmp")
-return cmp.setup({mapping = cmp.mapping.preset.insert({["<C-Space>"] = cmp.mapping.confirm({select = true}), ["<C-y>"] = cmp.mapping.confirm({select = true}), ["<C-m>"] = cmp.mapping.confirm({select = true})}), preselect = "item", completion = {completeopt = "menu,menuone,noinsert"}, sources = {{name = "nvim_lsp"}, {name = "nvim_lua"}}, window = {completion = cmp.config.window.bordered(), documentation = cmp.config.window.bordered()}})
+cmp.setup({mapping = cmp.mapping.preset.insert({["<C-Space>"] = cmp.mapping.confirm({select = true}), ["<C-y>"] = cmp.mapping.confirm({select = true}), ["<C-m>"] = cmp.mapping.confirm({select = true}), ["<C-enter>"] = cmp.mapping.confirm({select = true})}), preselect = "item", completion = {completeopt = "menu,menuone,noinsert"}, sources = {{name = "nvim_lsp"}, {name = "nvim_lua"}}, window = {completion = cmp.config.window.bordered(), documentation = cmp.config.window.bordered()}})
+local lspconfig = require("lspconfig")
+return lspconfig.racket_langserver.setup({})

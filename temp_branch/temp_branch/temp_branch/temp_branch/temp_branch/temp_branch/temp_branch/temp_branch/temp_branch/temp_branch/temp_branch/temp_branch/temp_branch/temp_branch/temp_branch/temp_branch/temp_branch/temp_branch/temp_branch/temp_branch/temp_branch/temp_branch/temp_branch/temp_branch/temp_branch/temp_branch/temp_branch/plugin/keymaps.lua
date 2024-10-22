@@ -38,6 +38,8 @@ local function _5_()
   return vim.api.nvim_command("buffer #")
 end
 vim.keymap.set("t", "<C-Tab>", _5_, {desc = "Switch to Alternate Buffer (ctrl+tab)"})
+vim.keymap.set("n", "<Tab>", ">$", {desc = "Indent line"})
+vim.keymap.set("n", "<S-Tab>", "<$", {desc = "Dedent line"})
 local function _6_()
   return vim.api.nvim_command(":bp")
 end
