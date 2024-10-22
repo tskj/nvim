@@ -103,3 +103,5 @@ vim.api.nvim_set_keymap('n', '<leader>p', ':lua ShowFilePathFloat()<CR>', { nore
 
 - regular dd does actually trash the register
   c also does this annoyingly
+
+- when oil window receives focus it needs to also set cwd
