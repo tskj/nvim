@@ -13,7 +13,7 @@ vim.api.nvim_create_autocmd("TermOpen", {pattern = "*", command = "startinsert"}
 vim.api.nvim_create_autocmd("BufEnter", {pattern = "term://*", command = "startinsert"})
 vim.keymap.set("n", "<C-Enter>", vim.lsp.buf.code_action, {desc = "Code Actions [LSP]"})
 vim.keymap.set("n", "<Enter>", "m`o<Esc>k``", {desc = "Add blank line below"})
-vim.keymap.set("n", "<S-Enter>", "i<Enter><Esc>k$", {desc = "Break line at cursor"})
+vim.keymap.set("n", "<S-Enter>", "m`i<Enter><Esc>``", {desc = "Break line at cursor"})
 vim.keymap.set("n", "<C-h>", "<cmd>wincmd h<cr>", {desc = "Move focus to the window to the left"})
 vim.keymap.set("n", "<C-j>", "<cmd>wincmd j<cr>", {desc = "Move focus to window below"})
 vim.keymap.set("n", "<C-k>", "<cmd>wincmd k<cr>", {desc = "Move focus to window above"})
@@ -253,17 +253,82 @@ vim.keymap.set("v", "<leader>cD", "\"+d", {silent = true, desc = "[C]lipboard [D
 vim.keymap.set("v", "<leader>cy", command_with_unchanged_unnamed_register("\"+y"), {silent = true, desc = "[C]lipboard [Y]ank (y)"})
 vim.keymap.set("v", "<leader>cp", "\"_d\"+P", {silent = true, desc = "[C]lipboard [P]aste (p)"})
 vim.keymap.set("v", "<leader>cd", command_with_unchanged_unnamed_register("\"+d"), {silent = true, desc = "[C]lipbaord [D]elete (d)"})
-vim.keymap.set("n", "[q", ":cprev<cr>", {desc = "[[]ump [Q]uickfix previous (:cprev)"})
-vim.keymap.set("n", "]q", ":cnext<cr>", {desc = "[]]ump [Q]uickfix next (:cnext)"})
-vim.keymap.set("n", "[l", ":lprev<cr>", {desc = "[[]ump [L]ocation previous (:lprev)"})
-vim.keymap.set("n", "]l", ":lnext<cr>", {desc = "[]]ump [L]ocation next (:lnext)"})
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, {desc = "[[]ump [D]iagnostic previous"})
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, {desc = "[]]ump [D]iagnostic next"})
-local function _31_()
+local m_type = nil
+local function register(type)
+  m_type = type
+  local function _31_()
+    m_type = nil
+    return nil
+  end
+  return vim.defer_fn(_31_, 100000)
+end
+local function _32_()
+  if (m_type == "q") then
+    return vim.cmd("normal ]q")
+  elseif (m_type == "l") then
+    return vim.cmd("normal ]l")
+  elseif (m_type == "d") then
+    return vim.cmd("normal ]d")
+  elseif (m_type == "t") then
+    return vim.cmd("normal ]t")
+  else
+    local _ = m_type
+    return vim.cmd("normal! ;")
+  end
+end
+vim.keymap.set("n", ";", _32_)
+local function _34_()
+  if (m_type == "q") then
+    return vim.cmd("normal [q")
+  elseif (m_type == "l") then
+    return vim.cmd("normal [l")
+  elseif (m_type == "d") then
+    return vim.cmd("normal [d")
+  elseif (m_type == "t") then
+    return vim.cmd("normal [t")
+  else
+    local _ = m_type
+    return vim.cmd("normal! ,")
+  end
+end
+vim.keymap.set("n", ",", _34_)
+local function _36_()
+  register("q")
+  return vim.api.nvim_command("cprev")
+end
+vim.keymap.set("n", "[q", _36_, {desc = "[[]ump [Q]uickfix previous (:cprev)"})
+local function _37_()
+  register("q")
+  return vim.api.nvim_command("cnext")
+end
+vim.keymap.set("n", "]q", _37_, {desc = "[]]ump [Q]uickfix next (:cnext)"})
+local function _38_()
+  register("l")
+  return vim.api.nvim_command("lprev")
+end
+vim.keymap.set("n", "[l", _38_, {desc = "[[]ump [L]ocation previous (:lprev)"})
+local function _39_()
+  register("l")
+  return vim.api.nvim_command("lnext")
+end
+vim.keymap.set("n", "]l", _39_, {desc = "[]]ump [L]ocation next (:lnext)"})
+local function _40_()
+  register("d")
+  return vim.diagnostic.goto_prev()
+end
+vim.keymap.set("n", "[d", _40_, {desc = "[[]ump [D]iagnostic previous"})
+local function _41_()
+  register("d")
+  return vim.diagnostic.goto_next()
+end
+vim.keymap.set("n", "]d", _41_, {desc = "[]]ump [D]iagnostic next"})
+local function _42_()
+  register("t")
   return run(require("todo-comments").jump_prev)
 end
-vim.keymap.set("n", "[t", _31_, {desc = "[[]ump [T]odo previous"})
-local function _32_()
+vim.keymap.set("n", "[t", _42_, {desc = "[[]ump [T]odo previous"})
+local function _43_()
+  register("t")
   return run(require("todo-comments").jump_next)
 end
-return vim.keymap.set("n", "]t", _32_, {desc = "[]]ump [T]odo next"})
+return vim.keymap.set("n", "]t", _43_, {desc = "[]]ump [T]odo next"})
