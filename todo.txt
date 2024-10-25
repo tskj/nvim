@@ -105,3 +105,6 @@ vim.api.nvim_set_keymap('n', '<leader>p', ':lua ShowFilePathFloat()<CR>', { nore
   c also does this annoyingly
 
 - when oil window receives focus it needs to also set cwd
+
+- double ctrl+l should sendt ctrl+l to a terminal to clear it, and single ctrl+l should move
+  focus one window wo the right!
