@@ -42,6 +42,7 @@ local function _6_()
   return vim.api.nvim_command("buffer #")
 end
 vim.keymap.set("t", "<C-Tab>", _6_, {desc = "Switch to Alternate Buffer (ctrl+tab)"})
+vim.keymap.set("n", "Z", "zz", {desc = "Center this line"})
 local function indent_then_move_cursor(cmd)
   local function _7_()
     local prev_line = vim.api.nvim_get_current_line()
@@ -329,4 +330,28 @@ local function _43_()
   register("t")
   return run(require("todo-comments").jump_next)
 end
-return vim.keymap.set("n", "]t", _43_, {desc = "[]]ump [T]odo next"})
+vim.keymap.set("n", "]t", _43_, {desc = "[]]ump [T]odo next"})
+vim.keymap.set("x", "<leader>ref", ":Refactor extract ", {desc = "[R]efactor [E]xtract [F]unction"})
+vim.keymap.set("x", "<leader>rff", ":Refactor extract_to_file ", {desc = "[R]efactor to [F]ile: [F]unction"})
+vim.keymap.set("x", "<leader>rev", ":Refactor extract_var ", {desc = "[R]efactor [E]xtract [V]variable"})
+vim.keymap.set("n", "<leader>rIf", ":Refactor inline_func<cr>", {desc = "[R]efactor [I]nline [F]unctino"})
+vim.keymap.set({"n", "x"}, "<leader>rIv", ":Refactor inline_var<cr>", {desc = "[R]efactor [I]nline [V]ariable"})
+vim.keymap.set("n", "<leader>reb", ":Refactor extract_block<cr>", {desc = "[R]efactor [E]xtract [B]lock"})
+vim.keymap.set("n", "<leader>rfb", ":Refactor extract_block<cr>", {desc = "[R]efactor to [F]ile: [B]lock"})
+local function _44_()
+  return require("telescope").extensions.refactoring.refactors()
+end
+vim.keymap.set({"n", "x"}, "<leader>rs", _44_, {desc = "[R]efactor [S]earch (telescope)"})
+local function _45_()
+  return require("refactoring").debug.printf()
+end
+vim.keymap.set("n", "<leader>rdf", _45_, {desc = "[R]efactor [D]debug [F]unction"})
+local function _46_()
+  return require("refactoring").debug.print_var()
+end
+vim.keymap.set({"n", "x"}, "<leader>rdp", _46_, {desc = "[R]efactor [D]debug [P]rint (variable or selection)"})
+local function _47_()
+  return require("refactoring").debug.cleanup({})
+end
+vim.keymap.set({"n", "x"}, "<leader>rdc", _47_)
+return {desc = "[R]efactor [D]debug [C]lean"}
