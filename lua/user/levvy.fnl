@@ -25,9 +25,9 @@
   (local end-time (vim.loop.hrtime))
   (print "\nresult took:" (/ (- end-time start-time) 1e6)
          "ms"
-         " and query length is " (. matches 1)
-         " and longest line is " (. matches 2)
-         " and number of lines is " (. matches 3)
-         " and fourth?? match is " (. matches 4)
+         " and first line is " (. matches 1)
+         " and second line is " (. matches 2)
+         " and third line is " (. matches 3)
+         " and fourth line is " (. matches 4)
          " out of the " (# matches) " matches"
          " with success? " success))

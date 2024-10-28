@@ -27,6 +27,7 @@
 - set parinfer's mode to 'paren' when doing a search and replace or replaying a macro
   or renaming a variable with lsp or pasting, to not get into a messed up state
   also maybe go to paren mode when saving to format and then go back to smart?
+  mini.pair changes parens in a well formed manner
 
 ## known issues
 
