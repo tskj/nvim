@@ -12,8 +12,18 @@
 
 (vim.keymap.set :t "<Esc><Esc>" "<C-\\><C-n>" {:desc "Activate Normal mode from Terminal"})
 (vim.api.nvim_create_autocmd "TermOpen" {:pattern  "*" :command "startinsert"}) ;; auto insert mode
-(vim.api.nvim_create_autocmd "BufEnter" {:pattern  "term://*" :command "startinsert"}) ;; auto insert mode
-
+;; (vim.api.nvim_create_autocmd "BufEnter" {:pattern  "term://*" :command "startinsert"}) ;; auto insert mode
+(vim.api.nvim_create_autocmd
+  :TermOpen
+  {:callback (fn []
+               (vim.keymap.set :n :<Enter>
+                               (fn []
+                                 (vim.api.nvim_feedkeys :i :n false)
+                                 (vim.api.nvim_feedkeys (vim.api.nvim_replace_termcodes :<CR> true false true)
+                                                        :n
+                                                        false))
+                               {:buffer true
+                                :desc "Enter terminal mode and send Enter"}))})
 
 ;; these are the regular bindings
 (vim.keymap.set :n "<C-Enter>"  vim.lsp.buf.code_action {:desc "Code Actions [LSP]"})
