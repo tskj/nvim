@@ -56,11 +56,15 @@ local function scrolly()
 end
 vim.api.nvim_create_autocmd("CursorMoved", {pattern = "*", callback = scrolly})
 local function _9_()
+  if (vim.fn.mode() ~= "n") then
+    return
+  else
+  end
   local win_height = vim.api.nvim_win_get_height(0)
   local cursor_line = vim.fn.winline()
-  local _let_10_ = vim.api.nvim_win_get_cursor(0)
-  local distance_to_top = _let_10_[1]
-  local _x = _let_10_[2]
+  local _let_11_ = vim.api.nvim_win_get_cursor(0)
+  local distance_to_top = _let_11_[1]
+  local _x = _let_11_[2]
   local screen_is_not_at_top_3f = (distance_to_top > cursor_line)
   local padding_top0 = padding_top
   local padding_bottom0 = padding_bottom
