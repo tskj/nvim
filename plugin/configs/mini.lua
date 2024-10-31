@@ -19,4 +19,6 @@ trailspace.setup()
 local function _1_()
   return trailspace.trim()
 end
-return vim.api.nvim_create_autocmd("BufWritePost", {pattern = "*", callback = _1_})
+vim.api.nvim_create_autocmd("BufWritePost", {pattern = "*", callback = _1_})
+local ai = require("mini.ai")
+return ai.setup({n_lines = 500})

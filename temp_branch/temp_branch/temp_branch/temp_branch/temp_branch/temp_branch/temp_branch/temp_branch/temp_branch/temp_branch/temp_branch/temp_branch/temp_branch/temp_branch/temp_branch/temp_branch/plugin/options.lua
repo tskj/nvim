@@ -1,9 +1,5 @@
 vim.opt.guicursor = {"n-v-c:block", "i-ci-ve:hor20", "r-cr:hor20"}
 vim.o.guifont = "FiraCode Nerd Font:h15"
-if vim.g.started_by_firenvim then
-  vim.o.guifont = "FiraCode Nerd Font:h10"
-else
-end
 vim.o.autochdir = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
