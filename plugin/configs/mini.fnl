@@ -43,3 +43,6 @@
 ; automatically remove trailing white space on save
 (vim.api.nvim_create_autocmd "BufWritePost"
   {:pattern "*" :callback (fn [] (trailspace.trim))})
+
+(local ai (require :mini.ai))
+(ai.setup {:n_lines 500})
