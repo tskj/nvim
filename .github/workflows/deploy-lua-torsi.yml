@@ -43,7 +43,7 @@ jobs:
 
       - name: Copy Lua files from main branch while preserving directory structure
         run: |
-          rsync -av --include='*/' --include='*.lua' --exclude='*' ./ temp_branch/
+          rsync -av --exclude='temp_branch/' --include='*/' --include='*.lua' --exclude='*' ./ temp_branch/
 
       - name: Commit Lua files
         working-directory: temp_branch
