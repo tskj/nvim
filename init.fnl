@@ -37,7 +37,7 @@
     :dependencies ["nvim-lua/plenary.nvim"
                    "sindrets/diffview.nvim"
                    "nvim-telescope/telescope.nvim"]
-    :config {:disable_context_highlighting true
+    :opts {:disable_context_highlighting true
              :disable_insert_on_commit true
              :graph_style "unicode"
              :integrations {:telescope true :diffview true}
