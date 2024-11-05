@@ -45,4 +45,5 @@
   {:pattern "*" :callback (fn [] (trailspace.trim))})
 
 (local ai (require :mini.ai))
-(ai.setup {:n_lines 500})
+(ai.setup {:n_lines 500
+           :custom_textobjects {:a (ai.gen_spec.argument {:separator ",%s*"})}})
