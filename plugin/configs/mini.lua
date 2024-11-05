@@ -21,4 +21,4 @@ local function _1_()
 end
 vim.api.nvim_create_autocmd("BufWritePost", {pattern = "*", callback = _1_})
 local ai = require("mini.ai")
-return ai.setup({n_lines = 500, custom_textobjects = {a = ai.gen_spec.argument({separator = ",%s*"})}})
+return ai.setup({n_lines = 500, mappings = {around_last = nil, inside_last = nil}, custom_textobjects = {a = ai.gen_spec.argument({separator = ",%s*"})}})
