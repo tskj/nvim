@@ -1,2 +1,4 @@
 **/*.lua
 zig/
+!plugin/custom/custom-lua/*.lua
+!lua/user/custom-lua/*.lua
