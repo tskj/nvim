@@ -47,4 +47,5 @@
 (local ai (require :mini.ai))
 (ai.setup {:n_lines 500
            :mappings {:around_last nil
-                      :inside_last nil}})
+                      :inside_last nil}
+           :custom_textobjects {:a (ai.gen_spec.argument {:separator ",%s*"})}})
