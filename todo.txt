@@ -109,3 +109,5 @@ vim.api.nvim_set_keymap('n', '<leader>p', ':lua ShowFilePathFloat()<CR>', { nore
 
 - double ctrl+l should sendt ctrl+l to a terminal to clear it, and single ctrl+l should move
   focus one window wo the right!
+
+- context at the top should be off by default and toggleable by a keybinding
