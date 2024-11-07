@@ -111,3 +111,5 @@ vim.api.nvim_set_keymap('n', '<leader>p', ':lua ShowFilePathFloat()<CR>', { nore
   focus one window wo the right!
 
 - context at the top should be off by default and toggleable by a keybinding
+
+- should have a completion thing for identifiers or text in the buffer, presumably much faster than the lsp
