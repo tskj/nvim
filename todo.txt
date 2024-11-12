@@ -109,3 +109,6 @@ vim.api.nvim_set_keymap('n', '<leader>p', ':lua ShowFilePathFloat()<CR>', { nore
 
 - double ctrl+l should sendt ctrl+l to a terminal to clear it, and single ctrl+l should move
   focus one window wo the right!
+
+- SPC c a or SPC c a p for clipboard append maybe? so I can append stuff to the system clipboard
+  incrementally, something I often want! 
