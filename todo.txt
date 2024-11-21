@@ -114,3 +114,5 @@ vim.api.nvim_set_keymap('n', '<leader>p', ':lua ShowFilePathFloat()<CR>', { nore
 
 - should have a completion thing for identifiers or text in the buffer, presumably much faster than the lsp
   there is telescope-completion for searching, maybe eventually add my fuzzy searcher thing there
+
+- SPC c p and SPC c P are flipped?
