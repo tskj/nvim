@@ -21,4 +21,8 @@
 
 (-> :treesitter-context (require)
   (. :setup)
-  (run {:mode :topline}))
+  (run {:mode :topline
+        :line_numbers true
+        :multiline_threshold 1
+        :max_lines 1
+        :trim_scope :inner}))

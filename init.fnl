@@ -33,6 +33,14 @@
    "nvim-tree/nvim-web-devicons"
    "mg979/vim-visual-multi"
 
+   {1 "svban/YankAssassin.nvim"
+    :opts {:auto_normal true
+           :auto_visual true}}
+   {1 "0xAdk/full_visual_line.nvim"
+    :keys "V"
+    :opts {}}
+
+
    {1 "NeogitOrg/neogit"
     :dependencies ["nvim-lua/plenary.nvim"
                    "sindrets/diffview.nvim"

@@ -112,3 +112,10 @@ vim.api.nvim_set_keymap('n', '<leader>p', ':lua ShowFilePathFloat()<CR>', { nore
 
 - SPC c a or SPC c a p for clipboard append maybe? so I can append stuff to the system clipboard
   incrementally, something I often want! 
+
+- context at the top should be off by default and toggleable by a keybinding
+
+- should have a completion thing for identifiers or text in the buffer, presumably much faster than the lsp
+  there is telescope-completion for searching, maybe eventually add my fuzzy searcher thing there
+
+- SPC c p and SPC c P are flipped?

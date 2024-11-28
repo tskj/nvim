@@ -7,5 +7,7 @@
 (local nightfox (require :nightfox))
 (nightfox.setup
   {:options {:dim_inactive true}})
+
 (vim.cmd (.. "colorscheme " (pick-random
-                              ["nightfox" "duskfox" "nordfox" "terafox" "carbonfox"])))
+                              ["nightfox" "duskfox" "terafox" "carbonfox"
+                               "torte"])))
