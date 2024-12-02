@@ -5,4 +5,6 @@ end
 math.randomseed(os.time())
 local nightfox = require("nightfox")
 nightfox.setup({options = {dim_inactive = true}})
-return vim.cmd(("colorscheme " .. pick_random({"nightfox", "duskfox", "terafox", "carbonfox", "torte"})))
+local fm = require("fluoromachine")
+fm.setup({glow = true, theme = "fluoromachine", transparent = true})
+return vim.cmd(("colorscheme " .. pick_random({"nightfox", "duskfox", "terafox", "carbonfox", "rose-pine", "tokyodark", "torte"})))
