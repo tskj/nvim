@@ -8,6 +8,14 @@
 (nightfox.setup
   {:options {:dim_inactive true}})
 
+(local fm (require :fluoromachine))
+(fm.setup
+  {:glow true
+   :theme "fluoromachine"
+   :transparent true})
+
 (vim.cmd (.. "colorscheme " (pick-random
                               ["nightfox" "duskfox" "terafox" "carbonfox"
+                               "rose-pine"
+                               "tokyodark"
                                "torte"])))

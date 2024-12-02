@@ -13,6 +13,9 @@
 (lazy.setup
   [;; color schemes
    "EdenEast/nightfox.nvim"
+   "tiagovla/tokyodark.nvim"
+   {1 "rose-pine/neovim" :name "rose-pine"}
+   "maxmx03/fluoromachine.nvim"
 
    ;; plugins
    "ibhagwan/fzf-lua"
