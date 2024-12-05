@@ -111,7 +111,7 @@ vim.api.nvim_set_keymap('n', '<leader>p', ':lua ShowFilePathFloat()<CR>', { nore
   focus one window wo the right!
 
 - SPC c a or SPC c a p for clipboard append maybe? so I can append stuff to the system clipboard
-  incrementally, something I often want! 
+  incrementally, something I often want!
 
 - context at the top should be off by default and toggleable by a keybinding
 
@@ -119,3 +119,14 @@ vim.api.nvim_set_keymap('n', '<leader>p', ':lua ShowFilePathFloat()<CR>', { nore
   there is telescope-completion for searching, maybe eventually add my fuzzy searcher thing there
 
 - SPC c p and SPC c P are flipped?
+
+- en keybinding som ligner på o som flytter cursoren _rett_ ned, i motsetning til vanlig o som i clojure
+  code sender til et litt random sted (som du som oftest vil, men noen ganger vil man straight down)
+
+- you want to indent stuff not just as leading padding! it's also convenient to format stuff by indenting
+  further to the right so that stuff on lines above and below line up nicely (like jon blow likes to do).
+  this can be automated by knowing the tabwidth thingy (tabstop?) and searching for "secondary" tabs,
+  those further to the right of the main padding (this also therefore requries tabs to not be auto spaced).
+  we can then calculate how many to add or remove on all adjacent lines (where adjacent is calculating
+  based on empty lines) to make all the secondary tabstops align. can be bound to a keybinding to act where
+  the cursor is.
