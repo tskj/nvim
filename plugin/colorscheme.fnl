@@ -10,12 +10,16 @@
 
 (local fm (require :fluoromachine))
 (fm.setup
-  {:glow true
+  {:glow false
    :theme "fluoromachine"
    :transparent true})
 
 (vim.cmd (.. "colorscheme " (pick-random
                               ["nightfox" "duskfox" "terafox" "carbonfox"
-                               "rose-pine"
                                "tokyodark"
+                               "darkblue"
                                "torte"])))
+
+(local adv (require :advent))
+(adv.setup)
+; (vim.cmd "colorscheme advent")
