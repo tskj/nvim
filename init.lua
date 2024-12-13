@@ -1,5 +1,6 @@
 vim.keymap.set("", "<space>", "", {noremap = true})
 vim.g.mapleader = " "
+vim.g.maplocalleader = ","
 vim.g.winresizer_start_key = "<F14>"
 local lazypath = (vim.fn.stdpath("data") .. "/lazy/lazy.nvim")
 if not vim.loop.fs_stat(lazypath) then
