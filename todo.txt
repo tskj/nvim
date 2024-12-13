@@ -130,3 +130,5 @@ vim.api.nvim_set_keymap('n', '<leader>p', ':lua ShowFilePathFloat()<CR>', { nore
   we can then calculate how many to add or remove on all adjacent lines (where adjacent is calculating
   based on empty lines) to make all the secondary tabstops align. can be bound to a keybinding to act where
   the cursor is.
+
+- conjure ,er open window to the side instead of over?

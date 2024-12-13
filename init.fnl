@@ -1,5 +1,6 @@
 (vim.keymap.set ""  :<space> "" {:noremap true})
 (set vim.g.mapleader " ")
+(set vim.g.maplocalleader ",")
 (set vim.g.winresizer_start_key "<F14>") ;; needed to disable <C-e> for winresizer before it's loaded
 
 (local lazypath (.. (vim.fn.stdpath "data") "/lazy/lazy.nvim"))
