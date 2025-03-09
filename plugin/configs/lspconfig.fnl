@@ -83,6 +83,12 @@
 ;   rnix ; or nil_ls, for Nix
 ;   ocamllsp)
 
+(local mason_tool_installer (require :mason-tool-installer))
+(mason_tool_installer.setup
+  {:ensure_installed
+    ["prettier"
+     "prettierd"]})
+    
 (local cmp (require :cmp))
 (cmp.setup
   {:mapping (cmp.mapping.preset.insert
@@ -92,7 +98,7 @@
                :<C-enter> (cmp.mapping.confirm {:select true})}) ;; trying this
    :preselect "item"
    :completion {:completeopt "menu,menuone,noinsert"}
-   :sources [{:name "nvim_lsp"} {:name "nvim_lua"}]
+   :sources [{:name "nvim_lsp"} {:name "nvim_lua"} {:name "conjure"}]
    :window {:completion (cmp.config.window.bordered)
             :documentation (cmp.config.window.bordered)}})
 

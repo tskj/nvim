@@ -85,6 +85,10 @@
    {1 "ThePrimeagen/refactoring.nvim"
     :config (fn [] ((-> :refactoring (require) (. :setup))))}
 
+   "stevearc/conform.nvim"
+   "WhoIsSethDaniel/mason-tool-installer.nvim"
+   "MunifTanjim/prettier.nvim"
+
    ;; fennel
    "Olical/conjure"
    ;; "gpanders/nvim-parinfer"
