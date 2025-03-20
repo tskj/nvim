@@ -65,7 +65,6 @@
      "glsl_analyzer" ; GLSL (OpenGL)
      "powershell_es" ; PowerShell
      "jedi_language_server" ; Python lsp
-     "ruff_lsp" ; Python linter and formatter, no type checking (written in Rust)
      "sqlls" ; SQL, written in TypeScript (alternatively tried `sqls` written in Go, didn't work)
      "volar" ; Vue
      "wgsl_analyzer" ; WebGPU Shading Language
