@@ -106,6 +106,7 @@ vim.keymap.set({"n", "v"}, "<leader>ri", vim.lsp.buf.rename, {desc = "[R]ename [
 vim.keymap.set({"n", "v"}, "<leader>ef", open_in_explorer(""), {desc = "[E]xplore [F]ile (open directory of cwd)"})
 vim.keymap.set({"n", "v"}, "<leader>gs", ":Neogit<cr>", {desc = "[G]it [S]tage [Neogit]"})
 vim.keymap.set({"n", "v"}, "<leader>gc", ":Neogit commit<cr>", {desc = "[G]it [C]ommit [Neogit]"})
+vim.keymap.set({"n", "v"}, "<leader>gl", ":LazyGit<cr>", {desc = "[G]it [L]azy"})
 vim.keymap.set({"n", "v"}, "<leader>ac", vim.cmd.terminal, {desc = "[A]pplication [C]ommand line (opens terminal)"})
 local function _17_()
   return vim.cmd.terminal("powershell.exe")
