@@ -55,6 +55,11 @@
              :integrations {:telescope true :diffview true}
              :commit_editor {:spell_check false}}}
 
+   {1 "kdheepak/lazygit.nvim"
+    :lazy true
+    :cmd ["LazyGit" "LazyGitConfig" "LazyGitCurrentFile" "LazyGitFilter" "LazyGitFilterCurrentFile"]
+    :dependencies ["nvim-lua/plenary.nvim"]}
+
    {1 "nvim-telescope/telescope.nvim"
     :event "VimEnter"
     :branch "0.1.x"

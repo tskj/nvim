@@ -110,6 +110,9 @@
 (vim.keymap.set [:n :v] "<leader>gs" ":Neogit<cr>"        {:desc "[G]it [S]tage [Neogit]"})
 (vim.keymap.set [:n :v] "<leader>gc" ":Neogit commit<cr>" {:desc "[G]it [C]ommit [Neogit]"})
 
+;; lazygit
+(vim.keymap.set [:n :v] "<leader>gl" ":LazyGit<cr>" {:desc "[G]it [L]azy"})
+
 ;; open terminal (in spacemacs this is SPC a t for "application: terminal")
 (vim.keymap.set [:n :v] "<leader>ac" vim.cmd.terminal                            {:desc "[A]pplication [C]ommand line (opens terminal)"})
 (vim.keymap.set [:n :v] "<leader>ap" (fn [] (vim.cmd.terminal "powershell.exe")) {:desc "[A]pplication [P]owershell"})
