@@ -20,6 +20,6 @@
                                "darkblue"
                                "torte"])))
 
-(local adv (require :advent))
-(adv.setup)
+; (local adv (require :advent))
+; (adv.setup)
 ; (vim.cmd "colorscheme advent")
