@@ -87,17 +87,16 @@
   {:ensure_installed
     ["prettier"
      "prettierd"]})
-    
+
 (local cmp (require :cmp))
 (cmp.setup
   {:mapping (cmp.mapping.preset.insert
-              {:<C-Space> (cmp.mapping.confirm {:select true})
-               :<C-y> (cmp.mapping.confirm {:select true})
-               :<C-m> (cmp.mapping.confirm {:select true}) ;; trying this
-               :<C-enter> (cmp.mapping.confirm {:select true})}) ;; trying this
+              {:<C-Space> (cmp.mapping.complete {:select true})
+               :<C-enter> (cmp.mapping.confirm {:select true})})
    :preselect "item"
    :completion {:completeopt "menu,menuone,noinsert"}
-   :sources [{:name "nvim_lsp"} {:name "nvim_lua"} {:name "conjure"}]
+   :sources [{:name "nvim_lsp"} {:name "nvim_lua"} {:name "conjure"}
+             {:name "supermaven"}]
    :window {:completion (cmp.config.window.bordered)
             :documentation (cmp.config.window.bordered)}})
 
