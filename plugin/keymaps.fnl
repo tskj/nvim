@@ -70,13 +70,15 @@
 (vim.keymap.set [:n :t] "<C-S-K>" (fn [] (vim.api.nvim_command "tabnext")) {:desc "Next Tab (:tabnext)"})
 (vim.keymap.set [:n :t] "<C-S-J>" (fn [] (vim.api.nvim_command "tabprev")) {:desc "Previous Tab (:tabprev)"})
 
+(vim.keymap.set [:n :v] "<S-H>" "0")
+(vim.keymap.set [:n :v] "<S-L>" "$<cmd>normal! zszH<cr>")
 
 ;; Leap
 (vim.keymap.set [:n :x :o] "<leader>gl" "<Plug>(leap-forward)"  {:desc "[G]oto [L]eap forwards [Leap]"})
 (vim.keymap.set [:n :x :o] "<leader>gl" "<Plug>(leap-backward)" {:desc "[G]oto [L]eap backwards [Leap]"})
 
 ;; Sneak
-(vim.keymap.set [:n :x :o] "gl" "<Plug>Sneak_s" {:desc "[G]oto [l]eap forwards [Sneak]"})
+(vim.keymap.set [:n :x :o] "gl" "<Plug>Sneak_s" {:desc "[G]oto [L]eap forwards [Sneak]"})
 (vim.keymap.set [:n :x :o] "gL" "<Plug>Sneak_S" {:desc "[G]oto [L]eap backwards [Sneak]"})
 
 
