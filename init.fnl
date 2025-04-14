@@ -82,6 +82,8 @@
        "L3MON4D3/LuaSnip"]}
 
    "supermaven-inc/supermaven-nvim"
+   "milanglacier/minuet-ai.nvim"
+   "robitx/gp.nvim"
 
    "nvim-treesitter/nvim-treesitter"
    "nvim-treesitter/nvim-treesitter-context"
