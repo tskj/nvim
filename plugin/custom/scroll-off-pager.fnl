@@ -108,7 +108,7 @@
                  (not skip-horizontal-scroll))
         (let [distance-to-padding-border (- cursor-col (- win-width padding-right) 1)
               one-window-width (- win-width padding-left padding-right)
-              n (+ distance-to-padding-border one-window-width)]
+              n (+ distance-to-padding-border one-window-width 1)]
           (when (> n 0) (vim.api.nvim_command (.. "exe \"normal! " n "zl\""))))))))
 
 ; potentially move the screen when the cursor moves
