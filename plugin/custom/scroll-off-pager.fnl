@@ -24,6 +24,40 @@
     ;; Reset after a brief delay
     (vim.defer_fn (fn [] (set skip-horizontal-scroll false)) 100)))
 
+;; Shift-L: Move screen right (half screen width)
+(vim.keymap.set "n" "<S-L>"
+  (fn []
+    (set skip-horizontal-scroll true)
+    (let [win-width (vim.api.nvim_win_get_width 0)
+          cursor-col (vim.fn.wincol)
+          half-width (math.floor (/ win-width 2))]
+      ;; Move screen right
+      (vim.api.nvim_command (.. "exe \"normal! " half-width "zl\""))
+      ;; Keep cursor in same relative screen position
+      (let [new-col (vim.fn.wincol)
+            col-diff (- cursor-col new-col)]
+        (when (not= col-diff 0)
+          (vim.api.nvim_command (.. "normal! " (math.abs col-diff) (if (> col-diff 0) "l" "h"))))))
+    ;; Reset after a brief delay
+    (vim.defer_fn (fn [] (set skip-horizontal-scroll false)) 100)))
+
+;; Shift-H: Move screen left (half screen width)
+(vim.keymap.set "n" "<S-H>"
+  (fn []
+    (set skip-horizontal-scroll true)
+    (let [win-width (vim.api.nvim_win_get_width 0)
+          cursor-col (vim.fn.wincol)
+          half-width (math.floor (/ win-width 2))]
+      ;; Move screen left
+      (vim.api.nvim_command (.. "exe \"normal! " half-width "zh\""))
+      ;; Keep cursor in same relative screen position
+      (let [new-col (vim.fn.wincol)
+            col-diff (- cursor-col new-col)]
+        (when (not= col-diff 0)
+          (vim.api.nvim_command (.. "normal! " (math.abs col-diff) (if (> col-diff 0) "l" "h"))))))
+    ;; Reset after a brief delay
+    (vim.defer_fn (fn [] (set skip-horizontal-scroll false)) 100)))
+
 (fn scrolly []
   (let [win-height (vim.api.nvim_win_get_height 0)
         win-width (vim.api.nvim_win_get_width 0)

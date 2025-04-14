@@ -70,9 +70,6 @@
 (vim.keymap.set [:n :t] "<C-S-K>" (fn [] (vim.api.nvim_command "tabnext")) {:desc "Next Tab (:tabnext)"})
 (vim.keymap.set [:n :t] "<C-S-J>" (fn [] (vim.api.nvim_command "tabprev")) {:desc "Previous Tab (:tabprev)"})
 
-(vim.keymap.set [:n :v] "<S-H>" "0")
-(vim.keymap.set [:n :v] "<S-L>" "$<cmd>normal! zszH<cr>")
-
 ;; Leap
 (vim.keymap.set [:n :x :o] "<leader>gl" "<Plug>(leap-forward)"  {:desc "[G]oto [L]eap forwards [Leap]"})
 (vim.keymap.set [:n :x :o] "<leader>gl" "<Plug>(leap-backward)" {:desc "[G]oto [L]eap backwards [Leap]"})
