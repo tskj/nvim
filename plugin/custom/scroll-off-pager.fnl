@@ -16,6 +16,22 @@
       (= y0 y1)
       (= x0 x1))))
 
+;; Function to ensure cursor is within legal area (not in padding)
+(fn ensure-cursor-in-legal-area []
+  (let [win-width (vim.api.nvim_win_get_width 0)
+        cursor-col (vim.fn.wincol)]
+    ;; If cursor is in left padding area
+    (when (< cursor-col padding-left)
+      (let [required-move (- padding-left cursor-col)]
+        (when (> required-move 0)
+          (vim.api.nvim_command (.. "normal! " required-move "l")))))
+
+    ;; If cursor is in right padding area
+    (when (> cursor-col (- win-width padding-right))
+      (let [required-move (- cursor-col (- win-width padding-right))]
+        (when (> required-move 0)
+          (vim.api.nvim_command (.. "normal! " required-move "h")))))))
+
 ;; Special handler for the "0" key
 (vim.keymap.set "n" "0"
   (fn []
@@ -29,15 +45,11 @@
   (fn []
     (set skip-horizontal-scroll true)
     (let [win-width (vim.api.nvim_win_get_width 0)
-          cursor-col (vim.fn.wincol)
           half-width (math.floor (/ win-width 2))]
       ;; Move screen right
       (vim.api.nvim_command (.. "exe \"normal! " half-width "zl\""))
-      ;; Keep cursor in same relative screen position
-      (let [new-col (vim.fn.wincol)
-            col-diff (- cursor-col new-col)]
-        (when (not= col-diff 0)
-          (vim.api.nvim_command (.. "normal! " (math.abs col-diff) (if (> col-diff 0) "l" "h"))))))
+      ;; Ensure cursor is in legal area
+      (ensure-cursor-in-legal-area))
     ;; Reset after a brief delay
     (vim.defer_fn (fn [] (set skip-horizontal-scroll false)) 100)))
 
@@ -46,15 +58,11 @@
   (fn []
     (set skip-horizontal-scroll true)
     (let [win-width (vim.api.nvim_win_get_width 0)
-          cursor-col (vim.fn.wincol)
           half-width (math.floor (/ win-width 2))]
       ;; Move screen left
       (vim.api.nvim_command (.. "exe \"normal! " half-width "zh\""))
-      ;; Keep cursor in same relative screen position
-      (let [new-col (vim.fn.wincol)
-            col-diff (- cursor-col new-col)]
-        (when (not= col-diff 0)
-          (vim.api.nvim_command (.. "normal! " (math.abs col-diff) (if (> col-diff 0) "l" "h"))))))
+      ;; Ensure cursor is in legal area
+      (ensure-cursor-in-legal-area))
     ;; Reset after a brief delay
     (vim.defer_fn (fn [] (set skip-horizontal-scroll false)) 100)))
 
@@ -136,17 +144,17 @@
             (vim.api.nvim_command (.. "normal! " n "k"))
             (set just-scrolled-cursor-to (vim.api.nvim_win_get_cursor 0)))))
 
-      ;; Horizontal handling - skip if flag is set
+      ;; Fixed horizontal handling - no additional adjustment
       (when (and (< cursor-col padding-left)
                  (not skip-horizontal-scroll))
-        (let [n (- padding-left cursor-col 1)]
+        (let [n (- padding-left cursor-col)]
           (when (> n 0)
             (vim.api.nvim_command (.. "normal! " n "l"))
             (set just-scrolled-cursor-to (vim.api.nvim_win_get_cursor 0)))))
 
       (when (and (> cursor-col (- win-width padding-right))
                  (not skip-horizontal-scroll))
-        (let [n (- cursor-col (- win-width padding-right) 1)]
+        (let [n (- cursor-col (- win-width padding-right))]
           (when (> n 0)
             (vim.api.nvim_command (.. "normal! " n "h"))
             (set just-scrolled-cursor-to (vim.api.nvim_win_get_cursor 0)))))))})
