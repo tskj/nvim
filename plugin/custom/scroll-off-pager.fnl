@@ -7,6 +7,7 @@
 ; let's us know whether the triggered cursored moved event
 ; was caused by us moving it out of the way of the scrolling
 (var just-scrolled-cursor-to nil)
+(var skip-horizontal-scroll false)
 
 (fn equal-coords [ab cd]
   (let [[y0 x0] ab
@@ -14,6 +15,14 @@
     (and
       (= y0 y1)
       (= x0 x1))))
+
+;; Special handler for the "0" key
+(vim.keymap.set "n" "0"
+  (fn []
+    (set skip-horizontal-scroll true)
+    (vim.api.nvim_command "normal! 0")
+    ;; Reset after a brief delay
+    (vim.defer_fn (fn [] (set skip-horizontal-scroll false)) 100)))
 
 (fn scrolly []
   (let [win-height (vim.api.nvim_win_get_height 0)
@@ -45,14 +54,16 @@
               n (+ distance-to-padding-border one-window-height)]
           (when (> n 0) (vim.api.nvim_command (.. "exe \"normal! " n "\\<C-e>\"")))))
 
-      ;; Horizontal scrolling
-      (when (< cursor-col padding-left)
+      ;; Horizontal scrolling - skip if flag is set
+      (when (and (< cursor-col padding-left)
+                 (not skip-horizontal-scroll))
         (let [distance-to-padding-border (- padding-left cursor-col)
               one-window-width (- win-width padding-left padding-right)
               n (+ distance-to-padding-border one-window-width)]
           (when (> n 0) (vim.api.nvim_command (.. "exe \"normal! " n "zh\"")))))
 
-      (when (> cursor-col (- win-width padding-right))
+      (when (and (> cursor-col (- win-width padding-right))
+                 (not skip-horizontal-scroll))
         (let [distance-to-padding-border (- cursor-col (- win-width padding-right) 1)
               one-window-width (- win-width padding-left padding-right)
               n (+ distance-to-padding-border one-window-width)]
@@ -91,14 +102,16 @@
             (vim.api.nvim_command (.. "normal! " n "k"))
             (set just-scrolled-cursor-to (vim.api.nvim_win_get_cursor 0)))))
 
-      ;; Horizontal handling
-      (when (< cursor-col padding-left)
+      ;; Horizontal handling - skip if flag is set
+      (when (and (< cursor-col padding-left)
+                 (not skip-horizontal-scroll))
         (let [n (- padding-left cursor-col 1)]
           (when (> n 0)
             (vim.api.nvim_command (.. "normal! " n "l"))
             (set just-scrolled-cursor-to (vim.api.nvim_win_get_cursor 0)))))
 
-      (when (> cursor-col (- win-width padding-right))
+      (when (and (> cursor-col (- win-width padding-right))
+                 (not skip-horizontal-scroll))
         (let [n (- cursor-col (- win-width padding-right) 1)]
           (when (> n 0)
             (vim.api.nvim_command (.. "normal! " n "h"))
