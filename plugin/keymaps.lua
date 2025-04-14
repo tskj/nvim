@@ -90,7 +90,7 @@ end
 vim.keymap.set({"n", "t"}, "<C-S-J>", _15_, {desc = "Previous Tab (:tabprev)"})
 vim.keymap.set({"n", "x", "o"}, "<leader>gl", "<Plug>(leap-forward)", {desc = "[G]oto [L]eap forwards [Leap]"})
 vim.keymap.set({"n", "x", "o"}, "<leader>gl", "<Plug>(leap-backward)", {desc = "[G]oto [L]eap backwards [Leap]"})
-vim.keymap.set({"n", "x", "o"}, "gl", "<Plug>Sneak_s", {desc = "[G]oto [l]eap forwards [Sneak]"})
+vim.keymap.set({"n", "x", "o"}, "gl", "<Plug>Sneak_s", {desc = "[G]oto [L]eap forwards [Sneak]"})
 vim.keymap.set({"n", "x", "o"}, "gL", "<Plug>Sneak_S", {desc = "[G]oto [L]eap backwards [Sneak]"})
 vim.keymap.set({"n", "v"}, "<leader>wo", ":only<cr>", {desc = "[W]indow [O]nly (close every other window)"})
 vim.keymap.set({"n", "v"}, "<leader>bs", ":enew<cr>", {desc = "[B]uffer [S]cratch (new buffer)"})
@@ -362,4 +362,6 @@ vim.keymap.set({"n", "x"}, "<leader>rdp", _48_, {desc = "[R]efactor [D]debug [P]
 local function _49_()
   return require("refactoring").debug.cleanup({})
 end
-return vim.keymap.set({"n", "x"}, "<leader>rdc", _49_, {desc = "[R]efactor [D]debug [C]lean"})
+vim.keymap.set({"n", "x"}, "<leader>rdc", _49_, {desc = "[R]efactor [D]debug [C]lean"})
+vim.keymap.set({"n", "x"}, "<leader>gpr", ":GpRewrite<cr>", {desc = "[G]PT [P]rompt [R]ewrite"})
+return vim.keymap.set({"n", "x"}, "<leader>gpa", ":GpAppend<cr>", {desc = "[G]PT [P]rompt [A]ppend"})
