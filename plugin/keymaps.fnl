@@ -241,46 +241,94 @@
 (vim.keymap.set [:n :v] "<leader>zc" fzf-lua.git_commits           {:desc "[Z]earch [C]ommits (git) [fzf-lua]"})
 
 
-;; these are modifications of existing behavior, from primeagen
-(vim.keymap.set :n "D" "\"_D"  {:silent true}) ; dont' overwrite register when pasting
-(vim.keymap.set :v "p" "\"_dP" {:silent true}) ; don't overwrite register when pasting
-(vim.keymap.set :v "d" "\"_d"  {:silent true}) ; don't overwrite register when deleting
-(vim.keymap.set :v "D" "\"_d"  {:silent true}) ; dont' overwrite register when pasting
-
-(vim.keymap.set :n "X" "D"     {:silent true}) ; cut to end of line)
-(vim.keymap.set :v "P" "p"     {:silent true}) ; overwrite register when pasting
-
-
-(fn command-with-unchanged-unnamed-register [cmd]
+;; command-with-unchanged-unnamed-register
+(fn uur [cmd]
   (fn []
     (let [old-unnamed (vim.fn.getreg "\"")]
       (vim.api.nvim_command (.. "normal! " cmd))
       (vim.fn.setreg "\"" old-unnamed))))
+(fn uur-2 [cmd r] ;; also writes to register r as if it was unnamed
+  (fn []
+    (let [old-unnamed (vim.fn.getreg "\"")]
+      (vim.api.nvim_command (.. "normal! " cmd))
+      (let [new-unnamed (vim.fn.getreg "\"")]
+        (vim.fn.setreg r new-unnamed)
+        (vim.fn.setreg "\"" old-unnamed)))))
+
+;; these are modifications of existing behavior, from primeagen
+(vim.keymap.set :n "d" "\"_d"  {:silent true}) ; don't overwrite register when deleting
+(vim.keymap.set :n "D" "\"_D"  {:silent true}) ; don't overwrite register when deleting
+(vim.keymap.set :x "d" "\"_d"  {:silent true}) ; don't overwrite register when deleting in visual mode
+(vim.keymap.set :x "D" "\"_D"  {:silent true}) ; don't overwrite register when deleting in visual mode
+(vim.keymap.set :x "p" (uur "p") {:silent true}) ; don't overwrite register when pasting
+(vim.keymap.set :x "P" "p"     {:silent true}) ; overwrite register when pasting over stuff using shift P
+
+;; special cut tool
+(vim.keymap.set :n "<leader>d" "d" {:silent true :desc "[C]lipboard [Y]ank (y)"})
+(vim.keymap.set :n "<leader>D" "D" {:silent true :desc "[C]lipboard [P]aste (p)"})
+(vim.keymap.set :x "<leader>d" "d" {:silent true :desc "[C]lipboard [D]elete (d)"})
+(vim.keymap.set :x "<leader>D" "d" {:silent true :desc "[C]lipboard [Y]ank (Y)"})
+
 
 ;; clipboard integrations
-(vim.keymap.set :n "<leader>cy" "\"+y" {:silent true :desc "[C]lipboard [Y]ank (y)"})
-(vim.keymap.set :n "<leader>cp" "\"+p" {:silent true :desc "[C]lipboard [P]aste (p)"})
-(vim.keymap.set :n "<leader>cd" "\"+d" {:silent true :desc "[C]lipboard [D]elete (d)"})
-(vim.keymap.set :n "<leader>cY" "\"+Y" {:silent true :desc "[C]lipboard [Y]ank (Y)"})
-(vim.keymap.set :n "<leader>cP" "\"+P" {:silent true :desc "[C]lipboard [P]aste (P)"})
-(vim.keymap.set :n "<leader>cD" "\"+D" {:silent true :desc "[C]lipboard [D]elete (D)"})
 
-(vim.keymap.set :v "<leader>cY" "\"+y" {:silent true :desc "[C]lipboard [Y]ank (Y)"})
-(vim.keymap.set :v "<leader>cP" "\"+p" {:silent true :desc "[C]lipboard [P]aste (P)"})
-(vim.keymap.set :v "<leader>cD" "\"+d" {:silent true :desc "[C]lipboard [D]elete (D)"})
+; operator pending mode for y and d
+(fn vim.g.clipboard_yank_operator []
+  (let [old-reg-content (vim.fn.getreg "\"")
+        old-reg-type (vim.fn.getregtype "\"")
+        start-pos (vim.fn.getpos "'[")
+        end-pos (vim.fn.getpos "']")]
+    (vim.cmd (string.format "normal! %dG%d|v%dG%d|%s"
+                            (. start-pos 2)
+                            (. start-pos 3)
+                            (. end-pos 2)
+                            (. end-pos 3)
+                            "\"+y"))
+    (vim.fn.setreg "\"" old-reg-content old-reg-type)))
 
-;; yank to clipboard without changing unnamed register:
-(vim.keymap.set :v "<leader>cy"
-                (command-with-unchanged-unnamed-register "\"+y")
-                {:silent true :desc "[C]lipboard [Y]ank (y)"})
+(vim.keymap.set :n :<leader>cy (fn []
+                                 (set vim.o.operatorfunc
+                                      "v:lua.vim.g.clipboard_yank_operator")
+                                 "g@")
+                {:silent true :desc "[C]lipboard [Y]ank (y)" :expr true})
 
-;; paste from clipboard without changing unnamed register:
-(vim.keymap.set :v "<leader>cp" "\"_d\"+P"  {:silent true :desc "[C]lipboard [P]aste (p)"})
+(fn vim.g.clipboard_delete_operator []
+  (let [old-reg-content (vim.fn.getreg "\"")
+        old-reg-type (vim.fn.getregtype "\"")
+        start-pos (vim.fn.getpos "'[")
+        end-pos (vim.fn.getpos "']")]
+    (vim.cmd (string.format "normal! %dG%d|v%dG%d|%s"
+                            (. start-pos 2)
+                            (. start-pos 3)
+                            (. end-pos 2)
+                            (. end-pos 3)
+                            "\"+y"))
+    (vim.cmd (string.format "normal! %dG%d|v%dG%d|%s"
+                            (. start-pos 2)
+                            (. start-pos 3)
+                            (. end-pos 2)
+                            (. end-pos 3)
+                            :d))
+    (vim.fn.setreg "\"" old-reg-content old-reg-type)))
 
-;; yank to clipboard without changing unnamed register:
-(vim.keymap.set :v "<leader>cd"
-                (command-with-unchanged-unnamed-register "\"+d")
-                {:silent true :desc "[C]lipbaord [D]elete (d)"})
+(vim.keymap.set :n :<leader>cd (fn []
+                                 (set vim.o.operatorfunc
+                                      "v:lua.vim.g.clipboard_delete_operator")
+                                 "g@")
+                {:silent true :desc "[C]lipboard [D]elete (d)" :expr true})
+
+(vim.keymap.set :n "<leader>cp" (uur "\"+p") {:silent true :desc "[C]lipboard [P]aste (p)"})
+(vim.keymap.set :n "<leader>cY" (uur "\"+y$") {:silent true :desc "[C]lipboard [Y]ank (Y)"})
+(vim.keymap.set :n "<leader>cP" (uur "\"+P") {:silent true :desc "[C]lipboard [P]aste (P)"})
+(vim.keymap.set :n "<leader>cD" (uur "\"+D") {:silent true :desc "[C]lipboard [D]elete (D)"})
+
+(vim.keymap.set :x "<leader>cy" (uur "\"+y") {:silent true :desc "[C]lipboard [Y]ank (y)"})
+(vim.keymap.set :x "<leader>cY" (uur "\"+y") {:silent true :desc "[C]lipboard [Y]ank (Y)"})
+(vim.keymap.set :x "<leader>cP" (uur-2 "\"+p" "+") {:silent true :desc "[C]lipboard [P]aste (P)"})
+(vim.keymap.set :x "<leader>cD" (uur "\"+D") {:silent true :desc "[C]lipboard [D]elete (D)"})
+(vim.keymap.set :x "<leader>cp" (uur "\"+p")  {:silent true :desc "[C]lipboard [P]aste (p)"})
+(vim.keymap.set :x "<leader>cd" (uur "\"+d") {:silent true :desc "[C]lipbaord [D]elete (d)"})
+
 
 ;;; jump commands
 
