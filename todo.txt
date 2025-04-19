@@ -94,34 +94,22 @@ vim.api.nvim_set_keymap('n', '<leader>p', ':lua ShowFilePathFloat()<CR>', { nore
 
 - lsp signature info when typing in insert mode: https://chatgpt.com/c/671422de-1330-800b-9639-fb113d72f024
 
-- close terminal window with <c-w> should close the actual terminal and remove it
-
-- plugin to kill process running on a specific port (floating modal input?) (maybe it exists?)
-  should work on windows and unix
-
 - SPC s v -> search visual, namely use telescope to fuzzy search in current buffer
   SPC s e -> search SEssions, whenver we get that working
 
-- regular dd does actually trash the register
-  c also does this annoyingly
-
 - when oil window receives focus it needs to also set cwd
-
-- double ctrl+l should sendt ctrl+l to a terminal to clear it, and single ctrl+l should move
-  focus one window wo the right!
 
 - SPC c a or SPC c a p for clipboard append maybe? so I can append stuff to the system clipboard
   incrementally, something I often want!
 
-- context at the top should be off by default and toggleable by a keybinding
+- contextfold at the top should be off by default and toggleable by a keybinding
 
 - should have a completion thing for identifiers or text in the buffer, presumably much faster than the lsp
   there is telescope-completion for searching, maybe eventually add my fuzzy searcher thing there
 
-- SPC c p and SPC c P are flipped?
-
 - en keybinding som ligner på o som flytter cursoren _rett_ ned, i motsetning til vanlig o som i clojure
   code sender til et litt random sted (som du som oftest vil, men noen ganger vil man straight down)
+  SPC o kanskje?
 
 - you want to indent stuff not just as leading padding! it's also convenient to format stuff by indenting
   further to the right so that stuff on lines above and below line up nicely (like jon blow likes to do).
