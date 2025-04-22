@@ -71,12 +71,12 @@
 (vim.keymap.set [:n :t] "<C-S-J>" (fn [] (vim.api.nvim_command "tabprev")) {:desc "Previous Tab (:tabprev)"})
 
 ;; Leap
-(vim.keymap.set [:n :x :o] "<leader>gl" "<Plug>(leap-forward)"  {:desc "[G]oto [L]eap forwards [Leap]"})
-(vim.keymap.set [:n :x :o] "<leader>gl" "<Plug>(leap-backward)" {:desc "[G]oto [L]eap backwards [Leap]"})
+(vim.keymap.set [:n :v :o] "<leader>gl" "<Plug>(leap-forward)"  {:desc "[G]oto [L]eap forwards [Leap]"})
+(vim.keymap.set [:n :v :o] "<leader>gl" "<Plug>(leap-backward)" {:desc "[G]oto [L]eap backwards [Leap]"})
 
 ;; Sneak
-(vim.keymap.set [:n :x :o] "gl" "<Plug>Sneak_s" {:desc "[G]oto [L]eap forwards [Sneak]"})
-(vim.keymap.set [:n :x :o] "gL" "<Plug>Sneak_S" {:desc "[G]oto [L]eap backwards [Sneak]"})
+(vim.keymap.set [:n :v :o] "gl" "<Plug>Sneak_s" {:desc "[G]oto [L]eap forwards [Sneak]"})
+(vim.keymap.set [:n :v :o] "gL" "<Plug>Sneak_S" {:desc "[G]oto [L]eap backwards [Sneak]"})
 
 
 ;;; these are all the spacemacs-like keybindings
@@ -258,32 +258,30 @@
 ;; these are modifications of existing behavior, from primeagen
 (vim.keymap.set :n "d" "\"_d"  {:silent true}) ; don't overwrite register when deleting
 (vim.keymap.set :n "D" "\"_D"  {:silent true}) ; don't overwrite register when deleting
-(vim.keymap.set :x "d" "\"_d"  {:silent true}) ; don't overwrite register when deleting in visual mode
-(vim.keymap.set :x "D" "\"_D"  {:silent true}) ; don't overwrite register when deleting in visual mode
-(vim.keymap.set :x "p" (uur "p") {:silent true}) ; don't overwrite register when pasting
-(vim.keymap.set :x "P" "p"     {:silent true}) ; overwrite register when pasting over stuff using shift P
+(vim.keymap.set :v "d" "\"_d"  {:silent true}) ; don't overwrite register when deleting in visual mode
+(vim.keymap.set :v "D" "\"_D"  {:silent true}) ; don't overwrite register when deleting in visual mode
+(vim.keymap.set :v "p" (uur "p") {:silent true}) ; don't overwrite register when pasting
+(vim.keymap.set :v "P" "p"     {:silent true}) ; overwrite register when pasting over stuff using shift P
 
 ;; special cut tool
 (vim.keymap.set :n "<leader>d" "d" {:silent true :desc "[C]lipboard [Y]ank (y)"})
 (vim.keymap.set :n "<leader>D" "D" {:silent true :desc "[C]lipboard [P]aste (p)"})
-(vim.keymap.set :x "<leader>d" "d" {:silent true :desc "[C]lipboard [D]elete (d)"})
-(vim.keymap.set :x "<leader>D" "d" {:silent true :desc "[C]lipboard [Y]ank (Y)"})
+(vim.keymap.set :v "<leader>d" "d" {:silent true :desc "[C]lipboard [D]elete (d)"})
+(vim.keymap.set :v "<leader>D" "d" {:silent true :desc "[C]lipboard [Y]ank (Y)"})
 
 
 ;; clipboard integrations
 
 ; operator pending mode for y and d
-(fn vim.g.clipboard_yank_operator []
+(fn vim.g.clipboard_yank_operator [motion-type]
   (let [old-reg-content (vim.fn.getreg "\"")
         old-reg-type (vim.fn.getregtype "\"")
-        start-pos (vim.fn.getpos "'[")
-        end-pos (vim.fn.getpos "']")]
-    (vim.cmd (string.format "normal! %dG%d|v%dG%d|%s"
-                            (. start-pos 2)
-                            (. start-pos 3)
-                            (. end-pos 2)
-                            (. end-pos 3)
-                            "\"+y"))
+        v (match motion-type
+            "line"  "V"
+            "block" "\x16"
+            _       "v")]
+
+    (vim.cmd (.. "normal! `[" v "`]\"+y"))
     (vim.fn.setreg "\"" old-reg-content old-reg-type)))
 
 (vim.keymap.set :n :<leader>cy (fn []
@@ -292,23 +290,15 @@
                                  "g@")
                 {:silent true :desc "[C]lipboard [Y]ank (y)" :expr true})
 
-(fn vim.g.clipboard_delete_operator []
+(fn vim.g.clipboard_delete_operator [motion-type]
   (let [old-reg-content (vim.fn.getreg "\"")
         old-reg-type (vim.fn.getregtype "\"")
-        start-pos (vim.fn.getpos "'[")
-        end-pos (vim.fn.getpos "']")]
-    (vim.cmd (string.format "normal! %dG%d|v%dG%d|%s"
-                            (. start-pos 2)
-                            (. start-pos 3)
-                            (. end-pos 2)
-                            (. end-pos 3)
-                            "\"+y"))
-    (vim.cmd (string.format "normal! %dG%d|v%dG%d|%s"
-                            (. start-pos 2)
-                            (. start-pos 3)
-                            (. end-pos 2)
-                            (. end-pos 3)
-                            :d))
+        v (match motion-type
+            "line"  "V"
+            "block" "\x16"
+            _       "v")]
+
+    (vim.cmd (.. "normal! `[" v "`]\"+d"))
     (vim.fn.setreg "\"" old-reg-content old-reg-type)))
 
 (vim.keymap.set :n :<leader>cd (fn []
@@ -322,12 +312,12 @@
 (vim.keymap.set :n "<leader>cP" (uur "\"+P") {:silent true :desc "[C]lipboard [P]aste (P)"})
 (vim.keymap.set :n "<leader>cD" (uur "\"+D") {:silent true :desc "[C]lipboard [D]elete (D)"})
 
-(vim.keymap.set :x "<leader>cy" (uur "\"+y") {:silent true :desc "[C]lipboard [Y]ank (y)"})
-(vim.keymap.set :x "<leader>cY" (uur "\"+y") {:silent true :desc "[C]lipboard [Y]ank (Y)"})
-(vim.keymap.set :x "<leader>cP" (uur-2 "\"+p" "+") {:silent true :desc "[C]lipboard [P]aste (P)"})
-(vim.keymap.set :x "<leader>cD" (uur "\"+D") {:silent true :desc "[C]lipboard [D]elete (D)"})
-(vim.keymap.set :x "<leader>cp" (uur "\"+p")  {:silent true :desc "[C]lipboard [P]aste (p)"})
-(vim.keymap.set :x "<leader>cd" (uur "\"+d") {:silent true :desc "[C]lipbaord [D]elete (d)"})
+(vim.keymap.set :v "<leader>cy" (uur "\"+y") {:silent true :desc "[C]lipboard [Y]ank (y)"})
+(vim.keymap.set :v "<leader>cY" (uur "\"+y") {:silent true :desc "[C]lipboard [Y]ank (Y)"})
+(vim.keymap.set :v "<leader>cP" (uur-2 "\"+p" "+") {:silent true :desc "[C]lipboard [P]aste (P)"})
+(vim.keymap.set :v "<leader>cD" (uur "\"+D") {:silent true :desc "[C]lipboard [D]elete (D)"})
+(vim.keymap.set :v "<leader>cp" (uur "\"+p")  {:silent true :desc "[C]lipboard [P]aste (p)"})
+(vim.keymap.set :v "<leader>cd" (uur "\"+d") {:silent true :desc "[C]lipbaord [D]elete (d)"})
 
 
 ;;; jump commands
@@ -395,19 +385,20 @@
                       (run)))                  {:desc "[]]ump [T]odo next"})
 
 ;; refactors
-(vim.keymap.set :x "<leader>ref" ":Refactor extract "         {:desc "[R]efactor [E]xtract [F]unction"})
-(vim.keymap.set :x "<leader>rff" ":Refactor extract_to_file " {:desc "[R]efactor to [F]ile: [F]unction"})
-(vim.keymap.set :x "<leader>rev" ":Refactor extract_var "     {:desc "[R]efactor [E]xtract [V]variable"})
+(vim.keymap.set :v "<leader>ref" ":Refactor extract "         {:desc "[R]efactor [E]xtract [F]unction"})
+(vim.keymap.set :v "<leader>rff" ":Refactor extract_to_file " {:desc "[R]efactor to [F]ile: [F]unction"})
+(vim.keymap.set :v "<leader>rev" ":Refactor extract_var "     {:desc "[R]efactor [E]xtract [V]variable"})
 (vim.keymap.set :n "<leader>rIf" ":Refactor inline_func<cr>"      {:desc "[R]efactor [I]nline [F]unctino"})
-(vim.keymap.set [:n :x] "<leader>rIv" ":Refactor inline_var<cr>"  {:desc "[R]efactor [I]nline [V]ariable"})
+(vim.keymap.set [:n :v] "<leader>rIv" ":Refactor inline_var<cr>"  {:desc "[R]efactor [I]nline [V]ariable"})
 (vim.keymap.set :n "<leader>reb" ":Refactor extract_block<cr>"    {:desc "[R]efactor [E]xtract [B]lock"})
 (vim.keymap.set :n "<leader>rfb" ":Refactor extract_block<cr>"    {:desc "[R]efactor to [F]ile: [B]lock"})
-(vim.keymap.set [:n :x] "<leader>rs" (fn [] ((-> :telescope (require) (. :extensions :refactoring :refactors)))) {:desc "[R]efactor [S]earch (telescope)"})
+(vim.keymap.set [:n :v] "<leader>rs" (fn [] ((-> :telescope (require) (. :extensions :refactoring :refactors)))) {:desc "[R]efactor [S]earch (telescope)"})
 ;; debug
 (vim.keymap.set :n "<leader>rdf" (fn [] ((-> :refactoring (require) (. :debug :printf))))                        {:desc "[R]efactor [D]debug [F]unction"})
-(vim.keymap.set [:n :x] "<leader>rdp" (fn [] ((-> :refactoring (require) (. :debug :print_var))))                {:desc "[R]efactor [D]debug [P]rint (variable or selection)"})
-(vim.keymap.set [:n :x] "<leader>rdc" (fn [] ((-> :refactoring (require) (. :debug :cleanup)) {}))              {:desc "[R]efactor [D]debug [C]lean"})
+(vim.keymap.set [:n :v] "<leader>rdp" (fn [] ((-> :refactoring (require) (. :debug :print_var))))                {:desc "[R]efactor [D]debug [P]rint (variable or selection)"})
+(vim.keymap.set [:n :v] "<leader>rdc" (fn [] ((-> :refactoring (require) (. :debug :cleanup)) {}))              {:desc "[R]efactor [D]debug [C]lean"})
 
 ;; AI
-(vim.keymap.set [:n :x] "<leader>gpr" ":GpRewrite<cr>" {:desc "[G]PT [P]rompt [R]ewrite"})
-(vim.keymap.set [:n :x] "<leader>gpa" ":GpAppend<cr>" {:desc "[G]PT [P]rompt [A]ppend"})
+(vim.keymap.set [:n :v] "<leader>gpr" ":GpRewrite<cr>" {:desc "[G]PT [P]rompt [R]ewrite"})
+(vim.keymap.set [:n :v] "<leader>gpa" ":GpAppend<cr>" {:desc "[G]PT [P]rompt [A]ppend"})
+(vim.keymap.set [:n :v] "gpt" ":GpRewrite<cr>" {:desc "[G][P][T] Prompt"})
