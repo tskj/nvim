@@ -16,7 +16,6 @@
 
 (vim.cmd (.. "colorscheme " (pick-random
                               ["nightfox" "duskfox" "terafox" "carbonfox"
-                               "tokyodark"
                                "darkblue"
                                "torte"])))
 
