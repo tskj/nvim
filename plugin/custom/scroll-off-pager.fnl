@@ -65,12 +65,11 @@
         cursor-col (vim.fn.wincol)
         [distance-to-top x] (vim.api.nvim_win_get_cursor 0)
         screen-is-at-top? (= distance-to-top cursor-line)]
-
     (when (or (not just-scrolled-cursor-to)
               (not (equal-coords [distance-to-top x] just-scrolled-cursor-to)))
       (set just-scrolled-cursor-to nil)
 
-      ;; Vertical scrolling (logic unchanged)
+      ;; Vertical scrolling
       (var padding-top padding-top)
       (var padding-bottom padding-bottom)
       (when (> (+ padding-top padding-bottom 1) win-height)
@@ -89,7 +88,7 @@
               n (+ distance-to-padding-border one-window-height)]
           (when (> n 0) (vim.api.nvim_command (.. "exe \"normal! " n "\\<C-e>\"")))))
 
-      ;; Horizontal scrolling - REMOVE the (> textoff 0) check here
+      ;; Horizontal scrolling - skip if flag is set
       (when (and (< cursor-col padding-left)
                  (not skip-horizontal-scroll))
         (let [distance-to-padding-border (- padding-left cursor-col)
@@ -97,7 +96,6 @@
               n (+ distance-to-padding-border one-window-width)]
           (when (> n 0) (vim.api.nvim_command (.. "exe \"normal! " n "zh\"")))))
 
-      ;; Right horizontal scroll (logic unchanged)
       (when (and (> cursor-col (- win-width padding-right))
                  (not skip-horizontal-scroll))
         (let [distance-to-padding-border (- cursor-col (- win-width padding-right) 1)
@@ -108,28 +106,18 @@
 ; potentially move the screen when the cursor moves
 (vim.api.nvim_create_autocmd "CursorMoved" {:pattern "*" :callback scrolly})
 
-; move cursor out of the way when scrolling with mouse wheel OR OTHER SCROLLS (like search)
+; move cursor out of the way when scrolling with mouse wheel
 (vim.api.nvim_create_autocmd "WinScrolled"
   {:pattern "*" :callback
-   (fn []
-     ;; Keep this check if you only want adjustments in normal mode
-     ;; Though you might want it in insert mode too? Consider removing if needed.
-     ;; Note: Original code had '(~= (vim.fn.mode) "n")' which means "if mode is NOT normal, return".
-     ;; Let's assume you DO want this adjustment in Normal mode primarily.
-     ; if (~= (vim.fn.mode) "n") then return end -- Original Lua-like check
-     ; Fennel equivalent (if mode is not "n", return early):
-     ; (when (not= (vim.fn.mode) "n")
-     ;  (lua :return))
-     ; OR, more idiomatically, only run if in normal mode:
-     (when (= (vim.fn.mode) "n")
-
-       ;; Get window dimensions, cursor position AND textoff
+     (fn []
+       (when (~= (vim.fn.mode) "n")
+         (lua :return))
        (let [win-height (vim.api.nvim_win_get_height 0)
              cursor-line (vim.fn.winline)
              [distance-to-top _x] (vim.api.nvim_win_get_cursor 0)
              screen-is-not-at-top? (> distance-to-top cursor-line)]
 
-         ;; Vertical handling (Keep this)
+         ;; Vertical handling
          (var padding-top padding-top)
          (var padding-bottom padding-bottom)
          (when (> (+ padding-top padding-bottom 1) win-height)
@@ -144,4 +132,4 @@
            (let [n (- padding-bottom (- win-height cursor-line))]
              (when (> n 0)
                (vim.api.nvim_command (.. "normal! " n "k"))
-               (set just-scrolled-cursor-to (vim.api.nvim_win_get_cursor 0))))))))})
+               (set just-scrolled-cursor-to (vim.api.nvim_win_get_cursor 0)))))))})
