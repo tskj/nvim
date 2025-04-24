@@ -133,35 +133,35 @@ local function scrolly()
 end
 vim.api.nvim_create_autocmd("CursorMoved", {pattern = "*", callback = scrolly})
 local function _21_()
-  if (vim.fn.mode() == "n") then
-    local win_height = vim.api.nvim_win_get_height(0)
-    local cursor_line = vim.fn.winline()
-    local _let_22_ = vim.api.nvim_win_get_cursor(0)
-    local distance_to_top = _let_22_[1]
-    local _x = _let_22_[2]
-    local screen_is_not_at_top_3f = (distance_to_top > cursor_line)
-    local padding_top0 = padding_top
-    local padding_bottom0 = padding_bottom
-    if ((padding_top0 + padding_bottom0 + 1) > win_height) then
-      padding_top0 = math.floor((win_height / 2))
-      padding_bottom0 = (win_height - padding_top0 - 1)
-    else
-    end
-    if ((cursor_line <= padding_top0) and screen_is_not_at_top_3f) then
-      local n = (padding_top0 - cursor_line - -1)
-      vim.api.nvim_command(("normal! " .. n .. "j"))
+  if (vim.fn.mode() ~= "n") then
+    return
+  else
+  end
+  local win_height = vim.api.nvim_win_get_height(0)
+  local cursor_line = vim.fn.winline()
+  local _let_23_ = vim.api.nvim_win_get_cursor(0)
+  local distance_to_top = _let_23_[1]
+  local _x = _let_23_[2]
+  local screen_is_not_at_top_3f = (distance_to_top > cursor_line)
+  local padding_top0 = padding_top
+  local padding_bottom0 = padding_bottom
+  if ((padding_top0 + padding_bottom0 + 1) > win_height) then
+    padding_top0 = math.floor((win_height / 2))
+    padding_bottom0 = (win_height - padding_top0 - 1)
+  else
+  end
+  if ((cursor_line <= padding_top0) and screen_is_not_at_top_3f) then
+    local n = (padding_top0 - cursor_line - -1)
+    vim.api.nvim_command(("normal! " .. n .. "j"))
+    just_scrolled_cursor_to = vim.api.nvim_win_get_cursor(0)
+  else
+  end
+  if (cursor_line >= (win_height - padding_bottom0 - -1)) then
+    local n = (padding_bottom0 - (win_height - cursor_line))
+    if (n > 0) then
+      vim.api.nvim_command(("normal! " .. n .. "k"))
       just_scrolled_cursor_to = vim.api.nvim_win_get_cursor(0)
-    else
-    end
-    if (cursor_line >= (win_height - padding_bottom0 - -1)) then
-      local n = (padding_bottom0 - (win_height - cursor_line))
-      if (n > 0) then
-        vim.api.nvim_command(("normal! " .. n .. "k"))
-        just_scrolled_cursor_to = vim.api.nvim_win_get_cursor(0)
-        return nil
-      else
-        return nil
-      end
+      return nil
     else
       return nil
     end
