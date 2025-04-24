@@ -32,14 +32,6 @@
         (when (> required-move 0)
           (vim.api.nvim_command (.. "normal! " required-move "h")))))))
 
-;; Special handler for the "0" key
-(vim.keymap.set "n" "0"
-  (fn []
-    (set skip-horizontal-scroll true)
-    (vim.api.nvim_command "normal! 0")
-    ;; Reset after a brief delay
-    (vim.defer_fn (fn [] (set skip-horizontal-scroll false)) 100)))
-
 ;; Shift-L: Move screen right (half screen width)
 (vim.keymap.set "n" "<S-L>"
   (fn []
@@ -72,7 +64,12 @@
         cursor-line (vim.fn.winline)
         cursor-col (vim.fn.wincol)
         [distance-to-top x] (vim.api.nvim_win_get_cursor 0)
-        screen-is-at-top? (= distance-to-top cursor-line)]
+        screen-is-at-top? (= distance-to-top cursor-line)
+        ;; Get window info to check horizontal scroll position
+        wininfo (vim.fn.getwininfo (vim.api.nvim_get_current_win))
+        current-wininfo (. wininfo 1) ;; Assuming only one entry for current window
+        textoff (. current-wininfo :textoff)] ;; textoff = 0 means fully scrolled left
+
     (when (or (not just-scrolled-cursor-to)
               (not (equal-coords [distance-to-top x] just-scrolled-cursor-to)))
       (set just-scrolled-cursor-to nil)
@@ -96,9 +93,11 @@
               n (+ distance-to-padding-border one-window-height)]
           (when (> n 0) (vim.api.nvim_command (.. "exe \"normal! " n "\\<C-e>\"")))))
 
-      ;; Horizontal scrolling - skip if flag is set
+      ;; Horizontal scrolling - skip if flag is set OR screen is fully left
+      ;; Check textoff > 0 to prevent scrolling left if already at the beginning
       (when (and (< cursor-col padding-left)
-                 (not skip-horizontal-scroll))
+                 (not skip-horizontal-scroll)
+                 (> textoff 0))
         (let [distance-to-padding-border (- padding-left cursor-col)
               one-window-width (- win-width padding-left padding-right)
               n (+ distance-to-padding-border one-window-width)]
@@ -114,18 +113,23 @@
 ; potentially move the screen when the cursor moves
 (vim.api.nvim_create_autocmd "CursorMoved" {:pattern "*" :callback scrolly})
 
-; move cursor out of the way when scrolling with mouse wheel
+; move cursor out of the way when scrolling with mouse wheel OR OTHER SCROLLS (like search)
 (vim.api.nvim_create_autocmd "WinScrolled"
   {:pattern "*" :callback
    (fn []
      (when (~= (vim.fn.mode) "n")
       (lua :return))
+
+    ;; Get window dimensions, cursor position AND textoff
      (let [win-height (vim.api.nvim_win_get_height 0)
            win-width (vim.api.nvim_win_get_width 0)
            cursor-line (vim.fn.winline)
            cursor-col (vim.fn.wincol)
-           [distance-to-top x] (vim.api.nvim_win_get_cursor 0)
-           screen-is-not-at-top? (> distance-to-top cursor-line)]
+           [distance-to-top _x] (vim.api.nvim_win_get_cursor 0)
+           screen-is-not-at-top? (> distance-to-top cursor-line)
+           wininfo (vim.fn.getwininfo (vim.api.nvim_get_current_win))
+           current-wininfo (. wininfo 1)
+           textoff (. current-wininfo :textoff)]
 
       ;; Vertical handling
       (var padding-top padding-top)
@@ -144,9 +148,11 @@
             (vim.api.nvim_command (.. "normal! " n "k"))
             (set just-scrolled-cursor-to (vim.api.nvim_win_get_cursor 0)))))
 
-      ;; Fixed horizontal handling - no additional adjustment
+      ;; Horizontal handling (adjust cursor position)
+      ;; -> Only push cursor from LEFT padding if screen is NOT fully left
       (when (and (< cursor-col padding-left)
-                 (not skip-horizontal-scroll))
+                 (not skip-horizontal-scroll)
+                 (> textoff 0))
         (let [n (- padding-left cursor-col)]
           (when (> n 0)
             (vim.api.nvim_command (.. "normal! " n "l"))
