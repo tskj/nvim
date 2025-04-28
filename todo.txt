@@ -120,3 +120,5 @@ vim.api.nvim_set_keymap('n', '<leader>p', ':lua ShowFilePathFloat()<CR>', { nore
   the cursor is.
 
 - conjure ,er open window to the side instead of over?
+
+- search todos and search diagnostics should respect git project, not just cwd
