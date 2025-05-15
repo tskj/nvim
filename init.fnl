@@ -81,6 +81,10 @@
        "hrsh7th/cmp-nvim-lua"
        "L3MON4D3/LuaSnip"]}
 
+   {1 "seblyng/roslyn.nvim"
+    :ft "cs"
+    :opts {}}
+
    "supermaven-inc/supermaven-nvim"
    "milanglacier/minuet-ai.nvim"
    "robitx/gp.nvim"

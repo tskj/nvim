@@ -29,7 +29,9 @@
 (neodev.setup)
 
 (local mason (require :mason))
-(mason.setup)
+(mason.setup
+  {:registries ["github:mason-org/mason-registry"
+                "github:Crashdummyy/mason-registry"]})
 
 (local mason-lspconfig (require :mason-lspconfig))
 (mason-lspconfig.setup
@@ -45,7 +47,6 @@
      "rust_analyzer" ; Rust
      "bashls" ; Bash
      "clangd" ; C
-     "omnisharp" ; C# (alternative is `csharp_ls`, written in F#)
      "clojure_lsp" ; Clojure
      "dockerls" ; Docker (there is also `docker_compose_language_service` as a supplement)
      "eslint"
