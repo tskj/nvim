@@ -99,6 +99,9 @@
                 {:desc "[E]xplore [P]roject (according to git repo)"})
 
 (vim.keymap.set [:n :v] "<leader>vd" vim.diagnostic.open_float   {:desc "[V]iew [D]diagnostic"})
+(vim.keymap.set [:n :v] "<leader>vh" ":Gitsigns preview_hunk<cr>"         {:desc "[V]iew [H]unk"})
+(vim.keymap.set [:n :v] "<leader>vi" ":Gitsigns preview_hunk_inline<cr>"  {:desc "[V]iew hunk [I]nline"})
+(vim.keymap.set [:n :v] "<leader>vb" ":Gitsigns toggle_current_line_blame<cr>" {:desc "[V]iew [B]lame inline (toggle)"})
 
 (vim.keymap.set [:n :v] "<leader>ri" vim.lsp.buf.rename    {:desc "[R]ename [I]dentifier [LSP]"})
 
@@ -111,6 +114,9 @@
 
 ;; lazygit
 (vim.keymap.set [:n :v] "<leader>gl" ":LazyGit<cr>" {:desc "[G]it [L]azy"})
+
+;; git quickfix
+(vim.keymap.set [:n :v] "<leader>gq" ":Gitsigns setqflist all<cr>" {:desc "[G]it [Q]uickfix"})
 
 ;; open terminal (in spacemacs this is SPC a t for "application: terminal")
 (vim.keymap.set [:n :v] "<leader>ac" vim.cmd.terminal                            {:desc "[A]pplication [C]ommand line (opens terminal)"})
