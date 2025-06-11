@@ -296,6 +296,26 @@
                                  "g@")
                 {:silent true :desc "[C]lipboard [Y]ank (y)" :expr true})
 
+(fn vim.g.clipboard_append_operator [motion-type]
+  (let [old-reg-content (vim.fn.getreg "\"")
+        old-reg-type (vim.fn.getregtype "\"")
+        current-clipboard (vim.fn.getreg "+")
+        v (match motion-type
+            "line"  "V"
+            "block" "\x16"
+            _       "v")]
+
+    (vim.cmd (.. "normal! `[" v "`]y"))
+    (let [yanked-text (vim.fn.getreg "\"")]
+      (vim.fn.setreg "+" (.. current-clipboard yanked-text)))
+    (vim.fn.setreg "\"" old-reg-content old-reg-type)))
+
+(vim.keymap.set :n :<leader>ce (fn []
+                                 (set vim.o.operatorfunc
+                                      "v:lua.vim.g.clipboard_append_operator")
+                                 "g@")
+                {:silent true :desc "[C]lipboard [E]xtend (append)" :expr true})
+
 (fn vim.g.clipboard_delete_operator [motion-type]
   (let [old-reg-content (vim.fn.getreg "\"")
         old-reg-type (vim.fn.getregtype "\"")
@@ -319,6 +339,15 @@
 (vim.keymap.set :n "<leader>cD" (uur "\"+D") {:silent true :desc "[C]lipboard [D]elete (D)"})
 
 (vim.keymap.set :v "<leader>cy" (uur "\"+y") {:silent true :desc "[C]lipboard [Y]ank (y)"})
+(vim.keymap.set :v "<leader>ce"
+                (fn []
+                  (let [old-unnamed (vim.fn.getreg "\"")
+                        current-clipboard (vim.fn.getreg "+")]
+                    (vim.cmd "normal! y")
+                    (let [yanked-text (vim.fn.getreg "\"")]
+                      (vim.fn.setreg "+" (.. current-clipboard yanked-text))
+                      (vim.fn.setreg "\"" old-unnamed))))
+                {:silent true :desc "[C]lipboard [E]xtend (append)"})
 (vim.keymap.set :v "<leader>cY" (uur "\"+y") {:silent true :desc "[C]lipboard [Y]ank (Y)"})
 (vim.keymap.set :v "<leader>cP" (uur-2 "\"+p" "+") {:silent true :desc "[C]lipboard [P]aste (P)"})
 (vim.keymap.set :v "<leader>cD" (uur "\"+D") {:silent true :desc "[C]lipboard [D]elete (D)"})

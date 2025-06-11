@@ -99,9 +99,6 @@ vim.api.nvim_set_keymap('n', '<leader>p', ':lua ShowFilePathFloat()<CR>', { nore
 
 - when oil window receives focus it needs to also set cwd
 
-- SPC c a or SPC c a p for clipboard append maybe? so I can append stuff to the system clipboard
-  incrementally, something I often want!
-
 - contextfold at the top should be off by default and toggleable by a keybinding
 
 - should have a completion thing for identifiers or text in the buffer, presumably much faster than the lsp
