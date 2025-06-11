@@ -287,6 +287,31 @@ local function _35_()
   return "g@"
 end
 vim.keymap.set("n", "<leader>cy", _35_, {silent = true, desc = "[C]lipboard [Y]ank (y)", expr = true})
+vim.g.clipboard_append_operator = function(motion_type)
+  local old_reg_content = vim.fn.getreg("\"")
+  local old_reg_type = vim.fn.getregtype("\"")
+  local current_clipboard = vim.fn.getreg("+")
+  local v
+  if (motion_type == "line") then
+    v = "V"
+  elseif (motion_type == "block") then
+    v = "\22"
+  else
+    local _ = motion_type
+    v = "v"
+  end
+  vim.cmd(("normal! `[" .. v .. "`]y"))
+  do
+    local yanked_text = vim.fn.getreg("\"")
+    vim.fn.setreg("+", (current_clipboard .. yanked_text))
+  end
+  return vim.fn.setreg("\"", old_reg_content, old_reg_type)
+end
+local function _37_()
+  vim.o.operatorfunc = "v:lua.vim.g.clipboard_append_operator"
+  return "g@"
+end
+vim.keymap.set("n", "<leader>ce", _37_, {silent = true, desc = "[C]lipboard [E]xtend (append)", expr = true})
 vim.g.clipboard_delete_operator = function(motion_type)
   local old_reg_content = vim.fn.getreg("\"")
   local old_reg_type = vim.fn.getregtype("\"")
@@ -302,16 +327,25 @@ vim.g.clipboard_delete_operator = function(motion_type)
   vim.cmd(("normal! `[" .. v .. "`]\"+d"))
   return vim.fn.setreg("\"", old_reg_content, old_reg_type)
 end
-local function _37_()
+local function _39_()
   vim.o.operatorfunc = "v:lua.vim.g.clipboard_delete_operator"
   return "g@"
 end
-vim.keymap.set("n", "<leader>cd", _37_, {silent = true, desc = "[C]lipboard [D]elete (d)", expr = true})
+vim.keymap.set("n", "<leader>cd", _39_, {silent = true, desc = "[C]lipboard [D]elete (d)", expr = true})
 vim.keymap.set("n", "<leader>cp", uur("\"+p"), {silent = true, desc = "[C]lipboard [P]aste (p)"})
 vim.keymap.set("n", "<leader>cY", uur("\"+y$"), {silent = true, desc = "[C]lipboard [Y]ank (Y)"})
 vim.keymap.set("n", "<leader>cP", uur("\"+P"), {silent = true, desc = "[C]lipboard [P]aste (P)"})
 vim.keymap.set("n", "<leader>cD", uur("\"+D"), {silent = true, desc = "[C]lipboard [D]elete (D)"})
 vim.keymap.set("v", "<leader>cy", uur("\"+y"), {silent = true, desc = "[C]lipboard [Y]ank (y)"})
+local function _40_()
+  local old_unnamed = vim.fn.getreg("\"")
+  local current_clipboard = vim.fn.getreg("+")
+  vim.cmd("normal! y")
+  local yanked_text = vim.fn.getreg("\"")
+  vim.fn.setreg("+", (current_clipboard .. yanked_text))
+  return vim.fn.setreg("\"", old_unnamed)
+end
+vim.keymap.set("v", "<leader>ce", _40_, {silent = true, desc = "[C]lipboard [E]xtend (append)"})
 vim.keymap.set("v", "<leader>cY", uur("\"+y"), {silent = true, desc = "[C]lipboard [Y]ank (Y)"})
 vim.keymap.set("v", "<leader>cP", uur_2("\"+p", "+"), {silent = true, desc = "[C]lipboard [P]aste (P)"})
 vim.keymap.set("v", "<leader>cD", uur("\"+D"), {silent = true, desc = "[C]lipboard [D]elete (D)"})
@@ -320,13 +354,13 @@ vim.keymap.set("v", "<leader>cd", uur("\"+d"), {silent = true, desc = "[C]lipbao
 local m_type = nil
 local function register(type)
   m_type = type
-  local function _38_()
+  local function _41_()
     m_type = nil
     return nil
   end
-  return vim.defer_fn(_38_, 100000)
+  return vim.defer_fn(_41_, 100000)
 end
-local function _39_()
+local function _42_()
   if (m_type == "q") then
     return vim.cmd("normal ]q")
   elseif (m_type == "l") then
@@ -340,8 +374,8 @@ local function _39_()
     return vim.cmd("normal! ;")
   end
 end
-vim.keymap.set("n", ";", _39_)
-local function _41_()
+vim.keymap.set("n", ";", _42_)
+local function _44_()
   if (m_type == "q") then
     return vim.cmd("normal [q")
   elseif (m_type == "l") then
@@ -355,47 +389,47 @@ local function _41_()
     return vim.cmd("normal! ,")
   end
 end
-vim.keymap.set("n", ",", _41_)
-local function _43_()
+vim.keymap.set("n", ",", _44_)
+local function _46_()
   register("q")
   return vim.api.nvim_command("cprev")
 end
-vim.keymap.set("n", "[q", _43_, {desc = "[[]ump [Q]uickfix previous (:cprev)"})
-local function _44_()
+vim.keymap.set("n", "[q", _46_, {desc = "[[]ump [Q]uickfix previous (:cprev)"})
+local function _47_()
   register("q")
   return vim.api.nvim_command("cnext")
 end
-vim.keymap.set("n", "]q", _44_, {desc = "[]]ump [Q]uickfix next (:cnext)"})
-local function _45_()
+vim.keymap.set("n", "]q", _47_, {desc = "[]]ump [Q]uickfix next (:cnext)"})
+local function _48_()
   register("l")
   return vim.api.nvim_command("lprev")
 end
-vim.keymap.set("n", "[l", _45_, {desc = "[[]ump [L]ocation previous (:lprev)"})
-local function _46_()
+vim.keymap.set("n", "[l", _48_, {desc = "[[]ump [L]ocation previous (:lprev)"})
+local function _49_()
   register("l")
   return vim.api.nvim_command("lnext")
 end
-vim.keymap.set("n", "]l", _46_, {desc = "[]]ump [L]ocation next (:lnext)"})
-local function _47_()
+vim.keymap.set("n", "]l", _49_, {desc = "[]]ump [L]ocation next (:lnext)"})
+local function _50_()
   register("d")
   return vim.diagnostic.goto_prev()
 end
-vim.keymap.set("n", "[d", _47_, {desc = "[[]ump [D]iagnostic previous"})
-local function _48_()
+vim.keymap.set("n", "[d", _50_, {desc = "[[]ump [D]iagnostic previous"})
+local function _51_()
   register("d")
   return vim.diagnostic.goto_next()
 end
-vim.keymap.set("n", "]d", _48_, {desc = "[]]ump [D]iagnostic next"})
-local function _49_()
+vim.keymap.set("n", "]d", _51_, {desc = "[]]ump [D]iagnostic next"})
+local function _52_()
   register("t")
   return run(require("todo-comments").jump_prev)
 end
-vim.keymap.set("n", "[t", _49_, {desc = "[[]ump [T]odo previous"})
-local function _50_()
+vim.keymap.set("n", "[t", _52_, {desc = "[[]ump [T]odo previous"})
+local function _53_()
   register("t")
   return run(require("todo-comments").jump_next)
 end
-vim.keymap.set("n", "]t", _50_, {desc = "[]]ump [T]odo next"})
+vim.keymap.set("n", "]t", _53_, {desc = "[]]ump [T]odo next"})
 vim.keymap.set("v", "<leader>ref", ":Refactor extract ", {desc = "[R]efactor [E]xtract [F]unction"})
 vim.keymap.set("v", "<leader>rff", ":Refactor extract_to_file ", {desc = "[R]efactor to [F]ile: [F]unction"})
 vim.keymap.set("v", "<leader>rev", ":Refactor extract_var ", {desc = "[R]efactor [E]xtract [V]variable"})
@@ -403,22 +437,22 @@ vim.keymap.set("n", "<leader>rIf", ":Refactor inline_func<cr>", {desc = "[R]efac
 vim.keymap.set({"n", "v"}, "<leader>rIv", ":Refactor inline_var<cr>", {desc = "[R]efactor [I]nline [V]ariable"})
 vim.keymap.set("n", "<leader>reb", ":Refactor extract_block<cr>", {desc = "[R]efactor [E]xtract [B]lock"})
 vim.keymap.set("n", "<leader>rfb", ":Refactor extract_block<cr>", {desc = "[R]efactor to [F]ile: [B]lock"})
-local function _51_()
+local function _54_()
   return require("telescope").extensions.refactoring.refactors()
 end
-vim.keymap.set({"n", "v"}, "<leader>rs", _51_, {desc = "[R]efactor [S]earch (telescope)"})
-local function _52_()
+vim.keymap.set({"n", "v"}, "<leader>rs", _54_, {desc = "[R]efactor [S]earch (telescope)"})
+local function _55_()
   return require("refactoring").debug.printf()
 end
-vim.keymap.set("n", "<leader>rdf", _52_, {desc = "[R]efactor [D]debug [F]unction"})
-local function _53_()
+vim.keymap.set("n", "<leader>rdf", _55_, {desc = "[R]efactor [D]debug [F]unction"})
+local function _56_()
   return require("refactoring").debug.print_var()
 end
-vim.keymap.set({"n", "v"}, "<leader>rdp", _53_, {desc = "[R]efactor [D]debug [P]rint (variable or selection)"})
-local function _54_()
+vim.keymap.set({"n", "v"}, "<leader>rdp", _56_, {desc = "[R]efactor [D]debug [P]rint (variable or selection)"})
+local function _57_()
   return require("refactoring").debug.cleanup({})
 end
-vim.keymap.set({"n", "v"}, "<leader>rdc", _54_, {desc = "[R]efactor [D]debug [C]lean"})
+vim.keymap.set({"n", "v"}, "<leader>rdc", _57_, {desc = "[R]efactor [D]debug [C]lean"})
 vim.keymap.set({"n", "v"}, "<leader>gpr", ":GpRewrite<cr>", {desc = "[G]PT [P]rompt [R]ewrite"})
 vim.keymap.set({"n", "v"}, "<leader>gpa", ":GpAppend<cr>", {desc = "[G]PT [P]rompt [A]ppend"})
 return vim.keymap.set({"n", "v"}, "gpt", ":GpRewrite<cr>", {desc = "[G][P][T] Prompt"})
