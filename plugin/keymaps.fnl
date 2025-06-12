@@ -434,6 +434,7 @@
 (vim.keymap.set [:n :v] "<leader>rdc" (fn [] ((-> :refactoring (require) (. :debug :cleanup)) {}))              {:desc "[R]efactor [D]debug [C]lean"})
 
 ;; AI
-(vim.keymap.set [:n :v] "<leader>gpr" ":GpRewrite<cr>" {:desc "[G]PT [P]rompt [R]ewrite"})
-(vim.keymap.set [:n :v] "<leader>gpa" ":GpAppend<cr>" {:desc "[G]PT [P]rompt [A]ppend"})
-(vim.keymap.set [:n :v] "gpt" ":GpRewrite<cr>" {:desc "[G][P][T] Prompt"})
+(vim.keymap.set [:n :v] "gpr" ":GpRewrite<cr>" {:desc "[G][P][R]ewrite"})
+(vim.keymap.set [:n :v] "gpa" ":GpAppend<cr>" {:desc "[G][P][A]ppend"})
+(vim.keymap.set [:n :v] "gpc" ":GpChatNew<cr>" {:desc "[G][P][C]hat new"})
+(vim.keymap.set [:n :v] "gpt" ":GpChatToggle<cr>" {:desc "[G][P][T]oggle (chat)"})
