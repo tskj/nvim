@@ -3,8 +3,9 @@
 (let [{: setup} (require :nvim-treesitter.configs)]
   (setup
     {:highlight {:enable true :additional_vim_regex_highlighting false}
-     :ensure_installed ["typescript" "fennel"]
+     :ensure_installed ["typescript" "fennel" "c_sharp"]
      :indent {:enable true}
+     :fold {:enable true}
      :textobjects
        {:move
          {:enable true
@@ -24,5 +25,5 @@
   (run {:mode :topline
         :line_numbers true
         :multiline_threshold 1
-        :max_lines 1
+        :max_lines 3
         :trim_scope :inner}))
