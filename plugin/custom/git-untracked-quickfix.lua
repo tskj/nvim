@@ -1,5 +1,6 @@
 local _local_1_ = require("user.utils")
 local run = _local_1_["run"]
+local volatile_quickfix = _local_1_["volatile-quickfix"]
 local function add_untracked_to_quickfix()
   local project_path = run(require("user.find-git-repo")["get-path-to-repo"], vim.fn.getcwd())
   if not project_path then
@@ -30,6 +31,6 @@ local function add_untracked_to_quickfix()
   end
   vim.fn.setqflist(qf_items, "a")
   print(("Added " .. #qf_items .. " untracked files to the quickfix list."))
-  return vim.cmd("copen")
+  return volatile_quickfix()
 end
 return vim.api.nvim_create_user_command("AddUntracked", add_untracked_to_quickfix, {})

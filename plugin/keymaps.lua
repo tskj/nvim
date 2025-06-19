@@ -1,5 +1,6 @@
 local _local_1_ = require("user.utils")
 local run = _local_1_["run"]
+local gitsigns_quickfix_volatile = _local_1_["gitsigns-quickfix-volatile"]
 local nvim_dir = vim.fn.stdpath("config")
 local function open_in_explorer(dir)
   local function _2_()
@@ -110,7 +111,7 @@ vim.keymap.set({"n", "v"}, "<leader>ef", open_in_explorer(""), {desc = "[E]xplor
 vim.keymap.set({"n", "v"}, "<leader>gs", ":Neogit<cr>", {desc = "[G]it [S]tage [Neogit]"})
 vim.keymap.set({"n", "v"}, "<leader>gc", ":Neogit commit<cr>", {desc = "[G]it [C]ommit [Neogit]"})
 vim.keymap.set({"n", "v"}, "<leader>gl", ":LazyGit<cr>", {desc = "[G]it [L]azy"})
-vim.keymap.set({"n", "v"}, "<leader>gq", ":Gitsigns setqflist all<cr>", {desc = "[G]it [Q]uickfix"})
+vim.keymap.set({"n", "v"}, "<leader>gq", gitsigns_quickfix_volatile, {desc = "[G]it [Q]uickfix"})
 vim.keymap.set({"n", "v"}, "<leader>ac", vim.cmd.terminal, {desc = "[A]pplication [C]ommand line (opens terminal)"})
 local function _17_()
   return vim.cmd.terminal("powershell.exe")
@@ -460,6 +461,10 @@ local function _58_()
   return require("refactoring").debug.cleanup({})
 end
 vim.keymap.set({"n", "v"}, "<leader>rdc", _58_, {desc = "[R]efactor [D]debug [C]lean"})
+local function _59_()
+  return vim.keymap.set("n", "<CR>", "<CR><cmd>cclose<cr>", {buffer = true, desc = "Jump to item and close quickfix"})
+end
+vim.api.nvim_create_autocmd("FileType", {pattern = "qf", callback = _59_})
 vim.keymap.set({"n", "v"}, "gpr", ":GpRewrite<cr>", {desc = "[G][P][R]ewrite"})
 vim.keymap.set({"n", "v"}, "gpa", ":GpAppend<cr>", {desc = "[G][P][A]ppend"})
 vim.keymap.set({"n", "v"}, "gpc", ":GpChatNew<cr>", {desc = "[G][P][C]hat new"})

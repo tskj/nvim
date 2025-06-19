@@ -27,4 +27,19 @@ local function debug_log(...)
   file:flush()
   return file:close()
 end
-return {run = run, ["debug-log"] = debug_log}
+local function volatile_quickfix(timeout_ms)
+  vim.cmd("copen")
+  local function _3_()
+    if (vim.fn.getqflist({winid = 1}) and (vim.fn.getqflist({winid = 1}).winid ~= 0)) then
+      return vim.cmd("cclose")
+    else
+      return nil
+    end
+  end
+  return vim.fn.timer_start((timeout_ms or 2000), _3_)
+end
+local function gitsigns_quickfix_volatile()
+  vim.cmd("Gitsigns setqflist all")
+  return volatile_quickfix()
+end
+return {run = run, ["debug-log"] = debug_log, ["volatile-quickfix"] = volatile_quickfix, ["gitsigns-quickfix-volatile"] = gitsigns_quickfix_volatile}
