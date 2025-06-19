@@ -352,15 +352,22 @@ vim.keymap.set("v", "<leader>cD", uur("\"+D"), {silent = true, desc = "[C]lipboa
 vim.keymap.set("v", "<leader>cp", uur("\"+p"), {silent = true, desc = "[C]lipboard [P]aste (p)"})
 vim.keymap.set("v", "<leader>cd", uur("\"+d"), {silent = true, desc = "[C]lipbaord [D]elete (d)"})
 local m_type = nil
+local m_timer = nil
 local function register(type)
   m_type = type
-  local function _41_()
+  if m_timer then
+    vim.fn.timer_stop(m_timer)
+  else
+  end
+  local function _42_()
     m_type = nil
+    m_timer = nil
     return nil
   end
-  return vim.defer_fn(_41_, 100000)
+  m_timer = vim.fn.timer_start(100000, _42_)
+  return nil
 end
-local function _42_()
+local function _43_()
   if (m_type == "q") then
     return vim.cmd("normal ]q")
   elseif (m_type == "l") then
@@ -374,8 +381,8 @@ local function _42_()
     return vim.cmd("normal! ;")
   end
 end
-vim.keymap.set("n", ";", _42_)
-local function _44_()
+vim.keymap.set("n", ";", _43_)
+local function _45_()
   if (m_type == "q") then
     return vim.cmd("normal [q")
   elseif (m_type == "l") then
@@ -389,47 +396,47 @@ local function _44_()
     return vim.cmd("normal! ,")
   end
 end
-vim.keymap.set("n", ",", _44_)
-local function _46_()
+vim.keymap.set("n", ",", _45_)
+local function _47_()
   register("q")
   return vim.api.nvim_command("cprev")
 end
-vim.keymap.set("n", "[q", _46_, {desc = "[[]ump [Q]uickfix previous (:cprev)"})
-local function _47_()
+vim.keymap.set("n", "[q", _47_, {desc = "[[]ump [Q]uickfix previous (:cprev)"})
+local function _48_()
   register("q")
   return vim.api.nvim_command("cnext")
 end
-vim.keymap.set("n", "]q", _47_, {desc = "[]]ump [Q]uickfix next (:cnext)"})
-local function _48_()
+vim.keymap.set("n", "]q", _48_, {desc = "[]]ump [Q]uickfix next (:cnext)"})
+local function _49_()
   register("l")
   return vim.api.nvim_command("lprev")
 end
-vim.keymap.set("n", "[l", _48_, {desc = "[[]ump [L]ocation previous (:lprev)"})
-local function _49_()
+vim.keymap.set("n", "[l", _49_, {desc = "[[]ump [L]ocation previous (:lprev)"})
+local function _50_()
   register("l")
   return vim.api.nvim_command("lnext")
 end
-vim.keymap.set("n", "]l", _49_, {desc = "[]]ump [L]ocation next (:lnext)"})
-local function _50_()
+vim.keymap.set("n", "]l", _50_, {desc = "[]]ump [L]ocation next (:lnext)"})
+local function _51_()
   register("d")
   return vim.diagnostic.goto_prev()
 end
-vim.keymap.set("n", "[d", _50_, {desc = "[[]ump [D]iagnostic previous"})
-local function _51_()
+vim.keymap.set("n", "[d", _51_, {desc = "[[]ump [D]iagnostic previous"})
+local function _52_()
   register("d")
   return vim.diagnostic.goto_next()
 end
-vim.keymap.set("n", "]d", _51_, {desc = "[]]ump [D]iagnostic next"})
-local function _52_()
+vim.keymap.set("n", "]d", _52_, {desc = "[]]ump [D]iagnostic next"})
+local function _53_()
   register("t")
   return run(require("todo-comments").jump_prev)
 end
-vim.keymap.set("n", "[t", _52_, {desc = "[[]ump [T]odo previous"})
-local function _53_()
+vim.keymap.set("n", "[t", _53_, {desc = "[[]ump [T]odo previous"})
+local function _54_()
   register("t")
   return run(require("todo-comments").jump_next)
 end
-vim.keymap.set("n", "]t", _53_, {desc = "[]]ump [T]odo next"})
+vim.keymap.set("n", "]t", _54_, {desc = "[]]ump [T]odo next"})
 vim.keymap.set("v", "<leader>ref", ":Refactor extract ", {desc = "[R]efactor [E]xtract [F]unction"})
 vim.keymap.set("v", "<leader>rff", ":Refactor extract_to_file ", {desc = "[R]efactor to [F]ile: [F]unction"})
 vim.keymap.set("v", "<leader>rev", ":Refactor extract_var ", {desc = "[R]efactor [E]xtract [V]variable"})
@@ -437,22 +444,22 @@ vim.keymap.set("n", "<leader>rIf", ":Refactor inline_func<cr>", {desc = "[R]efac
 vim.keymap.set({"n", "v"}, "<leader>rIv", ":Refactor inline_var<cr>", {desc = "[R]efactor [I]nline [V]ariable"})
 vim.keymap.set("n", "<leader>reb", ":Refactor extract_block<cr>", {desc = "[R]efactor [E]xtract [B]lock"})
 vim.keymap.set("n", "<leader>rfb", ":Refactor extract_block<cr>", {desc = "[R]efactor to [F]ile: [B]lock"})
-local function _54_()
+local function _55_()
   return require("telescope").extensions.refactoring.refactors()
 end
-vim.keymap.set({"n", "v"}, "<leader>rs", _54_, {desc = "[R]efactor [S]earch (telescope)"})
-local function _55_()
+vim.keymap.set({"n", "v"}, "<leader>rs", _55_, {desc = "[R]efactor [S]earch (telescope)"})
+local function _56_()
   return require("refactoring").debug.printf()
 end
-vim.keymap.set("n", "<leader>rdf", _55_, {desc = "[R]efactor [D]debug [F]unction"})
-local function _56_()
+vim.keymap.set("n", "<leader>rdf", _56_, {desc = "[R]efactor [D]debug [F]unction"})
+local function _57_()
   return require("refactoring").debug.print_var()
 end
-vim.keymap.set({"n", "v"}, "<leader>rdp", _56_, {desc = "[R]efactor [D]debug [P]rint (variable or selection)"})
-local function _57_()
+vim.keymap.set({"n", "v"}, "<leader>rdp", _57_, {desc = "[R]efactor [D]debug [P]rint (variable or selection)"})
+local function _58_()
   return require("refactoring").debug.cleanup({})
 end
-vim.keymap.set({"n", "v"}, "<leader>rdc", _57_, {desc = "[R]efactor [D]debug [C]lean"})
+vim.keymap.set({"n", "v"}, "<leader>rdc", _58_, {desc = "[R]efactor [D]debug [C]lean"})
 vim.keymap.set({"n", "v"}, "gpr", ":GpRewrite<cr>", {desc = "[G][P][R]ewrite"})
 vim.keymap.set({"n", "v"}, "gpa", ":GpAppend<cr>", {desc = "[G][P][A]ppend"})
 vim.keymap.set({"n", "v"}, "gpc", ":GpChatNew<cr>", {desc = "[G][P][C]hat new"})
