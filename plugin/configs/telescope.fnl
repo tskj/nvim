@@ -6,9 +6,9 @@
   {:extensions {:ui-select [(-> :telescope.themes (require) (. :get_dropdown) (run))]
                 :undo {}}
    :defaults {:layout_strategy "flex"
-              :layout_config {:flip_columns 120
-                              :horizontal {:width 0.9 :preview_width 0.6 :prompt_position "top"}
-                              :vertical {:prompt_position "top" :mirror true}}
+              :layout_config {:horizontal {:width 0.9 :preview_width 0.6 :prompt_position "top"}
+                              :vertical {:prompt_position "top" :mirror true}
+                              :flex {:flip_columns 120}}
               :sorting_strategy "ascending"
               :scroll_strategy "limit"
 
