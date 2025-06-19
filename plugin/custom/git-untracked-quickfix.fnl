@@ -1,4 +1,4 @@
-(local {: run} (require :user.utils))
+(local {: run : volatile-quickfix} (require :user.utils))
 
 (fn add-untracked-to-quickfix []
   ;; Use git repo detection from your existing config
@@ -32,7 +32,7 @@
   ;; Append to existing quickfix list
   (vim.fn.setqflist qf-items :a)
   (print (.. "Added " (# qf-items) " untracked files to the quickfix list."))
-  (vim.cmd :copen))
+  (volatile-quickfix))
 
 ;; Create user command
 (vim.api.nvim_create_user_command

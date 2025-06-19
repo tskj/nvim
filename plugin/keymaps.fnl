@@ -1,4 +1,4 @@
-(local {: run} (require :user.utils))
+(local {: run : gitsigns-quickfix-volatile} (require :user.utils))
 
 ;; get the path to the Neovim configuration directory
 (local nvim-dir (vim.fn.stdpath "config"))
@@ -116,7 +116,7 @@
 (vim.keymap.set [:n :v] "<leader>gl" ":LazyGit<cr>" {:desc "[G]it [L]azy"})
 
 ;; git quickfix
-(vim.keymap.set [:n :v] "<leader>gq" ":Gitsigns setqflist all<cr>" {:desc "[G]it [Q]uickfix"})
+(vim.keymap.set [:n :v] "<leader>gq" gitsigns-quickfix-volatile {:desc "[G]it [Q]uickfix"})
 
 ;; open terminal (in spacemacs this is SPC a t for "application: terminal")
 (vim.keymap.set [:n :v] "<leader>ac" vim.cmd.terminal                            {:desc "[A]pplication [C]ommand line (opens terminal)"})
@@ -436,6 +436,13 @@
 (vim.keymap.set :n "<leader>rdf" (fn [] ((-> :refactoring (require) (. :debug :printf))))                        {:desc "[R]efactor [D]debug [F]unction"})
 (vim.keymap.set [:n :v] "<leader>rdp" (fn [] ((-> :refactoring (require) (. :debug :print_var))))                {:desc "[R]efactor [D]debug [P]rint (variable or selection)"})
 (vim.keymap.set [:n :v] "<leader>rdc" (fn [] ((-> :refactoring (require) (. :debug :cleanup)) {}))              {:desc "[R]efactor [D]debug [C]lean"})
+
+;; Quickfix window specific keybindings
+(vim.api.nvim_create_autocmd "FileType"
+  {:pattern "qf"
+   :callback (fn []
+               (vim.keymap.set :n "<CR>" "<CR><cmd>cclose<cr>" 
+                               {:buffer true :desc "Jump to item and close quickfix"}))})
 
 ;; AI
 (vim.keymap.set [:n :v] "gpr" ":GpRewrite<cr>" {:desc "[G][P][R]ewrite"})
