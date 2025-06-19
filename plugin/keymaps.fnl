@@ -358,12 +358,16 @@
 ;;; jump commands
 
 (var m-type nil)
+(var m-timer nil)
 
 (fn register [type]
   (set m-type type)
-  (vim.defer_fn
-    (fn [] (set m-type nil))
-    100_000))
+  (when m-timer
+    (vim.fn.timer_stop m-timer))
+  (set m-timer (vim.fn.timer_start 100_000
+                                   (fn [] 
+                                     (set m-type nil)
+                                     (set m-timer nil)))))
 
 (vim.keymap.set :n ";"
                 (fn []
