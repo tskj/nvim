@@ -24,9 +24,9 @@
       :toggle-transparency
       (if transparent?
         (do (set transparent? false)
-            (set vim.g.neovide_transparency 1))
+            (set vim.g.neovide_opacity 1))
         (do (set transparent? true)
-            (set vim.g.neovide_transparency 0.95)))
+            (set vim.g.neovide_opacity 0.95)))
 
       :toggle-animations
       (if animation?
