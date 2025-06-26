@@ -449,4 +449,5 @@
 (vim.keymap.set [:n :v] "gpa" ":GpAppend<cr>" {:desc "[G][P][A]ppend"})
 (vim.keymap.set [:n :v] "gpc" ":GpChatNew<cr>" {:desc "[G][P][C]hat new"})
 (vim.keymap.set [:n :v] "gpt" ":GpChatToggle<cr>" {:desc "[G][P][T]oggle (chat)"})
+(vim.keymap.set [:n :v] "gpq" ":GpPopup<cr>" {:desc "[G][P][Q]uestion (popup)"})
 (vim.keymap.set :n "gpf" "<cmd>ClaudeCodeFind<cr>" {:desc "[G][P][F]ind file (Claude)"})

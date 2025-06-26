@@ -6,10 +6,15 @@
 Look at the following text, it will be a reference to a file in the current project. 
 It could be a git diff, a file name, or several lines from inside the file.
 If it's the latter, use tool calls to search for the file in question. If it's multiple lines, pick
-a line number. Your task is to respond with the absolute path to the file and linenumber (if appropriate,
-if not, only the absolute path). Answer only with this information, as it will be used by the automated
-system to open the user's editor at the correct spot. Always use absolute paths starting with /.
-If you cannot find a matching file, respond with exactly: ERROR_NO_SUCH_FILE
+a line number. 
+
+Your response must be ONLY the file path in one of these exact formats:
+- If you found a specific line: /absolute/path/to/file.ext:123
+- If you found the file but no specific line: /absolute/path/to/file.ext
+- If no file matches: ERROR_NO_SUCH_FILE
+
+Do NOT include explanatory text like \"I found it here:\" or \"The file is located at:\" or \"Here's the match:\".
+Your entire response will be parsed by a script that expects only the formats above.
 The input follows:
 
 ")))
@@ -48,7 +53,8 @@ The input follows:
                             (vim.cmd (.. "silent edit " filename))
                             (when (and line-num (not= line-num ""))
                               (vim.cmd (.. "normal! " line-num "G")))
-                            (vim.cmd "redraw")))))))))))
+                            (vim.cmd "redraw")
+                            (vim.cmd "echo ''")))))))))))
 
 ;; Create user command
 (vim.api.nvim_create_user_command 
