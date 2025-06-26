@@ -441,7 +441,7 @@
 (vim.api.nvim_create_autocmd "FileType"
   {:pattern "qf"
    :callback (fn []
-               (vim.keymap.set :n "<CR>" "<CR><cmd>cclose<cr>" 
+               (vim.keymap.set :n "<CR>" "<CR><cmd>cclose<cr>"
                                {:buffer true :desc "Jump to item and close quickfix"}))})
 
 ;; AI
@@ -449,3 +449,4 @@
 (vim.keymap.set [:n :v] "gpa" ":GpAppend<cr>" {:desc "[G][P][A]ppend"})
 (vim.keymap.set [:n :v] "gpc" ":GpChatNew<cr>" {:desc "[G][P][C]hat new"})
 (vim.keymap.set [:n :v] "gpt" ":GpChatToggle<cr>" {:desc "[G][P][T]oggle (chat)"})
+(vim.keymap.set :n "gpf" "<cmd>ClaudeCodeFind<cr>" {:desc "[G][P][F]ind file (Claude)"})
