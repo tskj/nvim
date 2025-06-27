@@ -88,6 +88,19 @@
    "supermaven-inc/supermaven-nvim"
    "milanglacier/minuet-ai.nvim"
    "robitx/gp.nvim"
+   {1 "coder/claudecode.nvim"
+    :dependencies ["folke/snacks.nvim"]
+    :config true
+    :keys [{1 "<leader>a" :desc "AI/Claude Code"}
+           {1 "<leader>ac" 2 "<cmd>ClaudeCode<cr>" :desc "Toggle Claude"}
+           {1 "<leader>af" 2 "<cmd>ClaudeCodeFocus<cr>" :desc "Focus Claude"}
+           {1 "<leader>ar" 2 "<cmd>ClaudeCode --resume<cr>" :desc "Resume Claude"}
+           {1 "<leader>aC" 2 "<cmd>ClaudeCode --continue<cr>" :desc "Continue Claude"}
+           {1 "<leader>ab" 2 "<cmd>ClaudeCodeAdd %<cr>" :desc "Add current buffer"}
+           {1 "<leader>as" 2 "<cmd>ClaudeCodeSend<cr>" :mode "v" :desc "Send to Claude"}
+           {1 "<leader>as" 2 "<cmd>ClaudeCodeTreeAdd<cr>" :desc "Add file" :ft ["NvimTree" "neo-tree" "oil"]}
+           {1 "<leader>aa" 2 "<cmd>ClaudeCodeDiffAccept<cr>" :desc "Accept diff"}
+           {1 "<leader>ad" 2 "<cmd>ClaudeCodeDiffDeny<cr>" :desc "Deny diff"}]}
 
    "nvim-treesitter/nvim-treesitter"
    "nvim-treesitter/nvim-treesitter-context"
