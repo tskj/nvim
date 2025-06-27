@@ -3,10 +3,23 @@
 (fn get-prompt-template []
   (let [cwd (vim.fn.getcwd)]
     (.. "You are running headless mode. The current working directory is: " cwd "
-Look at the following text, it will be a reference to a file in the current project. 
-It could be a git diff, a file name, or several lines from inside the file.
-If it's the latter, use tool calls to search for the file in question. If it's multiple lines, pick
-a line number. 
+
+Look at the following text, it will be a reference to a file in the current project.
+The input could be:
+- A complete filename (e.g., 'config.lua', 'src/main.js')
+- Part of a filename (e.g., 'config', 'main')
+- A git diff output showing file changes
+- Several lines of code from inside a file
+- A single line of code with context
+
+Use your available tools to search for and locate the file. If the input contains code lines, search for those exact lines or similar patterns in the codebase. If it's multiple lines, try to identify a specific line number within the found file.
+
+Examples of input types:
+- 'config.lua' → Find file named config.lua
+- 'config' → Find files with 'config' in the name
+- 'function calculateTotal()' → Search for this function definition
+- 'const API_URL = \"https://api.example.com\"' → Find where this constant is defined
+- Git diff showing +/- lines → Find the modified file
 
 Your response must be ONLY the file path in one of these exact formats:
 - If you found a specific line: /absolute/path/to/file.ext:123
@@ -21,21 +34,23 @@ The input follows:
 
 (fn claude-code-find-file []
   (let [clipboard-content (vim.fn.getreg "+")]
-    
+
     (when (= clipboard-content "")
       (vim.notify "Clipboard is empty" vim.log.levels.WARN)
       (lua "return nil"))
-    
+
     ;; Show a message that we're processing (user can Ctrl-C to abort)
     (vim.notify "Asking Claude to find file... (Ctrl-C to abort)" vim.log.levels.INFO)
-    
+
     ;; Combine prompt and clipboard content, then properly escape for shell
     (let [prompt (get-prompt-template)
           full-prompt (.. prompt "\n" clipboard-content)
           escaped-prompt (vim.fn.shellescape full-prompt)
-          cmd (.. "claude -p " escaped-prompt)
+          allowed-tools "--allowedTools \"Read Glob Grep LS Agent TodoRead TodoWrite Bash(find:*) Bash(rg:*) Bash(grep:*) Bash(ls:*) Bash(cat:*) Bash(head:*) Bash(tail:*)\""
+          disallowed-tools "--disallowedTools \"Edit MultiEdit Write WebSearch WebFetch NotebookEdit\""
+          cmd (.. "claude " allowed-tools " " disallowed-tools " -p " escaped-prompt)
           result (vim.fn.system cmd)]
-      
+
       ;; Check if command was interrupted
       (if (= vim.v.shell_error 130) ; 130 is the exit code for SIGINT (Ctrl-C)
           (vim.notify "Claude command aborted" vim.log.levels.WARN)
@@ -57,7 +72,7 @@ The input follows:
                             (vim.cmd "echo ''")))))))))))
 
 ;; Create user command
-(vim.api.nvim_create_user_command 
+(vim.api.nvim_create_user_command
   :ClaudeCodeFind
   claude-code-find-file
   {:desc "Find file using Claude Code from clipboard"})
