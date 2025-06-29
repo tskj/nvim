@@ -107,4 +107,12 @@
    ;; "gpanders/nvim-parinfer"
    {1 "eraserhd/parinfer-rust" :build "cargo build --release"}
    "bakpakin/fennel.vim" ; syntax highlighting
-   "folke/neodev.nvim"])
+   "folke/neodev.nvim"
+
+   ;; neorg
+   {1 "nvim-neorg/neorg"
+    :ft "norg"
+    :opts {:load {:core.defaults {}
+                  :core.concealer {:config {:icon_preset "basic"}}
+                  :core.dirman {:config {:workspaces {:notes "~/notes"}
+                                         :default_workspace "notes"}}}}}])

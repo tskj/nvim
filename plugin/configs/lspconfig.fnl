@@ -16,7 +16,7 @@
   {:servers
      {:rust_analyzer ["rust"]
       :biome ["typescript" "javascript"]
-      :volar ["vue"]}})
+      :vue_ls ["vue"]}})
 
 ; set some icons instead of letters in the gutter
 (lsp-zero.set_sign_icons
@@ -67,7 +67,7 @@
      "powershell_es" ; PowerShell
      "jedi_language_server" ; Python lsp
      "sqlls" ; SQL, written in TypeScript (alternatively tried `sqls` written in Go, didn't work)
-     "volar" ; Vue
+     "vue_ls" ; Vue
      "wgsl_analyzer" ; WebGPU Shading Language
      "yamlls" ; YAML
      "zls"]}) ; Zig

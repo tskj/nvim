@@ -4,8 +4,10 @@
 (local nvim-dir (vim.fn.stdpath "config"))
 
 
-(fn open-in-explorer [dir]
+(fn open-in-explorer [dir ?opts]
   (fn []
+    (when (and ?opts (. ?opts :new-tab))
+      (vim.cmd "tabedit"))
     (vim.cmd (.. "cd " dir))
     (vim.cmd (.. "Oil " dir))))
 
@@ -86,7 +88,8 @@
 ;; checkout <leader> lo below
 (vim.keymap.set [:n :v] "<leader>wo" ":only<cr>"                 {:desc "[W]indow [O]nly (close every other window)"})
 (vim.keymap.set [:n :v] "<leader>bs" ":enew<cr>"                 {:desc "[B]uffer [S]cratch (new buffer)"})
-(vim.keymap.set [:n :v] "<leader>en" (open-in-explorer nvim-dir) {:desc "[E]xplore [N]eovim config files"})
+(vim.keymap.set [:n :v] "<leader>ev" (open-in-explorer nvim-dir {:new-tab true}) {:desc "[E]xplore [V]im config (in new tab)"})
+(vim.keymap.set [:n :v] "<leader>en" (open-in-explorer "~/notes" {:new-tab true}) {:desc "[E]xplore [N]otes (in new tab)"})
 (vim.keymap.set [:n :v] "<leader>eh" (open-in-explorer "~")      {:desc "[E]xplore [H]ome"})
 (vim.keymap.set [:n :v] "<leader>ec" (open-in-explorer "~/code") {:desc "[E]xplore [C]ode"})
 (vim.keymap.set [:n :v] "<leader>ep" (fn []
@@ -107,6 +110,57 @@
 
 ;; open file explorer in directory of current file
 (vim.keymap.set [:n :v] "<leader>ef" (open-in-explorer "") {:desc "[E]xplore [F]ile (open directory of cwd)"})
+
+;; Notes namespace
+(local mini-notify (require :mini.notify))
+(local notes-notify (mini-notify.make_notify))
+
+(fn open-todays-journal []
+  (let [today (os.date "%Y-%m-%d")
+        year (os.date "%Y")
+        journal-dir (.. "~/notes/.private/journal/" year)]
+    ;; Ensure the year directory exists
+    (vim.fn.system (.. "mkdir -p " journal-dir))
+    (vim.cmd (.. ":edit " journal-dir "/" today ".norg"))))
+(vim.keymap.set [:n :v] "<leader>nj" open-todays-journal {:desc "[N]otes [J]ournal (open today's entry)"})
+(vim.keymap.set [:n :v] "<leader>ns" 
+  (fn [] 
+    (notes-notify "running save script..." vim.log.levels.INFO)
+    (vim.fn.jobstart [(.. (vim.fn.expand "~/notes") "/.bin/save.sh")]
+      {:on_stdout (fn [_ data _]
+                    (each [_ line (ipairs data)]
+                      (when (and line (not= line ""))
+                        (vim.schedule #(notes-notify line vim.log.levels.INFO)))))
+       :on_stderr (fn [_ data _]
+                    (each [_ line (ipairs data)]
+                      (when (and line (not= line ""))
+                        (vim.schedule #(notes-notify line vim.log.levels.ERROR)))))
+       :on_exit (fn [_ code _]
+                  (vim.schedule
+                    #(if (= code 0)
+                       (notes-notify "notes saved successfully!" vim.log.levels.INFO)
+                       (notes-notify "save script failed!" vim.log.levels.ERROR))))}))
+  {:desc "[N]otes [S]ave (run save script)"})
+(vim.keymap.set [:n :v] "<leader>np" 
+  (fn [] 
+    (notes-notify "pulling notes from git..." vim.log.levels.INFO)
+    (vim.fn.jobstart ["git" "pull"]
+      {:cwd (vim.fn.expand "~/notes")
+       :on_stdout (fn [_ data _]
+                    (each [_ line (ipairs data)]
+                      (when (and line (not= line ""))
+                        (vim.schedule #(notes-notify line vim.log.levels.INFO)))))
+       :on_stderr (fn [_ data _]
+                    (each [_ line (ipairs data)]
+                      (when (and line (not= line ""))
+                        (vim.schedule #(notes-notify line vim.log.levels.WARN)))))
+       :on_exit (fn [_ code _]
+                  (vim.schedule
+                    #(if (= code 0)
+                       (notes-notify "notes pulled successfully!" vim.log.levels.INFO)
+                       (notes-notify "git pull failed!" vim.log.levels.ERROR))))}))
+  {:desc "[N]otes [P]ull from git"})
+(vim.keymap.set [:n :v] "<leader>nn" (open-in-explorer "~/notes") {:desc "[N]otes [N]avigate (open notes directory)"})
 
 ;; neogit
 (vim.keymap.set [:n :v] "<leader>gs" ":Neogit<cr>"        {:desc "[G]it [S]tage [Neogit]"})
@@ -208,9 +262,9 @@
                 (fn [] (builtin.live_grep
                          {:grep_open_files true
                           :prompt_title "Live Grep in Open Files"}))   {:desc "[S]earch [/] in Open Files"})
-(vim.keymap.set [:n :v] "<leader>sn"
+(vim.keymap.set [:n :v] "<leader>sv"
                 (fn [] (builtin.find_files
-                         {:cwd (vim.fn.stdpath "config")}))            {:desc "[S]earch [N]eovim config files"})
+                         {:cwd (vim.fn.stdpath "config")}))            {:desc "[S]earch [V]im config files"})
 (vim.keymap.set [:n :v] "<leader>st" ":TodoTelescope<cr>"              {:desc "[S]earch [T]odos"})
 (vim.keymap.set [:n :v] "<leader>sm" builtin.marks                     {:desc "[S]earch [M]arks"})
 (vim.keymap.set [:n :v] "<leader>sq" builtin.quickfix                  {:desc "[S]earch [Q]quickfix list"})
@@ -239,9 +293,9 @@
 (vim.keymap.set [:n :v] "<leader>zb" fzf-lua.buffers               {:desc "[Z]earch [B]uffers (existing) [fzf-lua]"})
 (vim.keymap.set [:n :v] "<leader>zj" fzf-lua.blines                {:desc "[/] Fuzzily search in current buffer [fzf-lua]"})
 (vim.keymap.set [:n :v] "<leader>z/" fzf-lua.lines                 {:desc "[Z]earch [/] in Open Files [fzf-lua]"})
-(vim.keymap.set [:n :v] "<leader>zn"
+(vim.keymap.set [:n :v] "<leader>zv"
                 (fn [] (fzf-lua.files
-                         {:cwd (vim.fn.stdpath "config")}          {:desc "[Z]earch [N]eovim config files [fzf-lua]"})))
+                         {:cwd (vim.fn.stdpath "config")}))          {:desc "[Z]earch [V]im config files [fzf-lua]"})
 (vim.keymap.set [:n :v] "<leader>zm" fzf-lua.marks                 {:desc "[Z]earch [M]arks [fzf-lua]"})
 (vim.keymap.set [:n :v] "<leader>zq" fzf-lua.quickfix              {:desc "[Z]earch [Q]quickfix list [fzf-lua]"})
 (vim.keymap.set [:n :v] "<leader>zc" fzf-lua.git_commits           {:desc "[Z]earch [C]ommits (git) [fzf-lua]"})
