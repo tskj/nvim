@@ -35,4 +35,12 @@ vim.api.nvim_del_keymap("n", "<C-w><C-d>")
 vim.api.nvim_del_keymap("n", "<C-w>d")
 vim.env.LANG = "en_US.UTF-8"
 vim.env.LC_ALL = "en_US.UTF-8"
-return nil
+local function _2_()
+  vim.opt_local.textwidth = 80
+  vim.opt_local.wrap = true
+  vim.opt_local.linebreak = true
+  vim.opt_local.breakindent = true
+  vim.opt_local.formatoptions:remove("l")
+  return vim.opt_local.formatoptions:append("t")
+end
+return vim.api.nvim_create_autocmd("FileType", {pattern = {"markdown", "norg", "org", "text"}, callback = _2_})

@@ -21,11 +21,11 @@ if vim.g.neovide then
     if (args == "toggle-transparency") then
       if transparent_3f then
         transparent_3f = false
-        vim.g.neovide_transparency = 1
+        vim.g.neovide_opacity = 1
         return nil
       else
         transparent_3f = true
-        vim.g.neovide_transparency = 0.95
+        vim.g.neovide_opacity = 0.95
         return nil
       end
     elseif (args == "toggle-animations") then
