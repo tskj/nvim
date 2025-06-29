@@ -172,11 +172,11 @@
 ;; git quickfix
 (vim.keymap.set [:n :v] "<leader>gq" gitsigns-quickfix-volatile {:desc "[G]it [Q]uickfix"})
 
-;; open terminal (in spacemacs this is SPC a t for "application: terminal")
-(vim.keymap.set [:n :v] "<leader>ac" vim.cmd.terminal                            {:desc "[A]pplication [C]ommand line (opens terminal)"})
-(vim.keymap.set [:n :v] "<leader>ap" (fn [] (vim.cmd.terminal "powershell.exe")) {:desc "[A]pplication [P]owershell"})
-(vim.keymap.set [:n :v] "<leader>al" (fn [] (vim.cmd.terminal "wsl.exe zsh"))    {:desc "[A]pplication [L]inux (wsl zsh)"})
-(vim.keymap.set [:n :v] "<leader>ab" (fn [] (vim.cmd.terminal "wsl.exe bash"))   {:desc "[A]pplication [B]ash (wsl bash)"})
+;; open terminal (moved from <leader>a* to avoid claudecode.nvim conflicts)
+(vim.keymap.set [:n :v] "<leader>tc" vim.cmd.terminal                            {:desc "[T]erminal [C]ommand line"})
+(vim.keymap.set [:n :v] "<leader>tp" (fn [] (vim.cmd.terminal "powershell.exe")) {:desc "[T]erminal [P]owershell"})
+(vim.keymap.set [:n :v] "<leader>tl" (fn [] (vim.cmd.terminal "wsl.exe zsh"))    {:desc "[T]erminal [L]inux (wsl zsh)"})
+(vim.keymap.set [:n :v] "<leader>tb" (fn [] (vim.cmd.terminal "wsl.exe bash"))   {:desc "[T]erminal [B]ash (wsl bash)"})
 
 (vim.keymap.set [:n :v] "<leader>wr" vim.cmd.WinResizerStartResize {:desc "[W]indow [R]esize"})
 (vim.keymap.set [:n :v] "<leader>wD" ":q!<cr>"                     {:desc "[W]indow [D]elete force (:q!)"})
@@ -419,7 +419,7 @@
   (when m-timer
     (vim.fn.timer_stop m-timer))
   (set m-timer (vim.fn.timer_start 100_000
-                                   (fn [] 
+                                   (fn []
                                      (set m-type nil)
                                      (set m-timer nil)))))
 
@@ -495,7 +495,7 @@
 (vim.api.nvim_create_autocmd "FileType"
   {:pattern "qf"
    :callback (fn []
-               (vim.keymap.set :n "<CR>" "<CR><cmd>cclose<cr>" 
+               (vim.keymap.set :n "<CR>" "<CR><cmd>cclose<cr>"
                                {:buffer true :desc "Jump to item and close quickfix"}))})
 
 ;; AI
@@ -503,3 +503,9 @@
 (vim.keymap.set [:n :v] "gpa" ":GpAppend<cr>" {:desc "[G][P][A]ppend"})
 (vim.keymap.set [:n :v] "gpc" ":GpChatNew<cr>" {:desc "[G][P][C]hat new"})
 (vim.keymap.set [:n :v] "gpt" ":GpChatToggle<cr>" {:desc "[G][P][T]oggle (chat)"})
+(vim.keymap.set [:n :v] "gpq" ":GpPopup<cr>" {:desc "[G][P][Q]uestion (popup)"})
+
+(vim.keymap.set :n "gpf" "<cmd>ClaudeCodeFind<cr>" {:desc "[G][P][F]ind file (Claude)"})
+
+;; Custom Claude prompt with selection
+(vim.keymap.set :v "<leader>ap" "<cmd>ClaudeSelectionWithPrompt<cr>" {:desc "[A]I [P]rompt with selection"})
