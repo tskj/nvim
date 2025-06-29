@@ -128,4 +128,18 @@
     :opts {:load {:core.defaults {}
                   :core.concealer {:config {:icon_preset "basic"}}
                   :core.dirman {:config {:workspaces {:notes "~/notes"}
-                                         :default_workspace "notes"}}}}}])
+                                         :default_workspace "notes"}}}}}
+
+   ;; image rendering for Ghostty
+   {1 "3rd/image.nvim"
+    :opts {:backend "kitty"  ; Ghostty supports Kitty graphics protocol
+           :integrations {:markdown {:enabled true
+                                    :clear_in_insert_mode false
+                                    :download_remote_images true
+                                    :only_render_image_at_cursor false
+                                    :filetypes ["markdown" "vimwiki" "norg"]}
+                         :neorg {:enabled true
+                                :clear_in_insert_mode false
+                                :download_remote_images true
+                                :only_render_image_at_cursor false
+                                :filetypes ["norg"]}}}}])
