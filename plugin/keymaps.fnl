@@ -8,7 +8,6 @@
   (fn []
     (when (and ?opts (. ?opts :new-tab))
       (vim.cmd "tabedit"))
-    (vim.cmd (.. "cd " dir))
     (vim.cmd (.. "Oil " dir))))
 
 
@@ -210,8 +209,7 @@
 ;; (sadly there's no way to restart neovim automatically)
 (vim.keymap.set [:n :v] "<leader>qr"
   (fn []
-    (vim.cmd (.. "cd " nvim-dir))
-    (vim.cmd.terminal "make")
+    (vim.cmd.terminal (.. "cd " nvim-dir " && make"))
     ;; Setup an autocommand to quit Neovim after make completes
     (vim.api.nvim_create_autocmd "TermClose"
       {:pattern "term://*make"

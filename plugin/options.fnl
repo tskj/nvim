@@ -5,8 +5,6 @@
 
 (set vim.o.guifont "FiraCode Nerd Font:h15")
 
-; sets current working directory you open a file or w/e (needed for terminal)
-(set vim.o.autochdir true)
 
 ; more convenient with case insensitive search
 (set vim.opt.ignorecase true)
