@@ -110,6 +110,27 @@
 ;; open file explorer in directory of current file
 (vim.keymap.set [:n :v] "<leader>ef" (open-in-explorer "") {:desc "[E]xplore [F]ile (open directory of cwd)"})
 
+;; show current file path in modal
+(vim.keymap.set [:n :v] "<leader>fp" 
+  (fn []
+    (let [filepath (vim.fn.expand "%:p")
+          buf (vim.api.nvim_create_buf false true)
+          cols vim.o.columns
+          lines vim.o.lines
+          width (math.min (+ (string.len filepath) 4) (- cols 10))
+          opts {:relative "editor"
+                :width width
+                :height 1
+                :col (math.floor (/ (- cols width) 2))
+                :row (math.floor (/ lines 2))
+                :style "minimal"
+                :border "rounded"}]
+      (vim.api.nvim_buf_set_lines buf 0 -1 false [filepath])
+      (let [win (vim.api.nvim_open_win buf true opts)]
+        (vim.api.nvim_buf_set_option buf "modifiable" false)
+        (vim.api.nvim_buf_set_keymap buf "n" "<Esc>" "<cmd>q<cr>" {:noremap true :silent true}))))
+  {:desc "[F]ile [P]ath modal"})
+
 ;; Notes namespace
 (local mini-notify (require :mini.notify))
 (local notes-notify (mini-notify.make_notify))
