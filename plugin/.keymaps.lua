@@ -112,6 +112,19 @@ vim.keymap.set({"n", "v"}, "<leader>vi", ":Gitsigns preview_hunk_inline<cr>", {d
 vim.keymap.set({"n", "v"}, "<leader>vb", ":Gitsigns toggle_current_line_blame<cr>", {desc = "[V]iew [B]lame inline (toggle)"})
 vim.keymap.set({"n", "v"}, "<leader>ri", vim.lsp.buf.rename, {desc = "[R]ename [I]dentifier [LSP]"})
 vim.keymap.set({"n", "v"}, "<leader>ef", open_in_explorer(""), {desc = "[E]xplore [F]ile (open directory of cwd)"})
+local function _18_()
+  local filepath = vim.fn.expand("%:p")
+  local buf = vim.api.nvim_create_buf(false, true)
+  local cols = vim.o.columns
+  local lines = vim.o.lines
+  local width = math.min((string.len(filepath) + 4), (cols - 10))
+  local opts = {relative = "editor", width = width, height = 1, col = math.floor(((cols - width) / 2)), row = math.floor((lines / 2)), style = "minimal", border = "rounded"}
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, {filepath})
+  local win = vim.api.nvim_open_win(buf, true, opts)
+  vim.api.nvim_buf_set_option(buf, "modifiable", false)
+  return vim.api.nvim_buf_set_keymap(buf, "n", "<Esc>", "<cmd>q<cr>", {noremap = true, silent = true})
+end
+vim.keymap.set({"n", "v"}, "<leader>fp", _18_, {desc = "[F]ile [P]ath modal"})
 local mini_notify = require("mini.notify")
 local notes_notify = mini_notify.make_notify()
 local function open_todays_journal()
@@ -122,144 +135,144 @@ local function open_todays_journal()
   return vim.cmd((":edit " .. journal_dir .. "/" .. today .. ".norg"))
 end
 vim.keymap.set({"n", "v"}, "<leader>nj", open_todays_journal, {desc = "[N]otes [J]ournal (open today's entry)"})
-local function _18_()
+local function _19_()
   notes_notify("running save script...", vim.log.levels.INFO)
-  local function _19_(_, data, _0)
+  local function _20_(_, data, _0)
     for _1, line in ipairs(data) do
       if (line and (line ~= "")) then
-        local function _20_()
+        local function _21_()
           return notes_notify(line, vim.log.levels.INFO)
         end
-        vim.schedule(_20_)
+        vim.schedule(_21_)
       else
       end
     end
     return nil
   end
-  local function _22_(_, data, _0)
+  local function _23_(_, data, _0)
     for _1, line in ipairs(data) do
       if (line and (line ~= "")) then
-        local function _23_()
+        local function _24_()
           return notes_notify(line, vim.log.levels.ERROR)
         end
-        vim.schedule(_23_)
+        vim.schedule(_24_)
       else
       end
     end
     return nil
   end
-  local function _25_(_, code, _0)
-    local function _26_()
+  local function _26_(_, code, _0)
+    local function _27_()
       if (code == 0) then
         return notes_notify("notes saved successfully!", vim.log.levels.INFO)
       else
         return notes_notify("save script failed!", vim.log.levels.ERROR)
       end
     end
-    return vim.schedule(_26_)
+    return vim.schedule(_27_)
   end
-  return vim.fn.jobstart({(vim.fn.expand("~/notes") .. "/.bin/save.sh")}, {cwd = vim.fn.expand("~/notes"), on_stdout = _19_, on_stderr = _22_, on_exit = _25_})
+  return vim.fn.jobstart({(vim.fn.expand("~/notes") .. "/.bin/save.sh")}, {cwd = vim.fn.expand("~/notes"), on_stdout = _20_, on_stderr = _23_, on_exit = _26_})
 end
-vim.keymap.set({"n", "v"}, "<leader>ns", _18_, {desc = "[N]otes [S]ave (run save script)"})
-local function _28_()
+vim.keymap.set({"n", "v"}, "<leader>ns", _19_, {desc = "[N]otes [S]ave (run save script)"})
+local function _29_()
   notes_notify("pulling notes from git...", vim.log.levels.INFO)
-  local function _29_(_, data, _0)
+  local function _30_(_, data, _0)
     for _1, line in ipairs(data) do
       if (line and (line ~= "")) then
-        local function _30_()
+        local function _31_()
           return notes_notify(line, vim.log.levels.INFO)
         end
-        vim.schedule(_30_)
+        vim.schedule(_31_)
       else
       end
     end
     return nil
   end
-  local function _32_(_, data, _0)
+  local function _33_(_, data, _0)
     for _1, line in ipairs(data) do
       if (line and (line ~= "")) then
-        local function _33_()
+        local function _34_()
           return notes_notify(line, vim.log.levels.WARN)
         end
-        vim.schedule(_33_)
+        vim.schedule(_34_)
       else
       end
     end
     return nil
   end
-  local function _35_(_, code, _0)
-    local function _36_()
+  local function _36_(_, code, _0)
+    local function _37_()
       if (code == 0) then
         return notes_notify("notes pulled successfully!", vim.log.levels.INFO)
       else
         return notes_notify("git pull failed!", vim.log.levels.ERROR)
       end
     end
-    return vim.schedule(_36_)
+    return vim.schedule(_37_)
   end
-  return vim.fn.jobstart({"git", "pull"}, {cwd = vim.fn.expand("~/notes"), on_stdout = _29_, on_stderr = _32_, on_exit = _35_})
+  return vim.fn.jobstart({"git", "pull"}, {cwd = vim.fn.expand("~/notes"), on_stdout = _30_, on_stderr = _33_, on_exit = _36_})
 end
-vim.keymap.set({"n", "v"}, "<leader>np", _28_, {desc = "[N]otes [P]ull from git"})
+vim.keymap.set({"n", "v"}, "<leader>np", _29_, {desc = "[N]otes [P]ull from git"})
 vim.keymap.set({"n", "v"}, "<leader>nn", open_in_explorer("~/notes"), {desc = "[N]otes [N]avigate (open notes directory)"})
 vim.keymap.set({"n", "v"}, "<leader>gs", ":Neogit<cr>", {desc = "[G]it [S]tage [Neogit]"})
 vim.keymap.set({"n", "v"}, "<leader>gc", ":Neogit commit<cr>", {desc = "[G]it [C]ommit [Neogit]"})
 vim.keymap.set({"n", "v"}, "<leader>gl", ":LazyGit<cr>", {desc = "[G]it [L]azy"})
 vim.keymap.set({"n", "v"}, "<leader>gq", gitsigns_quickfix_volatile, {desc = "[G]it [Q]uickfix"})
 vim.keymap.set({"n", "v"}, "<leader>tc", vim.cmd.terminal, {desc = "[T]erminal [C]ommand line"})
-local function _38_()
+local function _39_()
   return vim.cmd.terminal("powershell.exe")
 end
-vim.keymap.set({"n", "v"}, "<leader>tp", _38_, {desc = "[T]erminal [P]owershell"})
-local function _39_()
+vim.keymap.set({"n", "v"}, "<leader>tp", _39_, {desc = "[T]erminal [P]owershell"})
+local function _40_()
   return vim.cmd.terminal("wsl.exe zsh")
 end
-vim.keymap.set({"n", "v"}, "<leader>tl", _39_, {desc = "[T]erminal [L]inux (wsl zsh)"})
-local function _40_()
+vim.keymap.set({"n", "v"}, "<leader>tl", _40_, {desc = "[T]erminal [L]inux (wsl zsh)"})
+local function _41_()
   return vim.cmd.terminal("wsl.exe bash")
 end
-vim.keymap.set({"n", "v"}, "<leader>tb", _40_, {desc = "[T]erminal [B]ash (wsl bash)"})
+vim.keymap.set({"n", "v"}, "<leader>tb", _41_, {desc = "[T]erminal [B]ash (wsl bash)"})
 vim.keymap.set({"n", "v"}, "<leader>wr", vim.cmd.WinResizerStartResize, {desc = "[W]indow [R]esize"})
 vim.keymap.set({"n", "v"}, "<leader>wD", ":q!<cr>", {desc = "[W]indow [D]elete force (:q!)"})
-local function _41_()
+local function _42_()
   return run(require("mini.starter").open)
 end
-vim.keymap.set({"n", "v"}, "<leader>bh", _41_, {desc = "[B]uffer [H]ome [Mini.Starter]"})
+vim.keymap.set({"n", "v"}, "<leader>bh", _42_, {desc = "[B]uffer [H]ome [Mini.Starter]"})
 vim.keymap.set({"n", "v"}, "<leader>bD", ":bd!<cr>", {desc = "[B]uffer [D]elete force (:bd!)"})
-local function _42_()
+local function _43_()
   vim.cmd.tabnew()
   return run(require("mini.starter").open)
 end
-vim.keymap.set({"n", "v"}, "<leader>lh", _42_, {desc = "[L]ayer [H]ome (open new tab with Starter page)"})
+vim.keymap.set({"n", "v"}, "<leader>lh", _43_, {desc = "[L]ayer [H]ome (open new tab with Starter page)"})
 vim.keymap.set({"n", "v"}, "<leader>ln", vim.cmd.tabnext, {desc = "[L]ayer [N]ext (next tab)"})
 vim.keymap.set({"n", "v"}, "<leader>lp", vim.cmd.tabprev, {desc = "[L]ayer [P]rev (prev tab)"})
 vim.keymap.set({"n", "v"}, "<leader>lc", vim.cmd.tabclose, {desc = "[L]ayer [C]lose (close tab)"})
-local function _43_()
+local function _44_()
   local buffer_name = vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())
   local cursor_position = vim.api.nvim_win_get_cursor(0)
   vim.cmd.tabedit(buffer_name)
   return vim.api.nvim_win_set_cursor(0, cursor_position)
 end
-vim.keymap.set({"n", "v"}, "<leader>lo", _43_, {desc = "[L]ayer [O]nly (open buffer in new tab to 'maximize' it)"})
-local function _44_()
+vim.keymap.set({"n", "v"}, "<leader>lo", _44_, {desc = "[L]ayer [O]nly (open buffer in new tab to 'maximize' it)"})
+local function _45_()
   return vim.cmd.tabmove("-1")
 end
-vim.keymap.set({"n", "v"}, "<leader>l<", _44_, {desc = "[L]ayer [<]eft (move tab left)"})
-local function _45_()
+vim.keymap.set({"n", "v"}, "<leader>l<", _45_, {desc = "[L]ayer [<]eft (move tab left)"})
+local function _46_()
   return vim.cmd.tabmove("+1")
 end
-vim.keymap.set({"n", "v"}, "<leader>l>", _45_, {desc = "[L]ayer [>]ight (move tab right)"})
-local function _46_()
+vim.keymap.set({"n", "v"}, "<leader>l>", _46_, {desc = "[L]ayer [>]ight (move tab right)"})
+local function _47_()
   vim.cmd.terminal(("cd " .. nvim_dir .. " && make"))
-  local function _47_()
+  local function _48_()
     return vim.cmd("qa!")
   end
-  return vim.api.nvim_create_autocmd("TermClose", {pattern = "term://*make", callback = _47_})
+  return vim.api.nvim_create_autocmd("TermClose", {pattern = "term://*make", callback = _48_})
 end
-vim.keymap.set({"n", "v"}, "<leader>qr", _46_, {desc = "[Q]uit [R]eload (compiles fennel and quits)"})
-local function _48_()
+vim.keymap.set({"n", "v"}, "<leader>qr", _47_, {desc = "[Q]uit [R]eload (compiles fennel and quits)"})
+local function _49_()
   return run(require("undotree").toggle)
 end
-vim.keymap.set({"n", "v"}, "<leader>u", _48_, {desc = "[U]ndo tree "})
+vim.keymap.set({"n", "v"}, "<leader>u", _49_, {desc = "[U]ndo tree "})
 vim.keymap.set("n", "<leader>bd", ":bd<cr>", {desc = "[B]uffer [D]elete"})
 vim.keymap.set("n", "<leader>bn", ":bn<cr>", {desc = "[B]uffer [N]ext"})
 vim.keymap.set("n", "<leader>bp", ":bp<cr>", {desc = "[B]uffer [P]rev"})
@@ -291,22 +304,22 @@ vim.keymap.set({"n", "v"}, "<leader>sr", builtin.resume, {desc = "[S]earch [R]es
 vim.keymap.set({"n", "v"}, "<leader>s.", builtin.oldfiles, {desc = "[S]earch Recent Files ('.' for repeat)"})
 vim.keymap.set({"n", "v"}, "<leader>sb", builtin.buffers, {desc = "[S]earch [B]uffers (existing)"})
 vim.keymap.set({"n", "v"}, "<leader>sj", builtin.current_buffer_fuzzy_find, {desc = "[S]earch [J]ump: fuzzily search in current buffer"})
-local function _49_()
+local function _50_()
   return builtin.live_grep({grep_open_files = true, prompt_title = "Live Grep in Open Files"})
 end
-vim.keymap.set({"n", "v"}, "<leader>s/", _49_, {desc = "[S]earch [/] in Open Files"})
-local function _50_()
+vim.keymap.set({"n", "v"}, "<leader>s/", _50_, {desc = "[S]earch [/] in Open Files"})
+local function _51_()
   return builtin.find_files({cwd = vim.fn.stdpath("config")})
 end
-vim.keymap.set({"n", "v"}, "<leader>sv", _50_, {desc = "[S]earch [V]im config files"})
+vim.keymap.set({"n", "v"}, "<leader>sv", _51_, {desc = "[S]earch [V]im config files"})
 vim.keymap.set({"n", "v"}, "<leader>st", ":TodoTelescope<cr>", {desc = "[S]earch [T]odos"})
 vim.keymap.set({"n", "v"}, "<leader>sm", builtin.marks, {desc = "[S]earch [M]arks"})
 vim.keymap.set({"n", "v"}, "<leader>sq", builtin.quickfix, {desc = "[S]earch [Q]quickfix list"})
 vim.keymap.set({"n", "v"}, "<leader>sc", builtin.git_commits, {desc = "[S]earch [C]ommits (git)"})
-local function _51_()
+local function _52_()
   return run(require("telescope").extensions.undo.undo)
 end
-vim.keymap.set({"n", "v"}, "<leader>su", _51_, {desc = "[S]earch [U]ndo tree"})
+vim.keymap.set({"n", "v"}, "<leader>su", _52_, {desc = "[S]earch [U]ndo tree"})
 vim.keymap.set("n", "gd", builtin.lsp_definitions, {desc = "[G]oto [D]efinition [LSP]"})
 vim.keymap.set("n", "gr", builtin.lsp_references, {desc = "[G]oto [R]eferences [LSP]"})
 vim.keymap.set("n", "gi", builtin.lsp_implementations, {desc = "[G]oto [I]mplementations [LSP]"})
@@ -325,30 +338,30 @@ vim.keymap.set({"n", "v"}, "<leader>z.", fzf_lua.oldfiles, {desc = "[Z]earch Rec
 vim.keymap.set({"n", "v"}, "<leader>zb", fzf_lua.buffers, {desc = "[Z]earch [B]uffers (existing) [fzf-lua]"})
 vim.keymap.set({"n", "v"}, "<leader>zj", fzf_lua.blines, {desc = "[/] Fuzzily search in current buffer [fzf-lua]"})
 vim.keymap.set({"n", "v"}, "<leader>z/", fzf_lua.lines, {desc = "[Z]earch [/] in Open Files [fzf-lua]"})
-local function _52_()
+local function _53_()
   return fzf_lua.files({cwd = vim.fn.stdpath("config")})
 end
-vim.keymap.set({"n", "v"}, "<leader>zv", _52_, {desc = "[Z]earch [V]im config files [fzf-lua]"})
+vim.keymap.set({"n", "v"}, "<leader>zv", _53_, {desc = "[Z]earch [V]im config files [fzf-lua]"})
 vim.keymap.set({"n", "v"}, "<leader>zm", fzf_lua.marks, {desc = "[Z]earch [M]arks [fzf-lua]"})
 vim.keymap.set({"n", "v"}, "<leader>zq", fzf_lua.quickfix, {desc = "[Z]earch [Q]quickfix list [fzf-lua]"})
 vim.keymap.set({"n", "v"}, "<leader>zc", fzf_lua.git_commits, {desc = "[Z]earch [C]ommits (git) [fzf-lua]"})
 local function uur(cmd)
-  local function _53_()
+  local function _54_()
     local old_unnamed = vim.fn.getreg("\"")
     vim.api.nvim_command(("normal! " .. cmd))
     return vim.fn.setreg("\"", old_unnamed)
   end
-  return _53_
+  return _54_
 end
 local function uur_2(cmd, r)
-  local function _54_()
+  local function _55_()
     local old_unnamed = vim.fn.getreg("\"")
     vim.api.nvim_command(("normal! " .. cmd))
     local new_unnamed = vim.fn.getreg("\"")
     vim.fn.setreg(r, new_unnamed)
     return vim.fn.setreg("\"", old_unnamed)
   end
-  return _54_
+  return _55_
 end
 vim.keymap.set("n", "d", "\"_d", {silent = true})
 vim.keymap.set("n", "D", "\"_D", {silent = true})
@@ -375,11 +388,11 @@ vim.g.clipboard_yank_operator = function(motion_type)
   vim.cmd(("normal! `[" .. v .. "`]\"+y"))
   return vim.fn.setreg("\"", old_reg_content, old_reg_type)
 end
-local function _56_()
+local function _57_()
   vim.o.operatorfunc = "v:lua.vim.g.clipboard_yank_operator"
   return "g@"
 end
-vim.keymap.set("n", "<leader>cy", _56_, {silent = true, desc = "[C]lipboard [Y]ank (y)", expr = true})
+vim.keymap.set("n", "<leader>cy", _57_, {silent = true, desc = "[C]lipboard [Y]ank (y)", expr = true})
 vim.g.clipboard_append_operator = function(motion_type)
   local old_reg_content = vim.fn.getreg("\"")
   local old_reg_type = vim.fn.getregtype("\"")
@@ -400,11 +413,11 @@ vim.g.clipboard_append_operator = function(motion_type)
   end
   return vim.fn.setreg("\"", old_reg_content, old_reg_type)
 end
-local function _58_()
+local function _59_()
   vim.o.operatorfunc = "v:lua.vim.g.clipboard_append_operator"
   return "g@"
 end
-vim.keymap.set("n", "<leader>ce", _58_, {silent = true, desc = "[C]lipboard [E]xtend (append)", expr = true})
+vim.keymap.set("n", "<leader>ce", _59_, {silent = true, desc = "[C]lipboard [E]xtend (append)", expr = true})
 vim.g.clipboard_delete_operator = function(motion_type)
   local old_reg_content = vim.fn.getreg("\"")
   local old_reg_type = vim.fn.getregtype("\"")
@@ -420,17 +433,17 @@ vim.g.clipboard_delete_operator = function(motion_type)
   vim.cmd(("normal! `[" .. v .. "`]\"+d"))
   return vim.fn.setreg("\"", old_reg_content, old_reg_type)
 end
-local function _60_()
+local function _61_()
   vim.o.operatorfunc = "v:lua.vim.g.clipboard_delete_operator"
   return "g@"
 end
-vim.keymap.set("n", "<leader>cd", _60_, {silent = true, desc = "[C]lipboard [D]elete (d)", expr = true})
+vim.keymap.set("n", "<leader>cd", _61_, {silent = true, desc = "[C]lipboard [D]elete (d)", expr = true})
 vim.keymap.set("n", "<leader>cp", uur("\"+p"), {silent = true, desc = "[C]lipboard [P]aste (p)"})
 vim.keymap.set("n", "<leader>cY", uur("\"+y$"), {silent = true, desc = "[C]lipboard [Y]ank (Y)"})
 vim.keymap.set("n", "<leader>cP", uur("\"+P"), {silent = true, desc = "[C]lipboard [P]aste (P)"})
 vim.keymap.set("n", "<leader>cD", uur("\"+D"), {silent = true, desc = "[C]lipboard [D]elete (D)"})
 vim.keymap.set("v", "<leader>cy", uur("\"+y"), {silent = true, desc = "[C]lipboard [Y]ank (y)"})
-local function _61_()
+local function _62_()
   local old_unnamed = vim.fn.getreg("\"")
   local current_clipboard = vim.fn.getreg("+")
   vim.cmd("normal! y")
@@ -438,7 +451,7 @@ local function _61_()
   vim.fn.setreg("+", (current_clipboard .. yanked_text))
   return vim.fn.setreg("\"", old_unnamed)
 end
-vim.keymap.set("v", "<leader>ce", _61_, {silent = true, desc = "[C]lipboard [E]xtend (append)"})
+vim.keymap.set("v", "<leader>ce", _62_, {silent = true, desc = "[C]lipboard [E]xtend (append)"})
 vim.keymap.set("v", "<leader>cY", uur("\"+y"), {silent = true, desc = "[C]lipboard [Y]ank (Y)"})
 vim.keymap.set("v", "<leader>cP", uur_2("\"+p", "+"), {silent = true, desc = "[C]lipboard [P]aste (P)"})
 vim.keymap.set("v", "<leader>cD", uur("\"+D"), {silent = true, desc = "[C]lipboard [D]elete (D)"})
@@ -452,15 +465,15 @@ local function register(type)
     vim.fn.timer_stop(m_timer)
   else
   end
-  local function _63_()
+  local function _64_()
     m_type = nil
     m_timer = nil
     return nil
   end
-  m_timer = vim.fn.timer_start(100000, _63_)
+  m_timer = vim.fn.timer_start(100000, _64_)
   return nil
 end
-local function _64_()
+local function _65_()
   if (m_type == "q") then
     return vim.cmd("normal ]q")
   elseif (m_type == "l") then
@@ -474,8 +487,8 @@ local function _64_()
     return vim.cmd("normal! ;")
   end
 end
-vim.keymap.set("n", ";", _64_)
-local function _66_()
+vim.keymap.set("n", ";", _65_)
+local function _67_()
   if (m_type == "q") then
     return vim.cmd("normal [q")
   elseif (m_type == "l") then
@@ -489,47 +502,47 @@ local function _66_()
     return vim.cmd("normal! ,")
   end
 end
-vim.keymap.set("n", ",", _66_)
-local function _68_()
+vim.keymap.set("n", ",", _67_)
+local function _69_()
   register("q")
   return vim.api.nvim_command("cprev")
 end
-vim.keymap.set("n", "[q", _68_, {desc = "[[]ump [Q]uickfix previous (:cprev)"})
-local function _69_()
+vim.keymap.set("n", "[q", _69_, {desc = "[[]ump [Q]uickfix previous (:cprev)"})
+local function _70_()
   register("q")
   return vim.api.nvim_command("cnext")
 end
-vim.keymap.set("n", "]q", _69_, {desc = "[]]ump [Q]uickfix next (:cnext)"})
-local function _70_()
+vim.keymap.set("n", "]q", _70_, {desc = "[]]ump [Q]uickfix next (:cnext)"})
+local function _71_()
   register("l")
   return vim.api.nvim_command("lprev")
 end
-vim.keymap.set("n", "[l", _70_, {desc = "[[]ump [L]ocation previous (:lprev)"})
-local function _71_()
+vim.keymap.set("n", "[l", _71_, {desc = "[[]ump [L]ocation previous (:lprev)"})
+local function _72_()
   register("l")
   return vim.api.nvim_command("lnext")
 end
-vim.keymap.set("n", "]l", _71_, {desc = "[]]ump [L]ocation next (:lnext)"})
-local function _72_()
+vim.keymap.set("n", "]l", _72_, {desc = "[]]ump [L]ocation next (:lnext)"})
+local function _73_()
   register("d")
   return vim.diagnostic.goto_prev()
 end
-vim.keymap.set("n", "[d", _72_, {desc = "[[]ump [D]iagnostic previous"})
-local function _73_()
+vim.keymap.set("n", "[d", _73_, {desc = "[[]ump [D]iagnostic previous"})
+local function _74_()
   register("d")
   return vim.diagnostic.goto_next()
 end
-vim.keymap.set("n", "]d", _73_, {desc = "[]]ump [D]iagnostic next"})
-local function _74_()
+vim.keymap.set("n", "]d", _74_, {desc = "[]]ump [D]iagnostic next"})
+local function _75_()
   register("t")
   return run(require("todo-comments").jump_prev)
 end
-vim.keymap.set("n", "[t", _74_, {desc = "[[]ump [T]odo previous"})
-local function _75_()
+vim.keymap.set("n", "[t", _75_, {desc = "[[]ump [T]odo previous"})
+local function _76_()
   register("t")
   return run(require("todo-comments").jump_next)
 end
-vim.keymap.set("n", "]t", _75_, {desc = "[]]ump [T]odo next"})
+vim.keymap.set("n", "]t", _76_, {desc = "[]]ump [T]odo next"})
 vim.keymap.set("v", "<leader>ref", ":Refactor extract ", {desc = "[R]efactor [E]xtract [F]unction"})
 vim.keymap.set("v", "<leader>rff", ":Refactor extract_to_file ", {desc = "[R]efactor to [F]ile: [F]unction"})
 vim.keymap.set("v", "<leader>rev", ":Refactor extract_var ", {desc = "[R]efactor [E]xtract [V]variable"})
@@ -537,26 +550,26 @@ vim.keymap.set("n", "<leader>rIf", ":Refactor inline_func<cr>", {desc = "[R]efac
 vim.keymap.set({"n", "v"}, "<leader>rIv", ":Refactor inline_var<cr>", {desc = "[R]efactor [I]nline [V]ariable"})
 vim.keymap.set("n", "<leader>reb", ":Refactor extract_block<cr>", {desc = "[R]efactor [E]xtract [B]lock"})
 vim.keymap.set("n", "<leader>rfb", ":Refactor extract_block<cr>", {desc = "[R]efactor to [F]ile: [B]lock"})
-local function _76_()
+local function _77_()
   return require("telescope").extensions.refactoring.refactors()
 end
-vim.keymap.set({"n", "v"}, "<leader>rs", _76_, {desc = "[R]efactor [S]earch (telescope)"})
-local function _77_()
+vim.keymap.set({"n", "v"}, "<leader>rs", _77_, {desc = "[R]efactor [S]earch (telescope)"})
+local function _78_()
   return require("refactoring").debug.printf()
 end
-vim.keymap.set("n", "<leader>rdf", _77_, {desc = "[R]efactor [D]debug [F]unction"})
-local function _78_()
+vim.keymap.set("n", "<leader>rdf", _78_, {desc = "[R]efactor [D]debug [F]unction"})
+local function _79_()
   return require("refactoring").debug.print_var()
 end
-vim.keymap.set({"n", "v"}, "<leader>rdp", _78_, {desc = "[R]efactor [D]debug [P]rint (variable or selection)"})
-local function _79_()
+vim.keymap.set({"n", "v"}, "<leader>rdp", _79_, {desc = "[R]efactor [D]debug [P]rint (variable or selection)"})
+local function _80_()
   return require("refactoring").debug.cleanup({})
 end
-vim.keymap.set({"n", "v"}, "<leader>rdc", _79_, {desc = "[R]efactor [D]debug [C]lean"})
-local function _80_()
+vim.keymap.set({"n", "v"}, "<leader>rdc", _80_, {desc = "[R]efactor [D]debug [C]lean"})
+local function _81_()
   return vim.keymap.set("n", "<CR>", "<CR><cmd>cclose<cr>", {buffer = true, desc = "Jump to item and close quickfix"})
 end
-vim.api.nvim_create_autocmd("FileType", {pattern = "qf", callback = _80_})
+vim.api.nvim_create_autocmd("FileType", {pattern = "qf", callback = _81_})
 vim.keymap.set({"n", "v"}, "gpr", ":GpRewrite<cr>", {desc = "[G][P][R]ewrite"})
 vim.keymap.set({"n", "v"}, "gpa", ":GpAppend<cr>", {desc = "[G][P][A]ppend"})
 vim.keymap.set({"n", "v"}, "gpc", ":GpChatNew<cr>", {desc = "[G][P][C]hat new"})
