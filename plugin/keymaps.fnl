@@ -126,7 +126,8 @@
   (fn [] 
     (notes-notify "running save script..." vim.log.levels.INFO)
     (vim.fn.jobstart [(.. (vim.fn.expand "~/notes") "/.bin/save.sh")]
-      {:on_stdout (fn [_ data _]
+      {:cwd (vim.fn.expand "~/notes")
+       :on_stdout (fn [_ data _]
                     (each [_ line (ipairs data)]
                       (when (and line (not= line ""))
                         (vim.schedule #(notes-notify line vim.log.levels.INFO)))))
