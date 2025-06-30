@@ -82,9 +82,19 @@ This is a Fennel-based Neovim configuration, not Lua. All configuration files us
 - **Deprecated functions**: `vim.tbl_islist` is deprecated, use `vim.islist` instead
 
 ## Compilation Workflow
-- **Command**: `make` - Compiles all .fnl files to .lua
-- **Location**: Run from `/home/tskj/.config/nvim/` directory
-- **Auto-compilation**: Uses Makefile to compile Fennel to Lua
+- **Command**: `make` - Compiles all .fnl files to dot-prefixed .lua files (e.g. `.keymaps.lua`)
+- **Clean**: `make clean` - Removes old compiled files (use carefully - git protects us!)
+- **Location**: Run from project root directory
+- **Custom Loader**: `lua/user/compiled-loader.lua` enables require() to find dot-prefixed files
+- **File Pattern**: `filename.fnl` → `.filename.lua` (hidden compiled files)
+
+### Migration Notes (One-Time Setup)
+When pulling the new build system on another computer:
+```bash
+# Clean old compiled files and rebuild with new naming
+make clean && make
+```
+**Warning**: Only run `make clean` during migration or if you're sure about what you're doing - it deletes compiled .lua files but preserves essential custom .lua files.
 
 ## Common Patterns
 

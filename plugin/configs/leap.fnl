@@ -2,7 +2,8 @@
 (leap.setup
   {:safe_labels "fnut/SFNLHMUGTZ?"})
 
-(leap.add_repeat_mappings ";" "," {:relative_directions true})
+; Removed repeat mappings to allow quickfix navigation with ; and ,
+; (leap.add_repeat_mappings ";" "," {:relative_directions true})
 
 ; fix bug where cursor is visible when autoleaping, from docs
 (vim.api.nvim_create_autocmd :User

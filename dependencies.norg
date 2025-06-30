@@ -1,0 +1,231 @@
+@document.meta
+title: Neovim Configuration Dependencies
+description: External dependencies required for the Neovim configuration
+authors: tarjei
+categories: [
+    documentation
+    dependencies
+]
+created: 2025-06-30
+updated: 2025-06-30
+version: 1.0.0
+@end
+
+* External Dependencies
+
+  This document lists all external tools and libraries that the Neovim configuration depends on.
+
+** Core Build Tools
+
+*** LuaRocks & Fennel
+   - *Purpose*: Lua package manager and Fennel compiler for `.fnl` to `.lua` compilation
+   - *Installation*: 
+     -- Install LuaRocks: `brew install luarocks`
+     -- Install Fennel: `luarocks install fennel`
+   - *Version*: Fennel 1.5.3+
+   - *Usage*: Build system via Makefile
+   - *Note*: Fennel should be installed via LuaRocks, not directly via brew
+
+*** Make
+   - *Purpose*: Build automation for compiling Fennel files
+   - *Installation*: Usually pre-installed on macOS/Linux
+   - *Usage*: `make` command to compile, `make clean` to clean
+
+** Language Servers (LSP)
+
+*** Mason-managed Language Servers
+   These are automatically installed via Mason when needed:
+   - `rust_analyzer` - Rust
+   - `tsserver` - TypeScript/JavaScript  
+   - `vue_ls` - Vue.js (NOT volar or vue_language_server)
+   - `html` - HTML
+   - `cssls` - CSS
+   - `tailwindcss` - Tailwind CSS
+   - `emmet_ls` - Emmet
+   - `bashls` - Bash
+   - `powershell_es` - PowerShell
+   - `pylsp` - Python
+   - `fsautocomplete` - F#
+   - `fennel_language_server` - Fennel
+   - `gopls` - Go
+   - `graphql` - GraphQL
+   - `htmx` - HTMX
+   - `biome` - JavaScript/TypeScript linter and formatter
+   - `lua_ls` - Lua
+   - `autotools_ls` - Make
+   - `marksman` - Markdown
+   - `roslyn` - C# (via roslyn.nvim)
+
+** Image Processing
+
+*** ImageMagick
+   - *Purpose*: Image rendering support for image.nvim plugin
+   - *Installation*: `brew install imagemagick`
+   - *Package*: Provides MagickWand library
+   - *Error*: "Package MagickWand was not found" if missing
+   - *Usage*: Image display in Markdown/Neorg files via Ghostty terminal
+
+** Programming Languages
+
+*** Go
+   - *Purpose*: Required for gopls language server
+   - *Installation*: `brew install go`
+   - *Environment Variables*:
+     -- `GOPATH="$HOME/go"`
+     -- `GOROOT="/usr/local/go"`
+     -- `PATH="$PATH:$GOPATH/bin:$GOROOT/bin"`
+   - *Error*: GOPATH warnings if not configured
+
+*** Node.js
+   - *Purpose*: Required for many language servers and tools
+   - *Installation*: Via NVM (already configured in .zshrc)
+   - *Usage*: TypeScript, Vue, JavaScript tooling
+
+*** Rust
+   - *Purpose*: Required for rust_analyzer
+   - *Installation*: `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
+   - *Usage*: Rust development
+
+*** Python
+   - *Purpose*: Required for pylsp and Python tooling
+   - *Installation*: Usually pre-installed, or `brew install python`
+   - *Usage*: Python development
+
+** Terminal and Shell Tools
+
+*** Git
+   - *Purpose*: Version control, used by various plugins
+   - *Installation*: Usually pre-installed or `brew install git`
+   - *Usage*: Neogit, Gitsigns, LazyGit integration
+
+*** LazyGit
+   - *Purpose*: Git TUI accessible via `<leader>gl`
+   - *Installation*: `brew install lazygit`
+   - *Alias*: `lg` in .zshrc
+
+*** ripgrep (rg)
+   - *Purpose*: Fast text search for Telescope and other plugins
+   - *Installation*: `brew install ripgrep`
+   - *Usage*: Live grep functionality
+
+*** fd
+   - *Purpose*: Fast file finder for Telescope
+   - *Installation*: `brew install fd`
+   - *Usage*: File finding operations
+
+** Optional Dependencies
+
+*** Ghostty Terminal
+   - *Purpose*: Modern terminal with image rendering support
+   - *Installation*: Download from GitHub releases
+   - *Usage*: Image display via kitty graphics protocol
+
+*** PowerShell (macOS)
+   - *Purpose*: Cross-platform PowerShell support
+   - *Installation*: `brew install powershell`
+   - *Usage*: Terminal integration (`<leader>tp`)
+
+*** WSL (Windows only)
+   - *Purpose*: Linux subsystem for Windows
+   - *Installation*: Windows feature
+   - *Usage*: Linux shell access on Windows
+
+** Package Managers
+
+*** Homebrew (macOS/Linux)
+   - *Purpose*: Primary package manager for most dependencies
+   - *Installation*: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
+
+*** LuaRocks
+   - *Purpose*: Lua package manager for Fennel
+   - *Installation*: `brew install luarocks`
+   - *Usage*: `luarocks install fennel`
+
+*** pnpm
+   - *Purpose*: Fast Node.js package manager
+   - *Installation*: `npm install -g pnpm`
+   - *Configuration*: Already configured in .zshrc
+
+** Environment Setup
+
+*** Required Environment Variables
+   These should be in your shell configuration (.zshrc):
+
+   @code bash
+   # Editor
+   export EDITOR="nvim"
+   export VISUAL="nvim"
+
+   # Go environment
+   export GOPATH="$HOME/go"
+   export GOROOT="/usr/local/go"
+   export PATH="$PATH:$GOPATH/bin:$GOROOT/bin"
+
+   # Node Version Manager
+   export NVM_DIR="$HOME/.nvm"
+   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+   # pnpm
+   export PNPM_HOME="/Users/tarjei/Library/pnpm"
+   export PATH="$PNPM_HOME:$PATH"
+   @end
+
+** Installation Script
+
+   For a fresh setup, run these commands:
+
+   @code bash
+   # Package managers
+   brew install luarocks
+
+   # Core build tools
+   luarocks install fennel
+   brew install imagemagick git ripgrep fd lazygit
+
+   # Programming languages
+   brew install go node python rust
+
+   # Optional tools
+   brew install powershell
+
+   # Install NVM for Node.js management
+   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+
+   # Install pnpm
+   npm install -g pnpm
+
+   # Source shell configuration
+   source ~/.zshrc
+   @end
+
+** Troubleshooting
+
+*** Common Issues
+   - *MagickWand not found*: Install ImageMagick with `brew install imagemagick`
+   - *GOPATH warnings*: Set Go environment variables in .zshrc
+   - *Language server failures*: Check if the corresponding language is installed
+   - *Build failures*: Ensure Fennel is installed via `luarocks install fennel`
+   - *Fennel not found*: Make sure LuaRocks bin directory is in PATH
+
+*** Verification Commands
+   @code bash
+   # Check core dependencies
+   which fennel
+   which make
+   which git
+   which rg
+   which fd
+   luarocks list | grep fennel
+
+   # Check programming languages
+   which go
+   which node
+   which python
+   which rustc
+
+   # Check package configs
+   pkg-config --exists MagickWand && echo "ImageMagick OK"
+   go version
+   node --version
+   fennel --version
+   @end

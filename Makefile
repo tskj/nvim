@@ -11,11 +11,17 @@ MACROS = $(wildcard ./fnl/macros/*.fnl)
 # Use .SECONDEXPANSION to allow dynamic prerequisites
 .SECONDEXPANSION:
 
-LUA = $(FNL:.fnl=.lua)
+LUA = $(shell echo "$(FNL)" | tr ' ' '\n' | sed 's|\(.*\)/\([^/]*\)\.fnl|\1/.\2.lua|; s|^\./\([^/]*\)\.fnl$$|./.\1.lua|' | tr '\n' ' ')
 
 all: $(LUA)
+	@if [ -f ./.init.lua ]; then mv ./.init.lua ./init.lua; fi
 
-$(LUA): %.lua: %.fnl $$(MACROS)
+clean:
+	find . -name "*.lua" -not -name "compiled-loader.lua" -not -name "list-element-text-objects.lua" -delete
+
+.PHONY: clean all
+
+.%.lua: %.fnl $$(MACROS)
 	fennel \
 		--add-package-path ${VIMRUNTIME}/lua \
 		--add-package-path ${VIMRUNTIME}/lua/vim/lsp \

@@ -3,6 +3,9 @@
 (set vim.g.maplocalleader ",")
 (set vim.g.winresizer_start_key "<F14>") ;; needed to disable <C-e> for winresizer before it's loaded
 
+;; Setup custom loader for dot-prefixed compiled lua files
+(require :user.compiled-loader)
+
 (local lazypath (.. (vim.fn.stdpath "data") "/lazy/lazy.nvim"))
 (if (not (vim.loop.fs_stat lazypath))
   (vim.fn.system ["git" "clone" "--filter=blob:none"
