@@ -8,7 +8,6 @@ local function open_in_explorer(dir, _3fopts)
       vim.cmd("tabedit")
     else
     end
-    vim.cmd(("cd " .. dir))
     return vim.cmd(("Oil " .. dir))
   end
   return _2_
@@ -250,8 +249,7 @@ local function _45_()
 end
 vim.keymap.set({"n", "v"}, "<leader>l>", _45_, {desc = "[L]ayer [>]ight (move tab right)"})
 local function _46_()
-  vim.cmd(("cd " .. nvim_dir))
-  vim.cmd.terminal("make")
+  vim.cmd.terminal(("cd " .. nvim_dir .. " && make"))
   local function _47_()
     return vim.cmd("qa!")
   end

@@ -1,6 +1,5 @@
 vim.opt.guicursor = {"n-v-c:block", "i-ci-ve:hor20", "r-cr:hor20"}
 vim.o.guifont = "FiraCode Nerd Font:h15"
-vim.o.autochdir = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.tabstop = 2
