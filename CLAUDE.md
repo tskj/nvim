@@ -82,11 +82,27 @@ This is a Fennel-based Neovim configuration, not Lua. All configuration files us
 - **Deprecated functions**: `vim.tbl_islist` is deprecated, use `vim.islist` instead
 
 ## Compilation Workflow
-- **Command**: `make` - Compiles all .fnl files to dot-prefixed .lua files (e.g. `.keymaps.lua`)
+- **Command**: `make` - Compiles all .fnl files to dot-prefixed .lua files
 - **Clean**: `make clean` - Removes old compiled files (use carefully - git protects us!)
 - **Location**: Run from project root directory
 - **Custom Loader**: `lua/user/compiled-loader.lua` enables require() to find dot-prefixed files
-- **File Pattern**: `filename.fnl` → `.filename.lua` (hidden compiled files)
+
+### File Compilation Patterns
+- **Plugin files**: `plugin/filename.fnl` → `plugin/.filename.lua` (hidden compiled files)
+- **Library files**: `lua/user/filename.fnl` → `lua/user/.filename.lua`
+- **Root init**: `init.fnl` → `.init.lua` → `init.lua` (special handling)
+
+### Special init.fnl Handling
+The `init.fnl` file has special compilation behavior:
+1. Compiles to `.init.lua` (hidden file)
+2. Automatically moved to `init.lua` (visible file) after compilation
+3. This ensures the main Neovim entry point is available as `init.lua`
+
+### Makefile Details
+- **File Discovery**: Uses wildcards to find all `.fnl` files recursively
+- **Macro Exclusion**: Excludes `fnl/macros/` directory from compilation
+- **Dependency Tracking**: Recompiles when macro files change
+- **Protected Files**: `make clean` preserves specific Lua files like `compiled-loader.lua`
 
 ### Migration Notes (One-Time Setup)
 When pulling the new build system on another computer:
