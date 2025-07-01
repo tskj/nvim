@@ -111,7 +111,7 @@
 (vim.keymap.set [:n :v] "<leader>ef" (open-in-explorer "") {:desc "[E]xplore [F]ile (open directory of cwd)"})
 
 ;; show current file path in modal
-(vim.keymap.set [:n :v] "<leader>fp" 
+(vim.keymap.set [:n :v] "<leader>fp"
   (fn []
     (let [filepath (vim.fn.expand "%:p")
           buf (vim.api.nvim_create_buf false true)
@@ -143,8 +143,8 @@
     (vim.fn.system (.. "mkdir -p " journal-dir))
     (vim.cmd (.. ":edit " journal-dir "/" today ".norg"))))
 (vim.keymap.set [:n :v] "<leader>nj" open-todays-journal {:desc "[N]otes [J]ournal (open today's entry)"})
-(vim.keymap.set [:n :v] "<leader>ns" 
-  (fn [] 
+(vim.keymap.set [:n :v] "<leader>ns"
+  (fn []
     (notes-notify "running save script..." vim.log.levels.INFO)
     (vim.fn.jobstart [(.. (vim.fn.expand "~/notes") "/.bin/save.sh")]
       {:cwd (vim.fn.expand "~/notes")
@@ -162,8 +162,8 @@
                        (notes-notify "notes saved successfully!" vim.log.levels.INFO)
                        (notes-notify "save script failed!" vim.log.levels.ERROR))))}))
   {:desc "[N]otes [S]ave (run save script)"})
-(vim.keymap.set [:n :v] "<leader>np" 
-  (fn [] 
+(vim.keymap.set [:n :v] "<leader>np"
+  (fn []
     (notes-notify "pulling notes from git..." vim.log.levels.INFO)
     (vim.fn.jobstart ["git" "pull"]
       {:cwd (vim.fn.expand "~/notes")
@@ -462,6 +462,7 @@
                     _  (vim.cmd "normal! ,"))))
 
 ;; quickfix and location list
+(vim.keymap.set :n "<leader>qo" ":copen<cr>" {:desc "[Q]uickfix [O]pen"})
 (vim.keymap.set :n "[q" (fn []
                           (register :q)
                           (vim.api.nvim_command "cprev")) {:desc "[[]ump [Q]uickfix previous (:cprev)"})
@@ -512,11 +513,24 @@
 (vim.keymap.set [:n :v] "<leader>rdc" (fn [] ((-> :refactoring (require) (. :debug :cleanup)) {}))              {:desc "[R]efactor [D]debug [C]lean"})
 
 ;; Quickfix window specific keybindings
+(fn vim.g.delete_selected_quickfix_items []
+  (let [qf-list (vim.fn.getqflist)
+        start-line (vim.fn.line "'<")
+        end-line (vim.fn.line "'>")
+        new-list (icollect [i item (ipairs qf-list)]
+                   (when (not (<= start-line i end-line))
+                     item))]
+    (vim.fn.setqflist new-list)))
+
 (vim.api.nvim_create_autocmd "FileType"
   {:pattern "qf"
    :callback (fn []
                (vim.keymap.set :n "<CR>" "<CR><cmd>cclose<cr>"
-                               {:buffer true :desc "Jump to item and close quickfix"}))})
+                               {:buffer true :desc "Jump to item and close quickfix"})
+               (vim.keymap.set [:v :x] "d" ":<C-u>lua vim.g.delete_selected_quickfix_items()<CR>"
+                               {:buffer true :desc "Delete selected quickfix items"})
+               (vim.keymap.set [:v :x] "D" ":<C-u>lua vim.g.delete_selected_quickfix_items()<CR>"
+                               {:buffer true :desc "Delete selected quickfix items"}))})
 
 ;; AI
 (vim.keymap.set [:n :v] "gpr" ":GpRewrite<cr>" {:desc "[G][P][R]ewrite"})

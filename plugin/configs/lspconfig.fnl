@@ -55,9 +55,9 @@
      "fsautocomplete" ; F#
      "fennel_language_server" ; Fennel
      "gopls" ; Go
-     "graphql"
+     ; "graphql" ; Disabled due to TypeScript hover conflicts
      "html"
-     "htmx"
+     ; "htmx" ; Disabled due to hover conflicts with TypeScript
      ; "hls" ; Haskell, failed to install for some reason
      "biome" ; Linter and Formatter for JavaScript, TypeSript, JSON, CSS, Vue (only the <script> part)
      "lua_ls" ; Lua
