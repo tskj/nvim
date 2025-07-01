@@ -503,6 +503,7 @@ local function _67_()
   end
 end
 vim.keymap.set("n", ",", _67_)
+vim.keymap.set("n", "<leader>qo", ":copen<cr>", {desc = "[Q]uickfix [O]pen"})
 local function _69_()
   register("q")
   return vim.api.nvim_command("cprev")
@@ -566,10 +567,37 @@ local function _80_()
   return require("refactoring").debug.cleanup({})
 end
 vim.keymap.set({"n", "v"}, "<leader>rdc", _80_, {desc = "[R]efactor [D]debug [C]lean"})
-local function _81_()
-  return vim.keymap.set("n", "<CR>", "<CR><cmd>cclose<cr>", {buffer = true, desc = "Jump to item and close quickfix"})
+vim.g.delete_selected_quickfix_items = function()
+  local qf_list = vim.fn.getqflist()
+  local start_line = vim.fn.line("'<")
+  local end_line = vim.fn.line("'>")
+  local new_list
+  do
+    local tbl_21_ = {}
+    local i_22_ = 0
+    for i, item in ipairs(qf_list) do
+      local val_23_
+      if not ((start_line <= i) and (i <= end_line)) then
+        val_23_ = item
+      else
+        val_23_ = nil
+      end
+      if (nil ~= val_23_) then
+        i_22_ = (i_22_ + 1)
+        tbl_21_[i_22_] = val_23_
+      else
+      end
+    end
+    new_list = tbl_21_
+  end
+  return vim.fn.setqflist(new_list)
 end
-vim.api.nvim_create_autocmd("FileType", {pattern = "qf", callback = _81_})
+local function _83_()
+  vim.keymap.set("n", "<CR>", "<CR><cmd>cclose<cr>", {buffer = true, desc = "Jump to item and close quickfix"})
+  vim.keymap.set({"v", "x"}, "d", ":<C-u>lua vim.g.delete_selected_quickfix_items()<CR>", {buffer = true, desc = "Delete selected quickfix items"})
+  return vim.keymap.set({"v", "x"}, "D", ":<C-u>lua vim.g.delete_selected_quickfix_items()<CR>", {buffer = true, desc = "Delete selected quickfix items"})
+end
+vim.api.nvim_create_autocmd("FileType", {pattern = "qf", callback = _83_})
 vim.keymap.set({"n", "v"}, "gpr", ":GpRewrite<cr>", {desc = "[G][P][R]ewrite"})
 vim.keymap.set({"n", "v"}, "gpa", ":GpAppend<cr>", {desc = "[G][P][A]ppend"})
 vim.keymap.set({"n", "v"}, "gpc", ":GpChatNew<cr>", {desc = "[G][P][C]hat new"})
