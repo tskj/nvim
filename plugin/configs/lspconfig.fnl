@@ -41,7 +41,7 @@
                                                                       {:settings
                                                                        {:fennel
                                                                          {:workspace {:library (vim.api.nvim_list_runtime_paths)}
-                                                                          :diagnostics {:globals ["vim"]}}}})))}
+                                                                          :diagnostics {:globals ["vim" "jit" "bit" "package" "require" "load" "loadfile" "dofile" "pcall" "xpcall" "pairs" "ipairs" "next" "print" "tostring" "tonumber" "type" "getmetatable" "setmetatable" "rawget" "rawset" "rawlen" "rawequal" "unpack" "select" "math" "string" "table" "io" "os" "coroutine" "debug" "collectgarbage" "error" "assert" "getfenv" "setfenv" "loadstring" "module"]}}}})))}
    :ensure_installed
     ["ts_ls" ; TypeScript and JavaScript
      "rust_analyzer" ; Rust
@@ -101,6 +101,13 @@
              {:name "minuet"}]
    :window {:completion (cmp.config.window.bordered)
             :documentation (cmp.config.window.bordered)}})
+
+;; Disable AI completion sources for prose filetypes
+(vim.api.nvim_create_autocmd "FileType"
+  {:pattern ["norg" "markdown" "org" "text" "gitcommit"]
+   :callback (fn []
+               (cmp.setup.buffer
+                 {:sources [{:name "nvim_lsp"} {:name "nvim_lua"} {:name "conjure"}]}))})
 
 (let [lspconfig (require "lspconfig")]
   (lspconfig.racket_langserver.setup {}))

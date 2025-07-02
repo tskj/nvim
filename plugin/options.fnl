@@ -64,17 +64,14 @@
 (set vim.env.LANG "en_US.UTF-8")
 (set vim.env.LC_ALL "en_US.UTF-8")
 
-;; Text wrapping for prose files
+;; Hard wrapping for prose files - insert newlines but no visual wrapping
 (vim.api.nvim_create_autocmd "FileType"
   {:pattern ["markdown" "norg" "org" "text"]
    :callback (fn []
                (set vim.opt_local.textwidth 80)
-               (set vim.opt_local.wrap true)
-               (set vim.opt_local.linebreak true)
-               (set vim.opt_local.breakindent true)
+               (set vim.opt_local.wrap false)  ; No visual wrapping
                ;; Set formatoptions for auto-wrapping
-               ;; t = auto-wrap text using textwidth
-               ;; Remove l = don't break long lines that were already long
-               (vim.opt_local.formatoptions:remove "l")
+               ;; t = auto-wrap text using textwidth (inserts actual newlines)
+               ;; l = don't break long lines that were already long (keep by default)
                (vim.opt_local.formatoptions:append "t"))})
 

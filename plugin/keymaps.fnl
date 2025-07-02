@@ -543,3 +543,16 @@
 
 ;; Custom Claude prompt with selection
 (vim.keymap.set :v "<leader>ap" "<cmd>ClaudeSelectionWithPrompt<cr>" {:desc "[A]I [P]rompt with selection"})
+
+;; Toggle formatoptions 'l' flag (prevents reformatting existing long lines)
+(vim.keymap.set [:n :v] "<leader>tw"
+  (fn []
+    (let [current-fo (vim.api.nvim_get_option_value "formatoptions" {:scope "local"})]
+      (if (string.find current-fo "l")
+        (do
+          (vim.opt_local.formatoptions:remove "l")
+          (print "Removed 'l' flag - will reformat existing long lines"))
+        (do
+          (vim.opt_local.formatoptions:append "l")
+          (print "Added 'l' flag - won't reformat existing long lines")))))
+  {:desc "[T]oggle [W]rap behavior (formatoptions 'l' flag)"})
