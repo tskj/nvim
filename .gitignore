@@ -1,6 +1,2 @@
-# Ignore dot-prefixed compiled lua files
-**/.*lua
-# Ignore compiled init.lua (generated from init.fnl)
-init.lua
 # Keep zig directory ignored
 zig/

@@ -35,13 +35,7 @@
 
 (local mason-lspconfig (require :mason-lspconfig))
 (mason-lspconfig.setup
-  {:handlers {1 lsp-zero.default_setup :fennel_language_server (fn []
-                                                                  (let [lspconfig (require "lspconfig")]
-                                                                    (lspconfig.fennel_language_server.setup
-                                                                      {:settings
-                                                                       {:fennel
-                                                                         {:workspace {:library (vim.api.nvim_list_runtime_paths)}
-                                                                          :diagnostics {:globals ["vim" "jit" "bit" "package" "require" "load" "loadfile" "dofile" "pcall" "xpcall" "pairs" "ipairs" "next" "print" "tostring" "tonumber" "type" "getmetatable" "setmetatable" "rawget" "rawset" "rawlen" "rawequal" "unpack" "select" "math" "string" "table" "io" "os" "coroutine" "debug" "collectgarbage" "error" "assert" "getfenv" "setfenv" "loadstring" "module"]}}}})))}
+  {:handlers {1 lsp-zero.default_setup}
    :ensure_installed
     ["ts_ls" ; TypeScript and JavaScript
      "rust_analyzer" ; Rust
@@ -53,7 +47,6 @@
      "elmls" ; Elm
      "millet" ; standard ml
      "fsautocomplete" ; F#
-     "fennel_language_server" ; Fennel
      "gopls" ; Go
      ; "graphql" ; Disabled due to TypeScript hover conflicts
      "html"
