@@ -540,6 +540,7 @@
 (vim.keymap.set [:n :v] "gpq" ":GpPopup<cr>" {:desc "[G][P][Q]uestion (popup)"})
 
 (vim.keymap.set :n "gpf" "<cmd>ClaudeCodeFind<cr>" {:desc "[G][P][F]ind file (Claude)"})
+(vim.keymap.set :n "gpF" "<cmd>ClaudeCodeFindPrompt<cr>" {:desc "[G][P][F]ind file with prompt (Claude)"})
 
 ;; Custom Claude prompt with selection
 (vim.keymap.set :v "<leader>ap" "<cmd>ClaudeSelectionWithPrompt<cr>" {:desc "[A]I [P]rompt with selection"})

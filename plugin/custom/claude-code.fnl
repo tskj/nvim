@@ -112,11 +112,56 @@ The input follows:
                             (vim.cmd "redraw")
                             (vim.cmd "echo ''")))))))))))
 
-;; Create user command
+(fn claude-code-find-with-prompt []
+  ;; Get description from user
+  (let [user-input (vim.fn.input "Describe what you're looking for: ")]
+
+    (when (= user-input "")
+      (vim.notify "Search cancelled" vim.log.levels.WARN)
+      (lua "return nil"))
+
+    ;; Show a message that we're processing (user can Ctrl-C to abort)
+    (vim.notify "Asking Claude to find file... (Ctrl-C to abort)" vim.log.levels.INFO)
+
+    ;; Combine prompt and user input, then properly escape for shell
+    (let [prompt (get-prompt-template)
+          full-prompt (.. prompt "\n" user-input)
+          escaped-prompt (vim.fn.shellescape full-prompt)
+          allowed-tools "--allowedTools \"Read Glob Grep LS Agent TodoRead TodoWrite Bash(find:*) Bash(rg:*) Bash(grep:*) Bash(ls:*) Bash(cat:*) Bash(head:*) Bash(tail:*)\""
+          disallowed-tools "--disallowedTools \"Edit MultiEdit Write WebSearch WebFetch NotebookEdit\""
+          cmd (.. "claude " allowed-tools " " disallowed-tools " -p " escaped-prompt)
+          result (vim.fn.system cmd)]
+
+      ;; Check if command was interrupted
+      (if (= vim.v.shell_error 130) ; 130 is the exit code for SIGINT (Ctrl-C)
+          (vim.notify "Claude command aborted" vim.log.levels.WARN)
+          ;; Parse the result
+          (let [clean-result (vim.trim result)]
+            (if (= clean-result "ERROR_NO_SUCH_FILE")
+                (vim.notify "No matching file found" vim.log.levels.WARN)
+                ;; Otherwise try to parse as filename
+                (let [(filename line-num) (string.match clean-result "^([^:]+):?(%d*)$")]
+                  (if (not filename)
+                      (vim.notify (.. "Could not parse result: " clean-result) vim.log.levels.ERROR)
+                      (if (= (vim.fn.filereadable filename) 0)
+                          (vim.notify (.. "File does not exist: " filename) vim.log.levels.ERROR)
+                          (do
+                            (vim.cmd (.. "silent edit " filename))
+                            (when (and line-num (not= line-num ""))
+                              (vim.cmd (.. "normal! " line-num "G")))
+                            (vim.cmd "redraw")
+                            (vim.cmd "echo ''")))))))))))
+
+;; Create user commands
 (vim.api.nvim_create_user_command
   :ClaudeCodeFind
   claude-code-find-file
   {:desc "Find file using Claude Code from clipboard"})
+
+(vim.api.nvim_create_user_command
+  :ClaudeCodeFindPrompt
+  claude-code-find-with-prompt
+  {:desc "Find file using Claude Code with custom prompt"})
 
 (fn claude-code-rewrite [continue?]
   (let [mode (vim.api.nvim_get_mode)
@@ -256,4 +301,4 @@ The input follows:
 (vim.api.nvim_create_user_command :ClaudeCodeQuestionContinue (fn [] (claude-code-question true)) {:desc "Ask Claude about selected code (continue conversation)"})
 (vim.api.nvim_create_user_command :ClaudeSelectionWithPrompt claude-selection-with-prompt {:desc "Ask Claude about selected code with custom prompt"})
 
-{: claude-code-find-file : claude-code-rewrite : claude-code-append : claude-code-question : claude-selection-with-prompt}
+{: claude-code-find-file : claude-code-find-with-prompt : claude-code-rewrite : claude-code-append : claude-code-question : claude-selection-with-prompt}

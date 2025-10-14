@@ -92,7 +92,49 @@ local function claude_code_find_file()
     end
   end
 end
+local function claude_code_find_with_prompt()
+  local user_input = vim.fn.input("Describe what you're looking for: ")
+  if (user_input == "") then
+    vim.notify("Search cancelled", vim.log.levels.WARN)
+    return nil
+  else
+  end
+  vim.notify("Asking Claude to find file... (Ctrl-C to abort)", vim.log.levels.INFO)
+  local prompt = get_prompt_template()
+  local full_prompt = (prompt .. "\n" .. user_input)
+  local escaped_prompt = vim.fn.shellescape(full_prompt)
+  local allowed_tools = "--allowedTools \"Read Glob Grep LS Agent TodoRead TodoWrite Bash(find:*) Bash(rg:*) Bash(grep:*) Bash(ls:*) Bash(cat:*) Bash(head:*) Bash(tail:*)\""
+  local disallowed_tools = "--disallowedTools \"Edit MultiEdit Write WebSearch WebFetch NotebookEdit\""
+  local cmd = ("claude " .. allowed_tools .. " " .. disallowed_tools .. " -p " .. escaped_prompt)
+  local result = vim.fn.system(cmd)
+  if (vim.v.shell_error == 130) then
+    return vim.notify("Claude command aborted", vim.log.levels.WARN)
+  else
+    local clean_result = vim.trim(result)
+    if (clean_result == "ERROR_NO_SUCH_FILE") then
+      return vim.notify("No matching file found", vim.log.levels.WARN)
+    else
+      local filename, line_num = string.match(clean_result, "^([^:]+):?(%d*)$")
+      if not filename then
+        return vim.notify(("Could not parse result: " .. clean_result), vim.log.levels.ERROR)
+      else
+        if (vim.fn.filereadable(filename) == 0) then
+          return vim.notify(("File does not exist: " .. filename), vim.log.levels.ERROR)
+        else
+          vim.cmd(("silent edit " .. filename))
+          if (line_num and (line_num ~= "")) then
+            vim.cmd(("normal! " .. line_num .. "G"))
+          else
+          end
+          vim.cmd("redraw")
+          return vim.cmd("echo ''")
+        end
+      end
+    end
+  end
+end
 vim.api.nvim_create_user_command("ClaudeCodeFind", claude_code_find_file, {desc = "Find file using Claude Code from clipboard"})
+vim.api.nvim_create_user_command("ClaudeCodeFindPrompt", claude_code_find_with_prompt, {desc = "Find file using Claude Code with custom prompt"})
 local function claude_code_rewrite(continue_3f)
   local mode = vim.api.nvim_get_mode()
   local selection
@@ -232,7 +274,7 @@ local function claude_selection_with_prompt()
   vim.notify("Asking Claude...", vim.log.levels.INFO)
   local escaped_prompt = vim.fn.shellescape(full_prompt)
   local cmd = ("claude -p " .. escaped_prompt)
-  local function _28_(_0, data)
+  local function _34_(_0, data)
     if (data and (#data > 0)) then
       local response = string.gsub(string.gsub(table.concat(data, "\n"), "^%s+", ""), "%s+$", "")
       if (response ~= "") then
@@ -244,7 +286,7 @@ local function claude_selection_with_prompt()
       return nil
     end
   end
-  local function _31_(_0, data)
+  local function _37_(_0, data)
     if (data and (#data > 0)) then
       local error_msg = table.concat(data, "\n")
       return vim.notify(("Claude error: " .. error_msg), vim.log.levels.ERROR)
@@ -252,31 +294,31 @@ local function claude_selection_with_prompt()
       return nil
     end
   end
-  return vim.fn.jobstart(cmd, {stdout_buffered = true, on_stdout = _28_, on_stderr = _31_})
+  return vim.fn.jobstart(cmd, {stdout_buffered = true, on_stdout = _34_, on_stderr = _37_})
 end
-local function _33_()
+local function _39_()
   return claude_code_rewrite(false)
 end
-vim.api.nvim_create_user_command("ClaudeCodeRewrite", _33_, {desc = "Rewrite selected code with Claude"})
-local function _34_()
+vim.api.nvim_create_user_command("ClaudeCodeRewrite", _39_, {desc = "Rewrite selected code with Claude"})
+local function _40_()
   return claude_code_rewrite(true)
 end
-vim.api.nvim_create_user_command("ClaudeCodeRewriteContinue", _34_, {desc = "Rewrite selected code with Claude (continue conversation)"})
-local function _35_()
+vim.api.nvim_create_user_command("ClaudeCodeRewriteContinue", _40_, {desc = "Rewrite selected code with Claude (continue conversation)"})
+local function _41_()
   return claude_code_append(false)
 end
-vim.api.nvim_create_user_command("ClaudeCodeAppend", _35_, {desc = "Append code after selection with Claude"})
-local function _36_()
+vim.api.nvim_create_user_command("ClaudeCodeAppend", _41_, {desc = "Append code after selection with Claude"})
+local function _42_()
   return claude_code_append(true)
 end
-vim.api.nvim_create_user_command("ClaudeCodeAppendContinue", _36_, {desc = "Append code after selection with Claude (continue conversation)"})
-local function _37_()
+vim.api.nvim_create_user_command("ClaudeCodeAppendContinue", _42_, {desc = "Append code after selection with Claude (continue conversation)"})
+local function _43_()
   return claude_code_question(false)
 end
-vim.api.nvim_create_user_command("ClaudeCodeQuestion", _37_, {desc = "Ask Claude about selected code"})
-local function _38_()
+vim.api.nvim_create_user_command("ClaudeCodeQuestion", _43_, {desc = "Ask Claude about selected code"})
+local function _44_()
   return claude_code_question(true)
 end
-vim.api.nvim_create_user_command("ClaudeCodeQuestionContinue", _38_, {desc = "Ask Claude about selected code (continue conversation)"})
+vim.api.nvim_create_user_command("ClaudeCodeQuestionContinue", _44_, {desc = "Ask Claude about selected code (continue conversation)"})
 vim.api.nvim_create_user_command("ClaudeSelectionWithPrompt", claude_selection_with_prompt, {desc = "Ask Claude about selected code with custom prompt"})
-return {["claude-code-find-file"] = claude_code_find_file, ["claude-code-rewrite"] = claude_code_rewrite, ["claude-code-append"] = claude_code_append, ["claude-code-question"] = claude_code_question, ["claude-selection-with-prompt"] = claude_selection_with_prompt}
+return {["claude-code-find-file"] = claude_code_find_file, ["claude-code-find-with-prompt"] = claude_code_find_with_prompt, ["claude-code-rewrite"] = claude_code_rewrite, ["claude-code-append"] = claude_code_append, ["claude-code-question"] = claude_code_question, ["claude-selection-with-prompt"] = claude_selection_with_prompt}
