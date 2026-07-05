@@ -19,7 +19,7 @@ local levvy = require("user.levvy")
 function M.sorter(_)
   local sorters = require("telescope.sorters")
 
-  return sorters.Sorter:new({
+  local sorter = sorters.Sorter:new({
     discard = false,
 
     scoring_function = function(_, prompt, line)
@@ -40,6 +40,10 @@ function M.sorter(_)
       return levvy.positions(prompt, display) or {}
     end,
   })
+
+  -- marker so the search logger only touches levvy-ranked pickers
+  sorter._levvy = true
+  return sorter
 end
 
 return M

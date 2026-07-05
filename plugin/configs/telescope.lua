@@ -38,7 +38,11 @@ telescope.setup({
   defaults = defaults,
 })
 
-if not levvy.available then
+if levvy.available then
+  -- record searches (prompt, ranked corpus, selection) for later
+  -- threshold tuning; inspect with :LevvyLog
+  require("user.levvy-log").attach()
+else
   -- fzf-native overrides file_sorter/generic_sorter when loaded, so only
   -- load it when levvy isn't around to do the ranking
   pcall(telescope.load_extension, "fzf")
