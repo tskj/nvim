@@ -108,6 +108,9 @@ require("lazy").setup({
     dependencies = { "nvim-lua/plenary.nvim" },
     opts = { signs = false } },
   { "ThePrimeagen/refactoring.nvim",
+    dependencies = { "nvim-lua/plenary.nvim",
+                     "nvim-treesitter/nvim-treesitter",
+                     "lewis6991/async.nvim" }, -- provides require("async")
     config = function() require("refactoring").setup() end },
 
   "stevearc/conform.nvim",

@@ -1,6 +1,7 @@
 {
   "LuaSnip": { "branch": "master", "commit": "eda5be8f0ce9816278671f0b578cdbb8b762c701" },
   "YankAssassin.nvim": { "branch": "main", "commit": "4074b307bec6bb8c92b59fb3544e3dc3e43fcf6d" },
+  "async.nvim": { "branch": "main", "commit": "e2a813be9cd143ab1181de6d8a0720e0230cd86e" },
   "claudecode.nvim": { "branch": "main", "commit": "2390c6e45c4789072c293ac69de051d169668b29" },
   "cmp-nvim-lsp": { "branch": "main", "commit": "cbc7b02bb99fae35cb42f514762b89b5126651ef" },
   "cmp-nvim-lua": { "branch": "main", "commit": "e3a22cb071eb9d6508a156306b102c45cd2d573d" },
