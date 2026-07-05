@@ -527,8 +527,10 @@ vim.keymap.set({ "n", "v" }, "<leader>rIv", ":Refactor inline_var<cr>", { desc =
 vim.keymap.set("n", "<leader>reb", ":Refactor extract_block<cr>", { desc = "[R]efactor [E]xtract [B]lock" })
 vim.keymap.set("n", "<leader>rfb", ":Refactor extract_block<cr>", { desc = "[R]efactor to [F]ile: [B]lock" })
 vim.keymap.set({ "n", "v" }, "<leader>rs", function()
-  require("telescope").extensions.refactoring.refactors()
-end, { desc = "[R]efactor [S]earch (telescope)" })
+  -- refactoring.nvim dropped its telescope extension; select_refactor uses
+  -- vim.ui.select, which telescope-ui-select routes through telescope anyway
+  require("refactoring").select_refactor()
+end, { desc = "[R]efactor [S]earch (select)" })
 -- debug
 vim.keymap.set("n", "<leader>rdf", function() require("refactoring").debug.printf() end, { desc = "[R]efactor [D]debug [F]unction" })
 vim.keymap.set({ "n", "v" }, "<leader>rdp", function() require("refactoring").debug.print_var() end, { desc = "[R]efactor [D]debug [P]rint (variable or selection)" })

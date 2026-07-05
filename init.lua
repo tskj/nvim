@@ -21,7 +21,7 @@ require("lazy").setup({
   -- plugins
   "ibhagwan/fzf-lua",
   "simeji/winresizer",
-  "ggandor/leap.nvim",
+  { url = "https://codeberg.org/andyg/leap.nvim" }, -- moved from ggandor/leap.nvim
   "echasnovski/mini.nvim",
   { "lewis6991/gitsigns.nvim", opts = {} },
   "nvim-telescope/telescope-ui-select.nvim",

@@ -101,4 +101,7 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
-require("lspconfig").racket_langserver.setup({})
+-- racket: the require('lspconfig') "framework" is deprecated on nvim 0.11
+-- and removed in nvim-lspconfig v3, so use the native api instead. pcall so
+-- a missing config/server can never crash startup.
+pcall(vim.lsp.enable, "racket_langserver")
