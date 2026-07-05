@@ -1,23 +1,84 @@
--- [nfnl] lua/user/levvy.fnl
-local ffi = require("ffi")
-ffi.cdef("int fuzzy_search(const char* query, int number_of_lines, const char** input, uint16_t* output);")
-local levvy = ffi.load((vim.fn.stdpath("config") .. "\\zig\\levvy"))
-local function _1_()
-  local query = vim.fn.input("Search: ")
-  local start_time = vim.loop.hrtime()
-  local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
-  local n_lines = #lines
-  local c_lines = ffi.new("const char*[?]", n_lines)
-  for i = 1, n_lines do
-    c_lines[(i - 1)] = lines[i]
-  end
-  local output = ffi.new("uint16_t[?]", n_lines)
-  local success = (0 == levvy.fuzzy_search(query, n_lines, c_lines, output))
-  local matches = {}
-  for i = 0, (n_lines - 1) do
-    table.insert(matches, tonumber(output[i]))
-  end
-  local end_time = vim.loop.hrtime()
-  return print("\nresult took:", ((end_time - start_time) / 1000000), "ms", " and first line is ", matches[1], " and second line is ", matches[2], " and third line is ", matches[3], " and fourth line is ", matches[4], " out of the ", #matches, " matches", " with success? ", success)
+-- ffi binding for levvy, the custom fuzzy-match scorer written in zig
+-- (~/code/tarshtein-distance) -- see `levvy_score` and `levvy_positions`
+-- in src/levvy.zig
+--
+-- build and install the library with tarshtein-distance/install.sh
+-- (or install.cmd on windows); when it's absent M.available is false
+-- and callers should fall back to their default scorer
+--
+-- set LEVVY_DISABLE=1 in the environment to force the fallback (handy for
+-- A/B-comparing against the stock fzf sorter)
+
+local M = { available = false }
+
+if vim.env.LEVVY_DISABLE == "1" then
+  return M
 end
-return _1_
+
+local ok, ffi = pcall(require, "ffi")
+if not ok then
+  return M
+end
+
+ffi.cdef([[
+int levvy_score(const char* query, const char* line, unsigned int pad_to);
+int levvy_positions(const char* query, const char* line, uint16_t* out, unsigned int out_cap);
+]])
+
+local is_windows = vim.fn.has("win32") == 1
+local candidates = is_windows
+    and {
+      vim.fn.stdpath("config") .. "\\zig\\levvy.dll",
+    }
+  or {
+    vim.fn.stdpath("config") .. "/zig/liblevvy.so",
+    vim.fn.expand("~/code/tarshtein-distance/zig-out/lib/liblevvy.so"),
+  }
+
+local lib
+for _, path in ipairs(candidates) do
+  if vim.fn.filereadable(path) == 1 then
+    local loaded, result = pcall(ffi.load, path)
+    if loaded then
+      lib = result
+      break
+    end
+  end
+end
+
+if not lib then
+  return M
+end
+
+M.available = true
+
+-- lines are scored as if padded to this many columns, which makes scores
+-- length-normalized and comparable without knowing the longest candidate
+local PAD_TO = 1024
+
+-- returns the levvy distance (lower is better), or -1 when the query is
+-- not a smart-case subsequence of the line (i.e. "no match")
+function M.score(prompt, line)
+  return lib.levvy_score(prompt, line, PAD_TO)
+end
+
+-- returns the byte positions (1-based, for highlighting) that an optimal
+-- levvy match path actually matched, or nil when the query doesn't match
+function M.positions(prompt, line)
+  local cap = #prompt
+  if cap == 0 then
+    return {}
+  end
+  local out = ffi.new("uint16_t[?]", cap)
+  local n = lib.levvy_positions(prompt, line, out, cap)
+  if n < 0 then
+    return nil
+  end
+  local positions = {}
+  for i = 0, n - 1 do
+    positions[i + 1] = out[i] + 1
+  end
+  return positions
+end
+
+return M
