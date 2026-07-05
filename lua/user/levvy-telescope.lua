@@ -11,10 +11,21 @@
 -- fzf, would do). the flip side is the list never empties: you read the
 -- top of a full ranked corpus. discard = false accordingly (nothing is
 -- ever filtered, so telescope must keep and re-rank every entry).
+--
+-- the sorter accumulates, per picker, the set of candidate ordinals it
+-- scored (the corpus). the prompt trace (everything typed, incl. backspaces)
+-- is captured separately by levvy-log watching the prompt buffer. levvy-log
+-- persists both; since levvy is deterministic, storing the raw inputs lets
+-- every score be recomputed offline -- smaller than logging scores and
+-- strictly more information.
 
 local M = {}
 
 local levvy = require("user.levvy")
+
+-- bound the in-memory corpus set so a giant live_grep session can't blow up
+-- memory or the on-disk corpus snapshot (find_files never approaches this)
+local CORPUS_CAP = 100000
 
 function M.sorter(_)
   local sorters = require("telescope.sorters")
@@ -22,7 +33,19 @@ function M.sorter(_)
   local sorter = sorters.Sorter:new({
     discard = false,
 
-    scoring_function = function(_, prompt, line)
+    scoring_function = function(self, prompt, line)
+      -- record corpus membership (every entry the picker feeds us, even at
+      -- the empty prompt), for levvy-log to persist
+      local seen = self._levvy_corpus
+      if seen and not seen[line] then
+        if self._levvy_corpus_n < CORPUS_CAP then
+          seen[line] = true
+          self._levvy_corpus_n = self._levvy_corpus_n + 1
+        else
+          self._levvy_corpus_truncated = true
+        end
+      end
+
       if not prompt or #prompt == 0 then
         return 1 -- empty query: keep the entries in their incoming order
       end
@@ -41,8 +64,12 @@ function M.sorter(_)
     end,
   })
 
-  -- marker so the search logger only touches levvy-ranked pickers
-  sorter._levvy = true
+  -- per-picker capture state (fresh Sorter instance per picker)
+  sorter._levvy = true -- marker so the logger only touches levvy pickers
+  sorter._levvy_corpus = {}
+  sorter._levvy_corpus_n = 0
+  sorter._levvy_corpus_truncated = false
+  sorter._levvy_trace = {} -- prompt trace, filled by levvy-log's text hook
   return sorter
 end
 
