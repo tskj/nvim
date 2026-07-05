@@ -121,6 +121,15 @@ require("lazy").setup({
   "bakpakin/fennel.vim", -- syntax highlighting
   "folke/neodev.nvim",
 
+  -- levvy: the custom zig fuzzy scorer that powers telescope ranking.
+  -- lazy compiles it natively on each machine at :Lazy sync (needs zig on
+  -- PATH); the loader in lua/user/levvy.lua finds the built library and
+  -- falls back to fzf-native if the build is missing. no runtime lua to
+  -- load, this spec exists only to clone + build the library.
+  { "tskj/tarshtein-distance",
+    lazy = true,
+    build = "zig build -Doptimize=ReleaseFast" },
+
   -- neorg
   { "nvim-neorg/neorg",
     ft = "norg",

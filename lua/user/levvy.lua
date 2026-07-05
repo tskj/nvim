@@ -25,15 +25,31 @@ int levvy_score(const char* query, const char* line, unsigned int pad_to);
 int levvy_positions(const char* query, const char* line, uint16_t* out, unsigned int out_cap);
 ]])
 
+-- dynamic library name is platform-specific: .dll on windows, .dylib on
+-- macos, .so on linux/other. searched in priority order:
+--   1. <config>/zig/       -- explicit install (install.sh / install.cmd)
+--   2. ~/code/...           -- a local dev checkout
+--   3. <data>/lazy/...      -- built by lazy.nvim on :Lazy sync (the default
+--                              on a fresh machine; see the plugin spec in
+--                              init.lua with `build = zig build ...`)
 local is_windows = vim.fn.has("win32") == 1
-local candidates = is_windows
-    and {
-      vim.fn.stdpath("config") .. "\\zig\\levvy.dll",
-    }
-  or {
-    vim.fn.stdpath("config") .. "/zig/liblevvy.so",
-    vim.fn.expand("~/code/tarshtein-distance/zig-out/lib/liblevvy.so"),
+local is_mac = vim.fn.has("mac") == 1
+local data = vim.fn.stdpath("data")
+local candidates
+if is_windows then
+  candidates = {
+    vim.fn.stdpath("config") .. "\\zig\\levvy.dll",
+    data .. "\\lazy\\tarshtein-distance\\zig-out\\bin\\levvy.dll",
+    data .. "\\lazy\\tarshtein-distance\\zig-out\\lib\\levvy.dll",
   }
+else
+  local libname = is_mac and "liblevvy.dylib" or "liblevvy.so"
+  candidates = {
+    vim.fn.stdpath("config") .. "/zig/" .. libname,
+    vim.fn.expand("~/code/tarshtein-distance/zig-out/lib/" .. libname),
+    data .. "/lazy/tarshtein-distance/zig-out/lib/" .. libname,
+  }
+end
 
 local lib
 for _, path in ipairs(candidates) do
