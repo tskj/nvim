@@ -2,9 +2,15 @@
 --
 -- plugs in as file_sorter / generic_sorter, so <leader>sf and friends rank
 -- with levvy: streak-rewarding distance, smart case, length-normalized.
--- entries whose query isn't a subsequence are discarded (score -1), and
--- since a non-match stays a non-match when the query grows, telescope's
--- prefix discard-caching is sound for it (discard = true).
+--
+-- there is no match/no-match gate: every entry gets a real levvy distance
+-- and the list is purely ranked by it. a poor match just gets a large
+-- distance and sinks to the bottom rather than disappearing, which is the
+-- point -- a one-character typo is a cheap substitution, so it still ranks
+-- near the top instead of being filtered out (as a subsequence gate, or
+-- fzf, would do). the flip side is the list never empties: you read the
+-- top of a full ranked corpus. discard = false accordingly (nothing is
+-- ever filtered, so telescope must keep and re-rank every entry).
 
 local M = {}
 
@@ -14,17 +20,15 @@ function M.sorter(_)
   local sorters = require("telescope.sorters")
 
   return sorters.Sorter:new({
-    discard = true,
+    discard = false,
 
     scoring_function = function(_, prompt, line)
       if not prompt or #prompt == 0 then
-        return 1
+        return 1 -- empty query: keep the entries in their incoming order
       end
-      local score = levvy.score(prompt, line)
-      if score < 0 then
-        return -1 -- discard
-      end
-      return score -- lower is better, matching telescope's convention
+      -- levvy distance, lower is better (matches telescope's convention);
+      -- always >= 0, so nothing is ever discarded
+      return levvy.score(prompt, line)
     end,
 
     -- exact highlighting: the byte positions an optimal levvy match path
