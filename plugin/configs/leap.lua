@@ -1,13 +1,22 @@
--- [nfnl] plugin/configs/leap.fnl
-local leap = require("leap")
-leap.setup({safe_labels = "fnut/SFNLHMUGTZ?"})
-local function _1_()
-  vim.cmd.hi("Cursor", "blend=100")
-  return vim.opt.guicursor:append({"a:Cursor/lCursor"})
-end
-vim.api.nvim_create_autocmd("User", {pattern = "LeapEnter", callback = _1_})
-local function _2_()
-  vim.cmd.hi("Cursor", "blend=0")
-  return vim.opt.guicursor:remove({"a:Cursor/lCursor"})
-end
-return vim.api.nvim_create_autocmd("User", {pattern = "LeapLeave", callback = _2_})
+require("leap").setup({
+  safe_labels = "fnut/SFNLHMUGTZ?",
+})
+
+-- Removed repeat mappings to allow quickfix navigation with ; and ,
+-- require("leap").add_repeat_mappings(";", ",", { relative_directions = true })
+
+-- fix bug where cursor is visible when autoleaping, from docs
+vim.api.nvim_create_autocmd("User", {
+  pattern = "LeapEnter",
+  callback = function()
+    vim.cmd.hi("Cursor", "blend=100")
+    vim.opt.guicursor:append({ "a:Cursor/lCursor" })
+  end,
+})
+vim.api.nvim_create_autocmd("User", {
+  pattern = "LeapLeave",
+  callback = function()
+    vim.cmd.hi("Cursor", "blend=0")
+    vim.opt.guicursor:remove({ "a:Cursor/lCursor" })
+  end,
+})

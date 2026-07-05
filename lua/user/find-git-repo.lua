@@ -1,32 +1,33 @@
--- [nfnl] lua/user/find-git-repo.fnl
+-- functionality to find the path to a "project",
+-- which means the path to the directory containing
+-- a .git directory (if you are in a git repo).
+-- if not (you're outside any git repo): returns nil
+
 local function find_path_to_repo(cwd)
+  -- First try to find .git as a directory (normal repo)
   local dot_git_dir = vim.fn.finddir(".git", ".;")
-  if (dot_git_dir ~= "") then
+  if dot_git_dir ~= "" then
     local git_path = vim.fn.fnamemodify(dot_git_dir, ":h")
-    local path_to_repo
-    if (git_path == ".") then
-      path_to_repo = cwd
-    else
-      path_to_repo = git_path
+    if git_path == "." then
+      return cwd
     end
-    return path_to_repo
-  else
-    local dot_git_file = vim.fn.findfile(".git", ".;")
-    if (dot_git_file ~= "") then
-      local git_path = vim.fn.fnamemodify(dot_git_file, ":h")
-      local path_to_repo
-      if (git_path == ".") then
-        path_to_repo = cwd
-      else
-        path_to_repo = git_path
-      end
-      return path_to_repo
-    else
-      return nil
-    end
+    return git_path
   end
+
+  -- No .git directory found, try to find .git file (worktree)
+  local dot_git_file = vim.fn.findfile(".git", ".;")
+  if dot_git_file ~= "" then
+    local git_path = vim.fn.fnamemodify(dot_git_file, ":h")
+    if git_path == "." then
+      return cwd
+    end
+    return git_path
+  end
+
+  -- No .git found at all
+  return nil
 end
-local function _5_(cwd)
-  return find_path_to_repo(cwd)
-end
-return {["get-path-to-repo"] = _5_}
+
+return {
+  get_path_to_repo = find_path_to_repo,
+}

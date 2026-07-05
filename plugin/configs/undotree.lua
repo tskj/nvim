@@ -1,4 +1,1 @@
--- [nfnl] plugin/configs/undotree.fnl
-local _local_1_ = require("user.utils")
-local run = _local_1_["run"]
-return run(require("undotree").setup)
+require("undotree").setup()

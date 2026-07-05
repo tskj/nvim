@@ -1,19 +1,147 @@
--- [nfnl] init.fnl
-vim.keymap.set("", "<space>", "", {noremap = true})
+vim.keymap.set("", "<space>", "", { noremap = true })
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
-vim.g.winresizer_start_key = "<F14>"
-local lazypath = (vim.fn.stdpath("data") .. "/lazy/lazy.nvim")
+vim.g.winresizer_start_key = "<F14>" -- needed to disable <C-e> for winresizer before it's loaded
+
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system({"git", "clone", "--filter=blob:none", "https://github.com/folke/lazy.nvim.git", "--branch=stable", lazypath})
-else
+  vim.fn.system({ "git", "clone", "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", lazypath })
 end
 vim.opt.rtp:prepend(lazypath)
-local lazy = require("lazy")
-local function _2_()
-  return (1 == vim.fn.executable("make"))
-end
-local function _3_()
-  return require("refactoring").setup()
-end
-return lazy.setup({"EdenEast/nightfox.nvim", "tiagovla/tokyodark.nvim", {"rose-pine/neovim", name = "rose-pine"}, "maxmx03/fluoromachine.nvim", "ibhagwan/fzf-lua", "simeji/winresizer", "ggandor/leap.nvim", "echasnovski/mini.nvim", {"lewis6991/gitsigns.nvim", opts = {}}, "nvim-telescope/telescope-ui-select.nvim", "nvim-lualine/lualine.nvim", "justinmk/vim-sneak", {"folke/which-key.nvim", event = "VeryLazy", opts = {}}, "stevearc/oil.nvim", "jiaoshijie/undotree", "debugloop/telescope-undo.nvim", "nvim-tree/nvim-web-devicons", "mg979/vim-visual-multi", {"svban/YankAssassin.nvim", opts = {auto_normal = true, auto_visual = true}}, {"0xAdk/full_visual_line.nvim", keys = "V", opts = {}}, {"NeogitOrg/neogit", dependencies = {"nvim-lua/plenary.nvim", "sindrets/diffview.nvim", "nvim-telescope/telescope.nvim"}, opts = {disable_context_highlighting = true, disable_insert_on_commit = true, graph_style = "unicode", integrations = {telescope = true, diffview = true}, commit_editor = {spell_check = false}}}, {"kdheepak/lazygit.nvim", lazy = true, cmd = {"LazyGit", "LazyGitConfig", "LazyGitCurrentFile", "LazyGitFilter", "LazyGitFilterCurrentFile"}, dependencies = {"nvim-lua/plenary.nvim"}}, {"nvim-telescope/telescope.nvim", event = "VimEnter", branch = "0.1.x", dependencies = {"nvim-lua/plenary.nvim", {"nvim-telescope/telescope-fzf-native.nvim", build = "make", cond = _2_}, "nvim-telescope/telescope-ui-select.nvim"}}, {"VonHeikemen/lsp-zero.nvim", lazy = true, event = "VeryLazy", dependencies = {"williamboman/mason.nvim", "williamboman/mason-lspconfig.nvim", "neovim/nvim-lspconfig", "hrsh7th/nvim-cmp", "hrsh7th/cmp-nvim-lsp", "hrsh7th/cmp-nvim-lua", "L3MON4D3/LuaSnip"}}, {"seblyng/roslyn.nvim", ft = "cs", opts = {}}, "supermaven-inc/supermaven-nvim", "milanglacier/minuet-ai.nvim", "robitx/gp.nvim", {"coder/claudecode.nvim", dependencies = {"folke/snacks.nvim"}, config = true, keys = {{"<leader>a", desc = "AI/Claude Code"}, {"<leader>ac", "<cmd>ClaudeCode<cr>", desc = "Toggle Claude"}, {"<leader>af", "<cmd>ClaudeCodeFocus<cr>", desc = "Focus Claude"}, {"<leader>ar", "<cmd>ClaudeCode --resume<cr>", desc = "Resume Claude"}, {"<leader>aC", "<cmd>ClaudeCode --continue<cr>", desc = "Continue Claude"}, {"<leader>ab", "<cmd>ClaudeCodeAdd %<cr>", desc = "Add current buffer"}, {"<leader>as", "<cmd>ClaudeCodeSend<cr>", mode = "v", desc = "Send to Claude"}, {"<leader>as", "<cmd>ClaudeCodeTreeAdd<cr>", desc = "Add file", ft = {"NvimTree", "neo-tree", "oil"}}, {"<leader>aa", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff"}, {"<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny diff"}}}, "nvim-treesitter/nvim-treesitter", "nvim-treesitter/nvim-treesitter-context", {"folke/todo-comments.nvim", event = "VimEnter", dependencies = {"nvim-lua/plenary.nvim"}, opts = {signs = false}}, {"ThePrimeagen/refactoring.nvim", config = _3_}, "stevearc/conform.nvim", "WhoIsSethDaniel/mason-tool-installer.nvim", "MunifTanjim/prettier.nvim", "Olical/conjure", {"Olical/nfnl", ft = "fennel"}, {"eraserhd/parinfer-rust", build = "cargo build --release"}, "bakpakin/fennel.vim", "folke/neodev.nvim", {"nvim-neorg/neorg", ft = "norg", opts = {load = {["core.defaults"] = {}, ["core.concealer"] = {config = {icon_preset = "basic"}}, ["core.dirman"] = {config = {workspaces = {notes = "~/notes"}, default_workspace = "notes"}}, ["core.keybinds"] = {config = {default_keybinds = true, neorg_leader = "<localleader>"}}}}}, {"3rd/image.nvim", opts = {backend = "kitty", integrations = {markdown = {enabled = true, download_remote_images = true, filetypes = {"markdown", "vimwiki", "norg"}, clear_in_insert_mode = false, only_render_image_at_cursor = false}, neorg = {enabled = true, download_remote_images = true, filetypes = {"norg"}, clear_in_insert_mode = false, only_render_image_at_cursor = false}}}}})
+
+require("lazy").setup({
+  -- color schemes
+  "EdenEast/nightfox.nvim",
+  "tiagovla/tokyodark.nvim",
+  { "rose-pine/neovim", name = "rose-pine" },
+  "maxmx03/fluoromachine.nvim",
+
+  -- plugins
+  "ibhagwan/fzf-lua",
+  "simeji/winresizer",
+  "ggandor/leap.nvim",
+  "echasnovski/mini.nvim",
+  { "lewis6991/gitsigns.nvim", opts = {} },
+  "nvim-telescope/telescope-ui-select.nvim",
+  "nvim-lualine/lualine.nvim",
+  "justinmk/vim-sneak",
+  { "folke/which-key.nvim",
+    event = "VeryLazy",
+    opts = {} },
+  "stevearc/oil.nvim",
+  "jiaoshijie/undotree",
+  "debugloop/telescope-undo.nvim",
+
+  "nvim-tree/nvim-web-devicons",
+  "mg979/vim-visual-multi",
+
+  { "svban/YankAssassin.nvim",
+    opts = { auto_normal = true,
+             auto_visual = true } },
+  { "0xAdk/full_visual_line.nvim",
+    keys = "V",
+    opts = {} },
+
+  { "NeogitOrg/neogit",
+    dependencies = { "nvim-lua/plenary.nvim",
+                     "sindrets/diffview.nvim",
+                     "nvim-telescope/telescope.nvim" },
+    opts = { disable_context_highlighting = true,
+             disable_insert_on_commit = true,
+             graph_style = "unicode",
+             integrations = { telescope = true, diffview = true },
+             commit_editor = { spell_check = false } } },
+
+  { "kdheepak/lazygit.nvim",
+    lazy = true,
+    cmd = { "LazyGit", "LazyGitConfig", "LazyGitCurrentFile", "LazyGitFilter", "LazyGitFilterCurrentFile" },
+    dependencies = { "nvim-lua/plenary.nvim" } },
+
+  { "nvim-telescope/telescope.nvim",
+    event = "VimEnter",
+    branch = "0.1.x",
+    dependencies = { "nvim-lua/plenary.nvim",
+                     { "nvim-telescope/telescope-fzf-native.nvim",
+                       build = "make",
+                       cond = function() return 1 == vim.fn.executable("make") end },
+                     "nvim-telescope/telescope-ui-select.nvim" } },
+
+  { "VonHeikemen/lsp-zero.nvim",
+    lazy = true,
+    event = "VeryLazy",
+    dependencies = {
+      "williamboman/mason.nvim",
+      "williamboman/mason-lspconfig.nvim",
+      "neovim/nvim-lspconfig",
+      "hrsh7th/nvim-cmp",
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-nvim-lua",
+      "L3MON4D3/LuaSnip" } },
+
+  { "seblyng/roslyn.nvim",
+    ft = "cs",
+    opts = {} },
+
+  "supermaven-inc/supermaven-nvim",
+  "milanglacier/minuet-ai.nvim",
+  "robitx/gp.nvim",
+  { "coder/claudecode.nvim",
+    dependencies = { "folke/snacks.nvim" },
+    config = true,
+    keys = { { "<leader>a", desc = "AI/Claude Code" },
+             { "<leader>ac", "<cmd>ClaudeCode<cr>", desc = "Toggle Claude" },
+             { "<leader>af", "<cmd>ClaudeCodeFocus<cr>", desc = "Focus Claude" },
+             { "<leader>ar", "<cmd>ClaudeCode --resume<cr>", desc = "Resume Claude" },
+             { "<leader>aC", "<cmd>ClaudeCode --continue<cr>", desc = "Continue Claude" },
+             { "<leader>ab", "<cmd>ClaudeCodeAdd %<cr>", desc = "Add current buffer" },
+             { "<leader>as", "<cmd>ClaudeCodeSend<cr>", mode = "v", desc = "Send to Claude" },
+             { "<leader>as", "<cmd>ClaudeCodeTreeAdd<cr>", desc = "Add file", ft = { "NvimTree", "neo-tree", "oil" } },
+             { "<leader>aa", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
+             { "<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny diff" } } },
+
+  "nvim-treesitter/nvim-treesitter",
+  "nvim-treesitter/nvim-treesitter-context",
+  { "folke/todo-comments.nvim",
+    event = "VimEnter",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = { signs = false } },
+  { "ThePrimeagen/refactoring.nvim",
+    config = function() require("refactoring").setup() end },
+
+  "stevearc/conform.nvim",
+  "WhoIsSethDaniel/mason-tool-installer.nvim",
+  "MunifTanjim/prettier.nvim",
+
+  -- fennel/lisp editing (the config itself is plain Lua)
+  "Olical/conjure",
+  { "Olical/nfnl", ft = "fennel" },
+  { "eraserhd/parinfer-rust", build = "cargo build --release" },
+  "bakpakin/fennel.vim", -- syntax highlighting
+  "folke/neodev.nvim",
+
+  -- neorg
+  { "nvim-neorg/neorg",
+    ft = "norg",
+    opts = { load = { ["core.defaults"] = {},
+                      ["core.concealer"] = { config = { icon_preset = "basic" } },
+                      ["core.dirman"] = { config = { workspaces = { notes = "~/notes" },
+                                                     default_workspace = "notes" } },
+                      ["core.keybinds"] = { config = { default_keybinds = true,
+                                                       neorg_leader = "<localleader>" } } } } },
+
+  -- image rendering for Ghostty
+  { "3rd/image.nvim",
+    opts = { backend = "kitty", -- Ghostty supports Kitty graphics protocol
+             integrations = { markdown = { enabled = true,
+                                           clear_in_insert_mode = false,
+                                           download_remote_images = true,
+                                           only_render_image_at_cursor = false,
+                                           filetypes = { "markdown", "vimwiki", "norg" } },
+                              neorg = { enabled = true,
+                                        clear_in_insert_mode = false,
+                                        download_remote_images = true,
+                                        only_render_image_at_cursor = false,
+                                        filetypes = { "norg" } } } } },
+})

@@ -1,25 +1,52 @@
--- [nfnl] plugin/configs/mini.fnl
-local move = require("mini.move")
-move.setup({mappings = {left = "<C-h>", right = "<C-l>", down = "<C-j>", up = "<C-k>"}})
-local pairs = require("mini.pairs")
-pairs.setup()
-local surround = require("mini.surround")
-surround.setup({mappings = {add = "S"}})
-local comment_ = require("mini.comment")
-comment_.setup({options = {ignore_blank_line = true}})
-local starter = require("mini.starter")
-starter.setup()
-local sessions = require("mini.sessions")
-sessions.setup({file = "", autoread = false})
-local jump2d = require("mini.jump2d")
-jump2d.setup({mappings = {start_jumping = "<leader>gj"}, view = {dim = true, n_steps_ahead = 2}})
-local notify = require("mini.notify")
-notify.setup()
+-- moves selection using ctrl + [hjkl]
+require("mini.move").setup({
+  -- default is meta (alt),
+  -- I think ctrl is easier to press
+  mappings = { left = "<C-h>",
+               right = "<C-l>",
+               down = "<C-j>",
+               up = "<C-k>" },
+})
+
+-- auto-closes brackets and stuff
+require("mini.pairs").setup()
+
+-- surround parens
+require("mini.surround").setup({
+  mappings = { add = "S" },
+})
+
+-- comment
+require("mini.comment").setup({
+  options = { ignore_blank_line = true },
+})
+
+-- starter screen and sessions
+require("mini.starter").setup()
+require("mini.sessions").setup({
+  autoread = false,
+  file = "",
+})
+
+require("mini.jump2d").setup({
+  mappings = { start_jumping = "<leader>gj" },
+  view = { dim = true, n_steps_ahead = 2 },
+})
+
+require("mini.notify").setup()
+
 local trailspace = require("mini.trailspace")
 trailspace.setup()
-local function _1_()
-  return trailspace.trim()
-end
-vim.api.nvim_create_autocmd("BufWritePost", {pattern = "*", callback = _1_})
+-- automatically remove trailing white space on save
+vim.api.nvim_create_autocmd("BufWritePost", {
+  pattern = "*",
+  callback = function() trailspace.trim() end,
+})
+
 local ai = require("mini.ai")
-return ai.setup({n_lines = 500, mappings = {around_last = nil, inside_last = nil}, custom_textobjects = {a = ai.gen_spec.argument({separator = ",%s*"})}})
+ai.setup({
+  n_lines = 500,
+  mappings = { around_last = nil,
+               inside_last = nil },
+  custom_textobjects = { a = ai.gen_spec.argument({ separator = ",%s*" }) },
+})
