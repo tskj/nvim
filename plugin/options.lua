@@ -47,6 +47,22 @@ end
 vim.opt.undofile = true
 vim.opt.undodir = undodir
 
+-- Anything under a .private/ directory leaves no trace on disk:
+--  * no undo file (buffer-local, so other files keep theirs)
+--  * no write-backup copy next to the file while saving
+--  * no ShaDa for the whole session. shada is global, and registers / search / command history
+--    aren't tied to a buffer, so text yanked from a private file would otherwise be persisted.
+--    Once a private file has been opened, this session writes no history at all on exit.
+local private_pattern = "*/.private/*"
+vim.opt.backupskip:append(private_pattern)
+vim.api.nvim_create_autocmd({ "BufReadPre", "BufNewFile", "BufWritePre" }, {
+  pattern = private_pattern,
+  callback = function()
+    vim.opt_local.undofile = false
+    vim.o.shada = ""
+  end,
+})
+
 vim.o.timeout = true
 vim.o.timeoutlen = 300
 
