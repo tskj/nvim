@@ -101,7 +101,7 @@ require("lazy").setup({
              { "<leader>aa", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
              { "<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny diff" } } },
 
-  "nvim-treesitter/nvim-treesitter",
+  { "nvim-treesitter/nvim-treesitter", branch = "master", build = ":TSUpdate" },
   "nvim-treesitter/nvim-treesitter-context",
   { "folke/todo-comments.nvim",
     event = "VimEnter",
@@ -118,7 +118,12 @@ require("lazy").setup({
   "MunifTanjim/prettier.nvim",
 
   -- fennel/lisp editing (the config itself is plain Lua)
-  "Olical/conjure",
+  -- Restrict conjure to lisp dialects so it doesn't auto-start (and crash) a
+  -- javascript/typescript REPL client on those files.
+  { "Olical/conjure",
+    init = function()
+      vim.g["conjure#filetypes"] = { "fennel", "clojure", "scheme", "racket", "janet", "lisp" }
+    end },
   { "Olical/nfnl", ft = "fennel" },
   { "eraserhd/parinfer-rust", build = "cargo build --release" },
   "bakpakin/fennel.vim", -- syntax highlighting
