@@ -1,11 +1,11 @@
+local x = { "searchcount", "selectioncount", "encoding", "filesize", "filetype" }
+local has_minuet, minuet_lualine = pcall(require, "minuet.lualine")
+if has_minuet then table.insert(x, 1, minuet_lualine) end
+
 require("lualine").setup({
   sections = {
     lualine_c = { { "filename", path = 3 } },
-    lualine_x = {
-      require("minuet.lualine"),
-      "searchcount", "selectioncount",
-      "encoding", "filesize", "filetype",
-    },
+    lualine_x = x,
   },
   options = {
     component_separators = { left = "", right = "" },

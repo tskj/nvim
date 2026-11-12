@@ -84,9 +84,11 @@ require("lazy").setup({
     ft = "cs",
     opts = {} },
 
-  "milanglacier/minuet-ai.nvim",
-  "robitx/gp.nvim",
+  -- AI plugins: disabled (enabled = false keeps the spec + config around to flip back on)
+  { "milanglacier/minuet-ai.nvim", enabled = false },
+  { "robitx/gp.nvim", enabled = false },
   { "coder/claudecode.nvim",
+    enabled = false,
     dependencies = { "folke/snacks.nvim" },
     config = true,
     keys = { { "<leader>a", desc = "AI/Claude Code" },

@@ -1,3 +1,5 @@
+if not pcall(require, "gp") then return end -- plugin disabled in init.lua
+
 require("gp").setup({
   providers = { openai = { disable = true },
                 googleai = { disable = false } },
