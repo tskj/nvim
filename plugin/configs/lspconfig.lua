@@ -85,7 +85,6 @@ cmp.setup({
   preselect = "item",
   completion = { completeopt = "menu,menuone,noinsert" },
   sources = { { name = "nvim_lsp" }, { name = "nvim_lua" }, { name = "conjure" },
-              { name = "supermaven" },
               { name = "minuet" } },
   window = { completion = cmp.config.window.bordered(),
              documentation = cmp.config.window.bordered() },

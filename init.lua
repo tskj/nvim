@@ -84,7 +84,6 @@ require("lazy").setup({
     ft = "cs",
     opts = {} },
 
-  "supermaven-inc/supermaven-nvim",
   "milanglacier/minuet-ai.nvim",
   "robitx/gp.nvim",
   { "coder/claudecode.nvim",
